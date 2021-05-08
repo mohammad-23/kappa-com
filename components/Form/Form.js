@@ -230,7 +230,6 @@ class Form extends Component {
     return (
       <form
         onSubmit={(event) => {
-          console.log("submit");
           event.preventDefault();
 
           this.onEnter();

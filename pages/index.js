@@ -1,34 +1,12 @@
-import { useState } from "react";
 import styled from "styled-components";
 
-import { config } from "../config";
-import { UIButtonPrimary, Toggle, UIInput } from "../styles";
+import Header from "../components/Header";
 
-const Home = () => {
-  const [checked, setChecked] = useState(false);
-
-  return (
-    <Container>
-      <h1>{config.appName}</h1>
-      <UIButtonPrimary>Continue</UIButtonPrimary>
-      <br />
-      <br />
-      <UIButtonPrimary inverted>Login</UIButtonPrimary>
-      <br />
-      <br />
-      <Toggle
-        checked={checked}
-        onToggle={() => setChecked((prevState) => !prevState)}
-      />
-      <br />
-      <br />
-      <UIInput width="35%" />
-      <p>
-        <em>{config.appTagline}</em>
-      </p>
-    </Container>
-  );
-};
+const Home = () => (
+  <Container>
+    <Header />
+  </Container>
+);
 
 export default Home;
 

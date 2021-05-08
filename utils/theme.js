@@ -8,5 +8,6 @@ export default {
   failure: "#FB4E4E",
   textPrimary: "#25282B",
   textSecondary: "#999999",
-  background: "#E8E8E8",
+  background: "#EBEBEB",
+  backgroundLight: "#FBFBFB",
 };

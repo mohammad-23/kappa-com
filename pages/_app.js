@@ -1,10 +1,13 @@
 import "../styles/index.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Fragment } from "react";
 import PropTypes from "prop-types";
+import { ToastContainer } from "react-toastify";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import { theme } from "../utils";
+import Auth from "../components/Auth";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -17,8 +20,11 @@ const GlobalStyle = createGlobalStyle`
 const MyApp = ({ Component, pageProps }) => (
   <Fragment>
     <GlobalStyle />
+    <ToastContainer />
     <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
+      <Auth>
+        <Component {...pageProps} />
+      </Auth>
     </ThemeProvider>
   </Fragment>
 );

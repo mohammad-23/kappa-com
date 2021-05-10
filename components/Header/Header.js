@@ -87,7 +87,7 @@ const Header = () => {
 export default Header;
 
 const HeaderContainer = styled.div`
-  height: 4rem;
+  height: 13vh;
   width: 100%;
 `;
 

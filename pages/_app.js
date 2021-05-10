@@ -8,6 +8,7 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import { theme } from "../utils";
 import Auth from "../components/Auth";
+import Layout from "../components/Layout/Layout";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -22,9 +23,11 @@ const MyApp = ({ Component, pageProps }) => (
     <GlobalStyle />
     <ToastContainer />
     <ThemeProvider theme={theme}>
+    <Layout>
       <Auth>
         <Component {...pageProps} />
       </Auth>
+      </Layout>
     </ThemeProvider>
   </Fragment>
 );

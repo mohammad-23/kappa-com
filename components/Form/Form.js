@@ -3,9 +3,8 @@ import PropTypes from "prop-types";
 import find from "lodash/find";
 import validator from "validator";
 import isEqual from "lodash/isEqual";
-import styled from "styled-components";
 
-import { Input } from "../../styles/UIKit";
+import { Input, InputField, Label } from "../../styles/UIKit";
 
 class Form extends Component {
   static propTypes = {
@@ -242,16 +241,3 @@ class Form extends Component {
 }
 
 export default Form;
-
-const InputField = styled.div`
-  width: 50%;
-  margin: 0 auto 1.5rem;
-`;
-
-const Label = styled.div`
-  font-size: 12px;
-  text-align: left;
-  margin: 0 0 0.5rem 0.2rem;
-  color: ${(props) =>
-    props.error ? props.theme.failure : props.theme.textPrimary};
-`;

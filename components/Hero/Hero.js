@@ -6,7 +6,7 @@ import UIBUtton from "../../styles/UIKit/Button";
 
 const Hero = () => {
   return (
-    <Carousel showThumbs={false} autoPlay>
+    <Carousel showThumbs={false} autoPlay showStatus={false}>
       <CarouselItem>
         <HeroTitle>HOT RIGHT NOW</HeroTitle>
         <HeroDescription>

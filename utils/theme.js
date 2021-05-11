@@ -10,4 +10,5 @@ export default {
   textSecondary: "#999999",
   background: "#EBEBEB",
   backgroundLight: "#FBFBFB",
+  heroText:"#FFFFFF",
 };

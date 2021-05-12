@@ -11,5 +11,6 @@ export default {
   background: "#EBEBEB",
   backgroundLight: "#FBFBFB",
   heroText:"#FFFFFF",
-  favouritesImagePlaceHolderColor:"#F1F1F1"
+  favouritesImagePlaceHolderColor:"#F1F1F1",
+  greyText:"#A7BDCC"
 };

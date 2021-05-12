@@ -5,6 +5,8 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Benefit from "../components/Benefit";
 import Favourites from "../components/Favourites";
+import Register from "../components/Register";
+import HotDeals from "../components/HotDeals";
 
 const Home = () => (
   <Container>
@@ -12,6 +14,8 @@ const Home = () => (
     <Hero/>
     <Benefit/>
     <Favourites/>
+    <Register/>
+    <HotDeals/>
   </Container>
 );
 

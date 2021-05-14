@@ -7,14 +7,24 @@ import { Logo } from "../../assets/icons";
 import { Input, Tooltip } from "../../styles/UIKit";
 import LoginModal from "../LoginModal/LoginModal";
 import AuthContext from "../../contexts/AuthContext";
+import {
+  HEADER_BASE_TEXT,
+  MEN,
+  WOMEN,
+  KIDS,
+  LOGIN,
+  ACCOUNT_DETAILS,
+  WISHLIST,
+  ORDER_HISTORY,
+} from "../../utils/constants";
 
-const primaryCategories = ["Men", "women", "kids"];
+const primaryCategories = [MEN, WOMEN, KIDS];
 
 const userMenu = [
-  { key: null, name: "Login" },
-  { key: "user", name: "Account Details" },
-  { key: "wishlist", name: "Wishlist" },
-  { key: "user", name: "Order History" },
+  { key: null, name: LOGIN },
+  { key: "user", name: ACCOUNT_DETAILS },
+  { key: "wishlist", name: WISHLIST },
+  { key: "user", name: ORDER_HISTORY },
 ];
 
 const Header = () => {
@@ -67,7 +77,7 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <HeaderBase>Free shipping and returns on all US orders</HeaderBase>
+      <HeaderBase>{HEADER_BASE_TEXT}</HeaderBase>
       <HeaderSections>
         <Logo style={{ margin: "auto 0" }} />
         <Categories>{renderCategories()}</Categories>

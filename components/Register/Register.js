@@ -1,19 +1,17 @@
 import styled from "styled-components";
-const Register = () => {
-  return (
-    <RegisterContainer>
-      <RegisterTitle>
-        As KappaCom Insider, shop with 20% off always!*
-      </RegisterTitle>
-      <RegisterDescription>
-        Not an insider? Sign up at checkout to recieve offer today.
-      </RegisterDescription>
-      <RegisterDescription>
-        Offer valid on full price items.
-      </RegisterDescription>
-    </RegisterContainer>
-  );
-};
+
+import {
+  REGISTER_TITLE,
+  REGISTER_TEXT1,
+  REGISTER_TEXT2,
+} from "../../utils/constants";
+const Register = () => (
+  <RegisterContainer>
+    <h1>{REGISTER_TITLE}</h1>
+    <RegisterDescription>{REGISTER_TEXT1}</RegisterDescription>
+    <RegisterDescription>{REGISTER_TEXT2}</RegisterDescription>
+  </RegisterContainer>
+);
 
 const RegisterContainer = styled.div`
   background-color: ${(props) => props.theme.primary};
@@ -26,10 +24,8 @@ const RegisterContainer = styled.div`
   color: ${(props) => props.theme.heroText};
 `;
 
-const RegisterTitle = styled.h1``;
-
 const RegisterDescription = styled.p`
-margin:0;
+  margin: 0;
 `;
 
 export default Register;

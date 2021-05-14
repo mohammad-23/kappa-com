@@ -1,58 +1,62 @@
 import styled from "styled-components";
-import ItemCard from "../../styles/UIKit/ItemCard";
-import UIButton from "../../styles/UIKit/Button";
-import Divider from "../../styles/UIKit/Divider";
-const HotDeals = () => {
-  return (
-    <HotDealsContainer>
-      <HotDealsTitle>HOT DEALS</HotDealsTitle>
-      <Divider/>
-      <HotDealsContent>
-        <HotDealsOfferContainer>
-          <HotDealsOfferTitle>Winter sales <br/> 50 % off</HotDealsOfferTitle>
-          <HotDealsCounterContainer>
+
+import { ItemCard, Button, Divider } from "../../styles/UIKit";
+import {
+  HOTDEALS_OFFER_BUTTON_TEXT,
+  HOTDEALS_OFFER_TEXT1,
+  HOTDEALS_OFFER_TEXT2,
+  HOTDEALS_TITLE,
+} from "../../utils/constants";
+const HotDeals = () => (
+  <HotDealsContainer>
+    <HotDealsTitle>{HOTDEALS_TITLE}</HotDealsTitle>
+    <Divider />
+    <HotDealsContent>
+      <HotDealsOfferContainer>
+        <HotDealsOfferTitle>
+          {HOTDEALS_OFFER_TEXT1} <br /> {HOTDEALS_OFFER_TEXT2}
+        </HotDealsOfferTitle>
+        <HotDealsCounterContainer>
           <HotDealsCounterSquare>
-          <SquareCounter>100</SquareCounter>
-          <SquareTime>DAYS</SquareTime>
+            <SquareCounter>100</SquareCounter>
+            <SquareTime>DAYS</SquareTime>
           </HotDealsCounterSquare>
           <HotDealsCounterSquare>
-          <SquareCounter>23</SquareCounter>
-          <SquareTime>HOURS</SquareTime>
+            <SquareCounter>23</SquareCounter>
+            <SquareTime>HOURS</SquareTime>
           </HotDealsCounterSquare>
           <HotDealsCounterSquare>
-          <SquareCounter>36</SquareCounter>
-          <SquareTime>MINS</SquareTime>
+            <SquareCounter>36</SquareCounter>
+            <SquareTime>MINS</SquareTime>
           </HotDealsCounterSquare>
           <HotDealsCounterSquare>
-          <SquareCounter>45</SquareCounter>
-          <SquareTime>SECS</SquareTime>
+            <SquareCounter>45</SquareCounter>
+            <SquareTime>SECS</SquareTime>
           </HotDealsCounterSquare>
-          </HotDealsCounterContainer>
-          <UIButton inverted> SHOP NOW</UIButton>
-        </HotDealsOfferContainer>
-        <ItemCard itemName={"Carson Shoulder"} itemPrice={"175.00"}></ItemCard>
-        <ItemCard itemName={"Jaxson Jacket"} itemPrice={"175.00"}></ItemCard>
-        <ItemCard
-          itemName={"Zinnia Scallop Applique Mini"}
-          itemPrice={"199.00"}
-        ></ItemCard>
-      </HotDealsContent>
-    </HotDealsContainer>
-  );
-};
+        </HotDealsCounterContainer>
+        <Button inverted> {HOTDEALS_OFFER_BUTTON_TEXT}</Button>
+      </HotDealsOfferContainer>
+      <ItemCard itemName={"Carson Shoulder"} itemPrice={"175.00"}></ItemCard>
+      <ItemCard itemName={"Jaxson Jacket"} itemPrice={"175.00"}></ItemCard>
+      <ItemCard
+        itemName={"Zinnia Scallop Applique Mini"}
+        itemPrice={"199.00"}
+      ></ItemCard>
+    </HotDealsContent>
+  </HotDealsContainer>
+);
 
 const HotDealsContainer = styled.div`
-width:100%;
-height:30.25rem;
+  width: 100%;
+  min-height: 40.25rem;
 `;
 
 const HotDealsTitle = styled.h1`
-margin-left: 1.5rem;
+  margin-left: 1.5rem;
 `;
 const HotDealsOfferTitle = styled.h1`
-text-transform:uppercase;
-text-align:center;
-
+  text-transform: uppercase;
+  text-align: center;
 `;
 const HotDealsContent = styled.div`
   display: flex;
@@ -71,31 +75,31 @@ const HotDealsOfferContainer = styled.div`
   justify-content: center;
 `;
 const HotDealsCounterSquare = styled.div`
-height:4.25rem;
-width:4.25rem;
-margin:0.5rem 0.5rem 1rem 0.5rem;
-border:1px solid #FFFFFF;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
+  height: 4.25rem;
+  width: 4.25rem;
+  margin: 0.5rem 0.5rem 1rem 0.5rem;
+  border: 1px solid #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const SquareCounter = styled.h2`
-margin:0;
+  margin: 0;
 `;
 const SquareTime = styled.p`
-color:${(props)=> props.theme.greyText};
-font-size:0.8rem;
-margin:0;
-display:inline;
-font-weight:bold;
+  color: ${(props) => props.theme.greyText};
+  font-size: 0.8rem;
+  margin: 0;
+  display: inline;
+  font-weight: bold;
 `;
 
 const HotDealsCounterContainer = styled.div`
-display:flex;
-flex-direction:row;
-justify-content:space-around;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 `;
 
 export default HotDeals;

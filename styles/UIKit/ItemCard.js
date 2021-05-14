@@ -1,16 +1,13 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const ItemCard = (props) => {
-  return (
-    <ItemCardContainer>
-      <ItemCardImageContainer></ItemCardImageContainer>
-      <ItemName>{props.itemName}</ItemName>
-      <ItemPrice>${props.itemPrice}</ItemPrice>
-    </ItemCardContainer>
-  );
-};
-
-
+const ItemCard = (props) => (
+  <ItemCardContainer>
+    <ItemCardImageContainer></ItemCardImageContainer>
+    <ItemName>{props.itemName}</ItemName>
+    <ItemPrice>${props.itemPrice}</ItemPrice>
+  </ItemCardContainer>
+);
 
 const ItemCardImageContainer = styled.div`
   height: 21rem;
@@ -33,5 +30,10 @@ const ItemPrice = styled.p`
   color: ${(props) => props.theme.primary};
   margin-top: 0;
 `;
+
+ItemCard.propTypes = {
+  itemName: PropTypes.string,
+  itemPrice: PropTypes.string,
+};
 
 export default ItemCard;

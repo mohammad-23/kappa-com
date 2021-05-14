@@ -10,7 +10,8 @@ export default {
   textSecondary: "#999999",
   background: "#EBEBEB",
   backgroundLight: "#FBFBFB",
-  heroText:"#FFFFFF",
-  favouritesImagePlaceHolderColor:"#F1F1F1",
-  greyText:"#A7BDCC"
+  heroText: "#FFFFFF",
+  favouritesImagePlaceHolderColor: "#F1F1F1",
+  greyText: "#A7BDCC",
+  footerBackground: "#FBFBFB",
 };

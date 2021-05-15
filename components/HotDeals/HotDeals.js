@@ -6,10 +6,14 @@ import {
   HOTDEALS_OFFER_TEXT1,
   HOTDEALS_OFFER_TEXT2,
   HOTDEALS_TITLE,
+  VIEW_ALL,
 } from "../../utils/constants";
 const HotDeals = () => (
   <HotDealsContainer>
-    <HotDealsTitle>{HOTDEALS_TITLE}</HotDealsTitle>
+    <HotDealsTitleContainer>
+      <HotDealsTitle>{HOTDEALS_TITLE}</HotDealsTitle>
+      <ViewAllLink>{VIEW_ALL} </ViewAllLink>
+    </HotDealsTitleContainer>
     <Divider />
     <HotDealsContent>
       <HotDealsOfferContainer>
@@ -46,6 +50,8 @@ const HotDeals = () => (
   </HotDealsContainer>
 );
 
+export default HotDeals;
+
 const HotDealsContainer = styled.div`
   width: 100%;
   min-height: 40.25rem;
@@ -53,6 +59,21 @@ const HotDealsContainer = styled.div`
 
 const HotDealsTitle = styled.h1`
   margin-left: 1.5rem;
+  display: inline;
+`;
+const HotDealsTitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const ViewAllLink = styled.a`
+  color: ${(props) => props.theme.primary};
+  font-size: 1rem;
+  margin-left: auto;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 2rem;
+  margin-right: 1rem;
 `;
 const HotDealsOfferTitle = styled.h1`
   text-transform: uppercase;
@@ -101,5 +122,3 @@ const HotDealsCounterContainer = styled.div`
   flex-direction: row;
   justify-content: space-around;
 `;
-
-export default HotDeals;

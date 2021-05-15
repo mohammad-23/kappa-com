@@ -56,6 +56,8 @@ const Benefit = () => (
   </BenefitContainer>
 );
 
+export default Benefit;
+
 const BenefitContainer = styled.div`
   height: 13rem;
   width: 100%;
@@ -81,5 +83,3 @@ const BenefitDiv = styled.div`
 const BenefitIconContainer = styled.div`
   color: ${(props) => props.theme.primary};
 `;
-
-export default Benefit;

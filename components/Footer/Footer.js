@@ -108,6 +108,8 @@ const Footer = () => (
   </FooterContainer>
 );
 
+export default Footer;
+
 const TopFooter = styled.div`
   display: flex;
   height: 20.56rem;
@@ -169,4 +171,3 @@ const CopyRightsContainer = styled.div`
 const PaymentCardsContainer = styled.div`
   align-items: flex-end;
 `;
-export default Footer;

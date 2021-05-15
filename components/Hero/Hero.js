@@ -16,24 +16,32 @@ import {
 } from "../../utils/constants";
 
 const Hero = () => (
-  <Carousel showThumbs={false} autoPlay showStatus={false}>
-    <CarouselItem>
-      <HeroTitle>{CAROUSEL1_TITLE}</HeroTitle>
-      <HeroDescription>{CARUOSEL1_DESCRIPTION}</HeroDescription>
-      <UIBUtton inverted>{CAROUSEL1_BUTTON_TEXT}</UIBUtton>
-    </CarouselItem>
-    <CarouselItem>
-      <HeroTitle>{CAROUSEL2_TITLE}</HeroTitle>
-      <HeroDescription>{CAROUSEL2_DESCRIPTION}</HeroDescription>
-      <UIBUtton inverted>{CAROUSEL2_BUTTON_TEXT}</UIBUtton>
-    </CarouselItem>
-    <CarouselItem>
-      <HeroTitle>{CAROUSEL3_TITLE}</HeroTitle>
-      <HeroDescription>{CAROUSEL3_DESCRIPTION}</HeroDescription>
-      <UIBUtton inverted>{CAROUSEL3_BUTTON_TEXT}</UIBUtton>
-    </CarouselItem>
-  </Carousel>
+  <CarouselContainer>
+    <Carousel showThumbs={false} autoPlay infiniteLoop showStatus={false}>
+      <CarouselItem>
+        <HeroTitle>{CAROUSEL1_TITLE}</HeroTitle>
+        <HeroDescription>{CARUOSEL1_DESCRIPTION}</HeroDescription>
+        <UIBUtton inverted>{CAROUSEL1_BUTTON_TEXT}</UIBUtton>
+      </CarouselItem>
+      <CarouselItem>
+        <HeroTitle>{CAROUSEL2_TITLE}</HeroTitle>
+        <HeroDescription>{CAROUSEL2_DESCRIPTION}</HeroDescription>
+        <UIBUtton inverted>{CAROUSEL2_BUTTON_TEXT}</UIBUtton>
+      </CarouselItem>
+      <CarouselItem>
+        <HeroTitle>{CAROUSEL3_TITLE}</HeroTitle>
+        <HeroDescription>{CAROUSEL3_DESCRIPTION}</HeroDescription>
+        <UIBUtton inverted>{CAROUSEL3_BUTTON_TEXT}</UIBUtton>
+      </CarouselItem>
+    </Carousel>
+  </CarouselContainer>
 );
+
+export default Hero;
+
+const CarouselContainer = styled.div`
+  width: 100%;
+`;
 
 const CarouselItem = styled.div`
   background-color: ${(props) => props.theme.textPrimary};
@@ -51,5 +59,3 @@ const HeroTitle = styled.h1`
 const HeroDescription = styled.p`
   font-size: 1.8rem;
 `;
-
-export default Hero;

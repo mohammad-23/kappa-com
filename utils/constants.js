@@ -63,6 +63,7 @@ export const HOTDEALS_TITLE = "HOT DEALS";
 export const HOTDEALS_OFFER_TEXT1 = "WINTER SALES";
 export const HOTDEALS_OFFER_TEXT2 = "50 % OFF";
 export const HOTDEALS_OFFER_BUTTON_TEXT = "SHOP NOW";
+export const VIEW_ALL = "VIEW ALL";
 
 // Footer Component
 export const COMPANY_INFO = "COMPANY INFO";

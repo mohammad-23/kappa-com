@@ -13,6 +13,8 @@ const Register = () => (
   </RegisterContainer>
 );
 
+export default Register;
+
 const RegisterContainer = styled.div`
   background-color: ${(props) => props.theme.primary};
   height: 17.75rem;
@@ -27,5 +29,3 @@ const RegisterContainer = styled.div`
 const RegisterDescription = styled.p`
   margin: 0;
 `;
-
-export default Register;

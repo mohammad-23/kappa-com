@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-import { ItemCard, Button, Divider } from "../../styles/UIKit";
+import { ItemCard, Button, Divider } from "../../../styles/UIKit";
 import {
   HOTDEALS_OFFER_BUTTON_TEXT,
   HOTDEALS_OFFER_TEXT1,
   HOTDEALS_OFFER_TEXT2,
   HOTDEALS_TITLE,
   VIEW_ALL,
-} from "../../utils/constants";
+} from "../../../utils/constants";
 const HotDeals = () => (
   <HotDealsContainer>
     <HotDealsTitleContainer>

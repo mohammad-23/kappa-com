@@ -16,7 +16,6 @@ const ItemCardImageContainer = styled.div`
 `;
 const ItemCardContainer = styled.div`
   height: 25.75rem;
-  width: 14.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;

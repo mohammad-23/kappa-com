@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 import Header from "../components/Header";
-import Hero from "../components/Hero";
-import Benefit from "../components/Benefit";
-import Favourites from "../components/Favourites";
-import Register from "../components/Register";
-import HotDeals from "../components/HotDeals";
+import Hero from "../components/Home/Hero";
+import Benefit from "../components/Home/Benefit";
+import Favourites from "../components/Home/Favourites";
+import Register from "../components/Home/Register";
+import HotDeals from "../components/Home/HotDeals";
 import Footer from "../components/Footer";
 
 const Home = () => (

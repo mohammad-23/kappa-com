@@ -38,7 +38,7 @@ const HotDeals = () => (
             <SquareTime>SECS</SquareTime>
           </HotDealsCounterSquare>
         </HotDealsCounterContainer>
-        <Button inverted> {HOTDEALS_OFFER_BUTTON_TEXT}</Button>
+        <ShopNowButton inverted> {HOTDEALS_OFFER_BUTTON_TEXT}</ShopNowButton>
       </HotDealsOfferContainer>
       <ItemCard itemName={"Carson Shoulder"} itemPrice={"175.00"}></ItemCard>
       <ItemCard itemName={"Jaxson Jacket"} itemPrice={"175.00"}></ItemCard>
@@ -89,7 +89,7 @@ const HotDealsOfferContainer = styled.div`
   width: 30.25rem;
   height: 25.75rem;
   background-color: ${(props) => props.theme.primary};
-  color: ${(props) => props.theme.heroText};
+  color: ${(props) => props.theme.white};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -121,4 +121,10 @@ const HotDealsCounterContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+`;
+const ShopNowButton = styled(Button)`
+  :hover {
+    background-color: ${(props) => props.theme.white};
+    color: ${(props) => props.theme.primary};
+  }
 `;

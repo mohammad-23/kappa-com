@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import PropTypes from "prop-types";
 
 import { Divider, ItemCard } from "../../styles/UIKit";
@@ -26,79 +25,92 @@ const responsive = {
   },
 };
 
-let nextOne, previousOne;
+let NextOne, PreviousOne;
 
 const ButtonGroup = ({ next, previous, ..._ }) => {
-  nextOne = next;
-  previousOne = previous;
+  NextOne = next;
+  PreviousOne = previous;
   return <div></div>;
 };
+
+const Favourites = () => {
+  const GotoNext = () => {
+    NextOne();
+  };
+  const GotoPrevious = () => {
+    PreviousOne();
+  };
+
+  return (
+    <FavoritesContainer>
+      <FavouritesTitleContainer>
+        <FavouritesTitle>{FAVOURITES_TITLE}</FavouritesTitle>
+        <FavouriteArrowContainer>
+          <FavouriteArrow onClick={GotoPrevious}> &lt; </FavouriteArrow>
+          <FavouriteArrow onClick={GotoNext}> &gt;</FavouriteArrow>
+        </FavouriteArrowContainer>
+      </FavouritesTitleContainer>
+
+      <Divider />
+      <CarouselContainer>
+        <Carousel
+          arrows={false}
+          responsive={responsive}
+          customButtonGroup={<ButtonGroup />}
+          renderButtonGroupOutside={true}
+        >
+          <ItemCard
+            itemName={"Greta White Midi Dress"}
+            itemPrice={"159.00"}
+          ></ItemCard>
+          <ItemCard
+            itemName={"Lilika Silver Mini"}
+            itemPrice={"99.00"}
+          ></ItemCard>
+          <ItemCard
+            itemName={"Crystal Off White Dress"}
+            itemPrice={"250.00"}
+          ></ItemCard>
+          <ItemCard
+            itemName={"Carson Shoulder"}
+            itemPrice={"175.00"}
+          ></ItemCard>
+          <ItemCard
+            itemName={"Dylan Polo Shirt"}
+            itemPrice={"250.00"}
+          ></ItemCard>
+          <ItemCard
+            itemName={"Greta White Midi Dress"}
+            itemPrice={"159.00"}
+          ></ItemCard>
+          <ItemCard
+            itemName={"Lilika Silver Mini"}
+            itemPrice={"99.00"}
+          ></ItemCard>
+          <ItemCard
+            itemName={"Crystal Off White Dress"}
+            itemPrice={"250.00"}
+          ></ItemCard>
+          <ItemCard
+            itemName={"Alexander Immanuel"}
+            itemPrice={"175.00"}
+          ></ItemCard>
+          <ItemCard
+            itemName={"Dylan Polo Shirt"}
+            itemPrice={"250.00"}
+          ></ItemCard>
+        </Carousel>
+      </CarouselContainer>
+    </FavoritesContainer>
+  );
+};
+
+export default Favourites;
 
 ButtonGroup.propTypes = {
   next: PropTypes.func,
   previous: PropTypes.func,
 };
-const GotoNext = () => {
-  nextOne();
-};
-const GotoPrevious = () => {
-  previousOne();
-};
-const Favourites = () => (
-  <FavoritesContainer>
-    <FavouritesTitleContainer>
-      <FavouritesTitle>{FAVOURITES_TITLE}</FavouritesTitle>
-      <FavouriteArrowContainer>
-        <FavouriteArrow onClick={GotoPrevious}> &lt; </FavouriteArrow>
-        <FavouriteArrow onClick={GotoNext}> &gt;</FavouriteArrow>
-      </FavouriteArrowContainer>
-    </FavouritesTitleContainer>
-
-    <Divider></Divider>
-    <CarouselContainer>
-      <Carousel
-        arrows={false}
-        responsive={responsive}
-        customButtonGroup={<ButtonGroup />}
-        renderButtonGroupOutside={true}
-      >
-        <ItemCard
-          itemName={"Greta White Midi Dress"}
-          itemPrice={"159.00"}
-        ></ItemCard>
-        <ItemCard
-          itemName={"Lilika Silver Mini"}
-          itemPrice={"99.00"}
-        ></ItemCard>
-        <ItemCard
-          itemName={"Crystal Off White Dress"}
-          itemPrice={"250.00"}
-        ></ItemCard>
-        <ItemCard itemName={"Carson Shoulder"} itemPrice={"175.00"}></ItemCard>
-        <ItemCard itemName={"Dylan Polo Shirt"} itemPrice={"250.00"}></ItemCard>
-        <ItemCard
-          itemName={"Greta White Midi Dress"}
-          itemPrice={"159.00"}
-        ></ItemCard>
-        <ItemCard
-          itemName={"Lilika Silver Mini"}
-          itemPrice={"99.00"}
-        ></ItemCard>
-        <ItemCard
-          itemName={"Crystal Off White Dress"}
-          itemPrice={"250.00"}
-        ></ItemCard>
-        <ItemCard
-          itemName={"Alexander Immanuel"}
-          itemPrice={"175.00"}
-        ></ItemCard>
-        <ItemCard itemName={"Dylan Polo Shirt"} itemPrice={"250.00"}></ItemCard>
-      </Carousel>
-    </CarouselContainer>
-  </FavoritesContainer>
-);
-
-export default Favourites;
 
 const FavouritesTitleContainer = styled.div`
   display: flex;

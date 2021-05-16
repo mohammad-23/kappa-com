@@ -5,6 +5,7 @@ import {
   FaUndo,
   FaShippingFast,
 } from "react-icons/fa";
+
 import {
   BENEFIT1_DESCRIPTION,
   BENEFIT1_TITLE,

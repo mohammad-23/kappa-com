@@ -23,7 +23,7 @@ const RegisterContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: ${(props) => props.theme.heroText};
+  color: ${(props) => props.theme.white};
 `;
 
 const RegisterDescription = styled.p`

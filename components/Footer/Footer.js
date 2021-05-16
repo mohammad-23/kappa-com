@@ -10,7 +10,7 @@ import {
   FaPinterestP,
 } from "react-icons/fa";
 
-import { Divider } from "../../styles/UIKit";
+import { Divider, Input } from "../../styles/UIKit";
 import {
   ABOUT_US,
   BLOG,
@@ -138,7 +138,7 @@ const ListItem = styled.li`
 const UnorderdListItem = styled.ul`
   padding-inline-end: 2.5rem;
 `;
-const EmailInput = styled.input`
+const EmailInput = styled(Input)`
   border-top: 0;
   border-right: 0;
   border-left: 0;

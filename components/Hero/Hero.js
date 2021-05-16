@@ -45,7 +45,7 @@ const CarouselContainer = styled.div`
 
 const CarouselItem = styled.div`
   background-color: ${(props) => props.theme.textPrimary};
-  color: ${(props) => props.theme.heroText};
+  color: ${(props) => props.theme.white};
   display: flex;
   flex-direction: column;
   align-items: center;

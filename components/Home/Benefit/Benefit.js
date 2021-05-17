@@ -29,16 +29,19 @@ const BenefitContainer = styled.div`
 const BenefitTitle = styled.h3`
   display: inline;
 `;
+
 const BenefitItem = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-around;
 `;
+
 const BenefitDiv = styled.div`
   margin-left: 1rem;
   width: 15rem;
 `;
+
 const BenefitIconContainer = styled.div`
   color: ${(props) => props.theme.primary};
 `;

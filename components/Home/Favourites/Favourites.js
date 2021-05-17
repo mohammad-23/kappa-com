@@ -4,7 +4,6 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 import { Divider, ItemCard } from "../../../styles/UIKit";
-import { FAVOURITES_TITLE } from "../../../utils/constants";
 import UIBUtton from "../../../styles/UIKit/Button";
 import { FavouritesData } from "../../../config/HomeConfig";
 
@@ -27,6 +26,7 @@ const responsive = {
     items: 1,
   },
 };
+
 const ButtonGroup = ({ next, previous, _, ...rest }) => {
   const {
     carouselState: { currentSlide },
@@ -52,7 +52,7 @@ const ButtonGroup = ({ next, previous, _, ...rest }) => {
 const Favourites = () => (
   <FavoritesContainer>
     <FavouritesTitleContainer>
-      <FavouritesTitle>{FAVOURITES_TITLE}</FavouritesTitle>
+      <FavouritesTitle>{FavouritesData.title}</FavouritesTitle>
     </FavouritesTitleContainer>
     <Divider />
     <CarouselContainer>
@@ -62,7 +62,7 @@ const Favourites = () => (
         renderButtonGroupOutside={true}
         customButtonGroup={<ButtonGroup />}
       >
-        {FavouritesData.map((favouriteItem) => (
+        {FavouritesData.items.map((favouriteItem) => (
           <ItemCard
             key={favouriteItem.id}
             itemName={favouriteItem.name}
@@ -100,13 +100,16 @@ const FavouritesTitle = styled.h1`
   padding: 0;
   align-items: flex-start;
 `;
+
 const FavoritesContainer = styled.div`
   height: 40rem;
   width: 100%;
 `;
+
 const UIButtonLeft = styled(UIBUtton)`
   float: left;
 `;
+
 const UIButtonRight = styled(UIBUtton)`
   float: right;
 `;

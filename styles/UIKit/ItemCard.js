@@ -14,6 +14,7 @@ const ItemCardImageContainer = styled.div`
   width: 14.5rem;
   background-color: ${(props) => props.theme.favouritesImagePlaceHolderColor};
 `;
+
 const ItemCardContainer = styled.div`
   height: 25.75rem;
   display: flex;
@@ -25,6 +26,7 @@ const ItemCardContainer = styled.div`
 const ItemName = styled.p`
   margin-bottom: 0;
 `;
+
 const ItemPrice = styled.p`
   color: ${(props) => props.theme.primary};
   margin-top: 0;

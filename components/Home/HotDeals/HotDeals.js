@@ -1,25 +1,17 @@
 import styled from "styled-components";
 
 import { ItemCard, Button, Divider } from "../../../styles/UIKit";
-import {
-  HOTDEALS_OFFER_BUTTON_TEXT,
-  HOTDEALS_OFFER_TEXT1,
-  HOTDEALS_OFFER_TEXT2,
-  HOTDEALS_TITLE,
-  VIEW_ALL,
-} from "../../../utils/constants";
+import { HotDealsData } from "../../../config/HomeConfig";
 const HotDeals = () => (
   <HotDealsContainer>
     <HotDealsTitleContainer>
-      <HotDealsTitle>{HOTDEALS_TITLE}</HotDealsTitle>
-      <ViewAllLink>{VIEW_ALL} </ViewAllLink>
+      <HotDealsTitle>{HotDealsData.title}</HotDealsTitle>
+      <ViewAllLink>{HotDealsData.linkText} </ViewAllLink>
     </HotDealsTitleContainer>
     <Divider />
     <HotDealsContent>
       <HotDealsOfferContainer>
-        <HotDealsOfferTitle>
-          {HOTDEALS_OFFER_TEXT1} <br /> {HOTDEALS_OFFER_TEXT2}
-        </HotDealsOfferTitle>
+        <HotDealsOfferTitle>{HotDealsData.OfferText}</HotDealsOfferTitle>
         <HotDealsCounterContainer>
           <HotDealsCounterSquare>
             <SquareCounter>100</SquareCounter>
@@ -38,14 +30,11 @@ const HotDeals = () => (
             <SquareTime>SECS</SquareTime>
           </HotDealsCounterSquare>
         </HotDealsCounterContainer>
-        <ShopNowButton inverted> {HOTDEALS_OFFER_BUTTON_TEXT}</ShopNowButton>
+        <ShopNowButton inverted> {HotDealsData.buttonText}</ShopNowButton>
       </HotDealsOfferContainer>
-      <ItemCard itemName={"Carson Shoulder"} itemPrice={"175.00"}></ItemCard>
-      <ItemCard itemName={"Jaxson Jacket"} itemPrice={"175.00"}></ItemCard>
-      <ItemCard
-        itemName={"Zinnia Scallop Applique Mini"}
-        itemPrice={"199.00"}
-      ></ItemCard>
+      {HotDealsData.items.map((item) => (
+        <ItemCard key={item.id} itemName={item.name} itemPrice={item.price} />
+      ))}
     </HotDealsContent>
   </HotDealsContainer>
 );
@@ -61,6 +50,7 @@ const HotDealsTitle = styled.h1`
   margin-left: 1.5rem;
   display: inline;
 `;
+
 const HotDealsTitleContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -75,10 +65,12 @@ const ViewAllLink = styled.a`
   margin-top: 2rem;
   margin-right: 1rem;
 `;
+
 const HotDealsOfferTitle = styled.h1`
   text-transform: uppercase;
   text-align: center;
 `;
+
 const HotDealsContent = styled.div`
   display: flex;
   flex-direction: row;
@@ -95,6 +87,7 @@ const HotDealsOfferContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 const HotDealsCounterSquare = styled.div`
   height: 4.25rem;
   width: 4.25rem;
@@ -109,6 +102,7 @@ const HotDealsCounterSquare = styled.div`
 const SquareCounter = styled.h2`
   margin: 0;
 `;
+
 const SquareTime = styled.p`
   color: ${(props) => props.theme.greyText};
   font-size: 0.8rem;
@@ -122,6 +116,7 @@ const HotDealsCounterContainer = styled.div`
   flex-direction: row;
   justify-content: space-around;
 `;
+
 const ShopNowButton = styled(Button)`
   :hover {
     background-color: ${(props) => props.theme.white};

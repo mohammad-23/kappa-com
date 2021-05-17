@@ -4,7 +4,7 @@ import {
   REGISTER_TITLE,
   REGISTER_TEXT1,
   REGISTER_TEXT2,
-} from "../../utils/constants";
+} from "../../../utils/constants";
 const Register = () => (
   <RegisterContainer>
     <h1>{REGISTER_TITLE}</h1>

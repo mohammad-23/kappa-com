@@ -110,4 +110,33 @@ const FavouritesData = {
   ],
 };
 
-export { HeroData, BenefitsData, FavouritesData };
+const HotDealsData = {
+  title: "HOT DEALS",
+  linkText: "VIEW ALL",
+  OfferText: (
+    <span>
+      {" "}
+      WINTER SALES <br /> 50 % OFF
+    </span>
+  ),
+  buttonText: "SHOP NOW",
+  items: [
+    {
+      id: 1,
+      name: "Carson Shoulder",
+      price: "175.00",
+    },
+    {
+      id: 2,
+      name: "Jaxson Jacket",
+      price: "175.00",
+    },
+    {
+      id: 3,
+      name: "Zinnia Scallop Applique Mini",
+      price: "199.00",
+    },
+  ],
+};
+
+export { HeroData, BenefitsData, FavouritesData, HotDealsData };

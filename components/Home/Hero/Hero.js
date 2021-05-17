@@ -33,10 +33,12 @@ const CarouselItem = styled.div`
   justify-content: center;
   height: 33rem;
 `;
+
 const HeroTitle = styled.h1`
   font-size: 4.8rem;
   margin: 0;
 `;
+
 const HeroDescription = styled.p`
   font-size: 1.8rem;
 `;

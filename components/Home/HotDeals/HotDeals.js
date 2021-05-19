@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { ItemCard, Button, Divider } from "../../../styles/UIKit";
 import { HotDealsData } from "../../../config/HomeConfig";
+
 const HotDeals = () => (
   <HotDealsContainer>
     <HotDealsTitleContainer>

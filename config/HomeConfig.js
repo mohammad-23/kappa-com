@@ -4,6 +4,7 @@ import {
   FaUndo,
   FaShippingFast,
 } from "react-icons/fa";
+
 const HeroData = [
   {
     id: 1,

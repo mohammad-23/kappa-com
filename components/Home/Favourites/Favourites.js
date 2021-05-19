@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 
 import { Divider, ItemCard } from "../../../styles/UIKit";
 import UIBUtton from "../../../styles/UIKit/Button";
@@ -41,7 +40,13 @@ const ButtonGroup = ({ next, previous, _, ...rest }) => {
         {" "}
         &lt;
       </UIButtonLeft>
-      <UIButtonRight inverted onClick={() => next()}>
+      <UIButtonRight
+        inverted
+        onClick={() => next()}
+        className={
+          currentSlide === FavouritesData.items.length / 2 ? "disable" : ""
+        }
+      >
         {" "}
         &gt;{" "}
       </UIButtonRight>
@@ -76,7 +81,7 @@ const Favourites = () => (
 
 export default Favourites;
 
-ButtonGroup.PropTypes = {
+ButtonGroup.propTypes = {
   next: PropTypes.func,
   previous: PropTypes.func,
 };

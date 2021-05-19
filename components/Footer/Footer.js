@@ -23,10 +23,10 @@ import FooterData from "../../config/FooterConfig";
 const Footer = () => (
   <FooterContainer>
     <TopFooter>
-      {FooterData.map((footerItem) => (
-        <ListContainer key={footerItem.id}>
-          <UnorderdListItem>
-            <ListHeading>{footerItem.title}</ListHeading>
+      {FooterData.map((footerItem, index) => (
+        <ListContainer key={footerItem.key}>
+          <UnorderdListItem key={index}>
+            <ListHeading key={footerItem.title}>{footerItem.title}</ListHeading>
             {footerItem.links.map((link) => (
               <ListItem key={link}> {link}</ListItem>
             ))}

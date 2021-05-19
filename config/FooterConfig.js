@@ -29,4 +29,5 @@ const FooterData = [
     links: ["Special Links", "Gift Cards", "Advertising", "Terms Of Use"],
   },
 ];
+
 export default FooterData;

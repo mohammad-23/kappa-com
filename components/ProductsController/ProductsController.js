@@ -31,7 +31,7 @@ const ProductsController = ({ children }) => {
     if (Object.keys(router.query).length) {
       try {
         setLoading(true);
-        console.log(router.query);
+
         const { page, orderBy, range, category, variant } = router.query;
 
         const currentOffset =

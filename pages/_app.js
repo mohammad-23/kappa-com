@@ -1,5 +1,6 @@
 import "../styles/index.css";
 import "react-toastify/dist/ReactToastify.css";
+import "react-multi-carousel/lib/styles.css";
 
 import { Fragment } from "react";
 import PropTypes from "prop-types";

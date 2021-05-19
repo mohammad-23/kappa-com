@@ -1,12 +1,22 @@
 import styled from "styled-components";
 
 import Header from "../components/Header";
-import Hero from "../components/Hero";
+import Hero from "../components/Home/Hero";
+import Benefit from "../components/Home/Benefit";
+import Favourites from "../components/Home/Favourites";
+import Register from "../components/Home/Register";
+import HotDeals from "../components/Home/HotDeals";
+import Footer from "../components/Footer";
 
 const Home = () => (
   <Container>
     <Header />
-    <Hero/>
+    <Hero />
+    <Benefit />
+    <Favourites />
+    <Register />
+    <HotDeals />
+    <Footer />
   </Container>
 );
 

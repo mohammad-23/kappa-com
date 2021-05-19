@@ -5,15 +5,27 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 import useOutsideAlerter from "../../utils/useOutsideAlerter";
 
-const Dropdown = ({ options, onOptionSelect }) => {
-  const [sortBy, setSortBy] = useState("");
+const Dropdown = ({ options, onOptionSelect, initialValue }) => {
+  const [sortBy, setSortBy] = useState({ name: "", value: "" });
 
   const wrapperRef = useRef(null);
   const { isOpen, setIsOpen } = useOutsideAlerter(wrapperRef);
 
+  const setInitialSort = () => {
+    if (Object.keys(initialValue).length) {
+      setSortBy({ name: initialValue.name, value: initialValue.value });
+    } else {
+      if (typeof options[0] === "string") {
+        setSortBy({ name: options[0], value: options[0] });
+      } else {
+        setSortBy({ name: options[0].name, value: options[0].value });
+      }
+    }
+  };
+
   useEffect(() => {
     if (options.length) {
-      setSortBy(options[0]);
+      setInitialSort();
     }
   }, []);
 
@@ -23,24 +35,44 @@ const Dropdown = ({ options, onOptionSelect }) => {
   );
 
   const onOptionClick = (item) => () => {
-    setSortBy(item);
-    toggleDropdownOpen();
-    onOptionSelect(item);
+    if (typeof options === "string") {
+      setSortBy(item);
+      toggleDropdownOpen();
+      onOptionSelect(item);
+    } else {
+      const { name, value } = item;
+
+      setSortBy({ name, value });
+      toggleDropdownOpen();
+      onOptionSelect(item);
+    }
   };
 
   return (
     <DropdownContainer ref={wrapperRef}>
       <DropdownButton onClick={toggleDropdownOpen} className="dropbtn">
-        <div>{sortBy}</div>
+        <div>{sortBy.name}</div>
         {isOpen ? <FiChevronUp /> : <FiChevronDown />}
       </DropdownButton>
       <DropdownContent isOpen={isOpen}>
         {options.length
-          ? options.map((item) => (
-              <Option key={item} onClick={onOptionClick(item)}>
-                {item}
-              </Option>
-            ))
+          ? options.map((item) => {
+              if (typeof item === "string") {
+                return (
+                  <Option key={item} onClick={onOptionClick(item)}>
+                    {item}
+                  </Option>
+                );
+              }
+
+              const { name, key } = item;
+
+              return (
+                <Option key={key} onClick={onOptionClick(item)}>
+                  {name}
+                </Option>
+              );
+            })
           : null}
       </DropdownContent>
     </DropdownContainer>
@@ -49,11 +81,17 @@ const Dropdown = ({ options, onOptionSelect }) => {
 
 Dropdown.defaultProps = {
   options: [],
+  initialValue: {},
   onOptionSelect: () => {},
 };
 
 Dropdown.propTypes = {
   options: PropTypes.array,
+  initialValue: PropTypes.shape({
+    key: PropTypes.string,
+    value: PropTypes.object,
+    name: PropTypes.string,
+  }),
   onOptionSelect: PropTypes.func,
 };
 

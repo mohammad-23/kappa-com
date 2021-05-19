@@ -1,13 +1,13 @@
 import "../styles/index.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Fragment } from "react";
 import PropTypes from "prop-types";
 import { ToastContainer } from "react-toastify";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import { theme } from "../utils";
 import Auth from "../components/Auth";
+import ProductsController from "../components/ProductsController";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -17,21 +17,28 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const MyApp = ({ Component, pageProps }) => (
-  <Fragment>
+const MyApp = ({ Component, pageProps, router }) => (
+  <AppContainer>
     <GlobalStyle />
     <ToastContainer />
     <ThemeProvider theme={theme}>
       <Auth>
-        <Component {...pageProps} />
+        {router.pathname === "/products" ? (
+          <ProductsController>
+            <Component {...pageProps} />
+          </ProductsController>
+        ) : (
+          <Component {...pageProps} />
+        )}
       </Auth>
     </ThemeProvider>
-  </Fragment>
+  </AppContainer>
 );
 
 MyApp.defaultProps = {
   Component: () => {},
   pageProps: {},
+  router: {},
 };
 
 MyApp.propTypes = {
@@ -40,6 +47,14 @@ MyApp.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
   }),
+  router: PropTypes.shape({
+    pathname: PropTypes.string,
+  }),
 };
 
 export default MyApp;
+
+const AppContainer = styled.div`
+  height: 100%;
+  width: 100%;
+`;

@@ -15,15 +15,15 @@ class UISlider extends Component {
     this.state = {
       domain: domain,
       values: [min, max],
-      update: [min, max],
       reversed: false,
     };
   }
 
   static defaultProps = {
-    domain: [0, 100],
+    domain: [0, 0],
     min: 0,
-    max: 100,
+    max: 0,
+    maxPrice: 0,
     onValuesChange: () => {},
   };
 
@@ -31,6 +31,7 @@ class UISlider extends Component {
     domain: PropTypes.arrayOf(PropTypes.number),
     min: PropTypes.number,
     max: PropTypes.number,
+    maxPrice: PropTypes.number,
     onValuesChange: PropTypes.func,
   };
 
@@ -51,11 +52,11 @@ class UISlider extends Component {
     });
   };
 
-  onUpdate = (values) => {
-    this.setState({ values }, () => {
-      this.props.onValuesChange(values);
-    });
-  };
+  // onUpdate = (values) => {
+  // this.setState({ values }, () => {
+  //   this.props.onValuesChange(values);
+  // });
+  // };
 
   render() {
     const {
@@ -70,7 +71,7 @@ class UISlider extends Component {
           domain={domain}
           reversed={reversed}
           onChange={this.onChange}
-          onUpdate={this.onUpdate}
+          // onUpdate={this.onUpdate}
           values={values}
         >
           <Rail>

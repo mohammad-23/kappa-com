@@ -36,7 +36,8 @@ const Pagination = ({
         return [1];
 
       case currentPage === totalPages:
-        return range(currentPage - (pageNeighbours + 1), totalPages + 1);
+        // currentPage - (pageNeighbours + 1)
+        return range(totalPages - pageNeighbours, totalPages + 1);
 
       case currentPage > 1 && currentPage < totalPages:
         return range(
@@ -45,7 +46,7 @@ const Pagination = ({
         );
 
       default:
-        return range(1, 4);
+        return range(1, totalPages + 1);
     }
   };
 

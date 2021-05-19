@@ -1,5 +1,24 @@
 import styled, { keyframes } from "styled-components";
 
+const getSize = (size) => {
+  switch (size) {
+    case "sm":
+      return "2px";
+
+    case "md":
+      return "4px";
+
+    case "lg":
+      return "5px";
+
+    case "xl":
+      return "5px";
+
+    default:
+      return "5px";
+  }
+};
+
 const rotate360 = keyframes`
   from {
     transform: rotate(0deg);
@@ -13,14 +32,26 @@ const Spinner = styled.div`
   animation: ${rotate360} 1s linear infinite;
   transform: translateZ(0);
 
-  border-top: 2px solid
-    ${({ theme, disabled }) => (disabled ? theme.textSecondary : "#fff")};
-  border-right: 2px solid
-    ${({ theme, disabled }) => (disabled ? theme.textSecondary : "#fff")};
-  border-bottom: 2px solid
-    ${({ theme, disabled }) => (disabled ? theme.textSecondary : "#fff")};
-  border-left: 2px solid
-    ${({ theme, disabled }) => (disabled ? "#fff" : theme.textSecondary)};
+  border-top: ${({ theme, disabled, size }) =>
+    disabled
+      ? `${getSize(size)} solid ${theme.textSecondary}`
+      : `${getSize(size)} solid  #fff`};
+
+  border-right: ${({ theme, disabled, size }) =>
+    disabled
+      ? `${getSize(size)} solid ${theme.textSecondary}`
+      : `${getSize(size)} solid  #fff`};
+
+  border-bottom: ${({ theme, disabled, size }) =>
+    disabled
+      ? `${getSize(size)} solid ${theme.textSecondary}`
+      : `${getSize(size)} solid  #fff`};
+
+  border-left: ${({ theme, disabled, size }) =>
+    disabled
+      ? `${getSize(size)} solid #fff`
+      : `${getSize(size)} solid ${theme.textSecondary}`};
+
   background: transparent;
   border-radius: 50%;
 

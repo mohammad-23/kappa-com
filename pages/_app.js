@@ -1,5 +1,6 @@
 import "../styles/index.css";
 import "react-toastify/dist/ReactToastify.css";
+import "react-multi-carousel/lib/styles.css";
 
 import PropTypes from "prop-types";
 import { ToastContainer } from "react-toastify";

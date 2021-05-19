@@ -8,6 +8,7 @@ import Divider from "./Divider";
 import Tooltip from "./Tooltip";
 import Checkbox from "./Checkbox";
 import Dropdown from "./Dropdown";
+import ItemCard from "./ItemCard";
 import InputField from "./InputField";
 import Pagination from "./Pagination";
 
@@ -22,6 +23,7 @@ export {
   Tooltip,
   Checkbox,
   Dropdown,
+  ItemCard,
   InputField,
   Pagination,
 };

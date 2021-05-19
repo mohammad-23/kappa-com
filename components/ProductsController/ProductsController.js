@@ -28,45 +28,49 @@ const ProductsController = ({ children }) => {
   const router = useRouter();
 
   const fetchProducts = async () => {
-    try {
-      setLoading(true);
+    if (Object.keys(router.query).length) {
+      try {
+        setLoading(true);
+        console.log(router.query);
+        const { page, orderBy, range, category, variant } = router.query;
 
-      const { page, orderBy, range, category, variant } = router.query;
+        const currentOffset =
+          Number(page) > 1 ? (Number(page) - 1) * paginationState.limit : 0;
 
-      const currentOffset =
-        Number(page) > 1 ? (Number(page) - 1) * paginationState.limit : 0;
+        const { data } = await api.get("/products", {
+          params: {
+            limit: paginationState.limit,
+            offset: currentOffset,
+            orderBy: orderBy || "price-desc",
+            range,
+            category,
+            variant,
+          },
+        });
 
-      const { data } = await api.get("/products", {
-        params: {
-          limit: paginationState.limit,
-          offset: currentOffset,
-          orderBy: orderBy || "price-desc",
-          range,
-          category,
-          variant,
-        },
-      });
+        const maxPriceAvailable = Math.max(
+          ...data.totalProducts.map((item) => item.price.raw)
+        );
 
-      const maxPriceAvailable = Math.max(
-        ...data.totalProducts.map((item) => item.price.raw)
-      );
+        setCategories(data.categories);
 
-      setCategories(data.categories);
+        const filterTypes = getProductFiltersTypes(data.totalProducts);
+        setProductFilters(filterTypes);
 
-      const filterTypes = getProductFiltersTypes(data.totalProducts);
-      setProductFilters(filterTypes);
-
-      setProductsState({
-        products: data.products,
-        totalProducts: data.totalProducts,
-        total: data.total,
-        maxPrice:
-          maxPriceAvailable > 0 ? Math.ceil(maxPriceAvailable / 100) * 100 : 0,
-      });
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
+        setProductsState({
+          products: data.products,
+          totalProducts: data.totalProducts,
+          total: data.total,
+          maxPrice:
+            maxPriceAvailable > 0
+              ? Math.ceil(maxPriceAvailable / 100) * 100
+              : 0,
+        });
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

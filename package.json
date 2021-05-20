@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ./",
-    "lint-fix": "eslint ./ --fix",
+    "lint": "eslint . --debug --format=pretty",
+    "lint:write": "eslint . --debug --format=pretty --fix",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "dependencies": {
@@ -48,12 +48,15 @@
       "react-app/jest"
     ]
   },
-  "lint-staged": {
-    "*.js": "eslint"
-  },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && pretty-quick --staged"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "npm run format",
+      "git add"
+    ]
   }
 }

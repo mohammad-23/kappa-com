@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint . --debug --format=pretty",
     "lint:write": "eslint . --debug --format=pretty --fix",
-    "prettier": "prettier '**/*.{*{js,json},babelrc,eslintrc,prettierrc,stylelintrc}' --write "
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -55,8 +55,7 @@
   },
   "lint-staged": {
     "src/**/*.js": [
-      "npm run lint:write",
-      "npm run prettier",
+      "npm run format",
       "git add"
     ]
   }

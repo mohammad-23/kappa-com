@@ -1,4 +1,8 @@
-body {
+body,
+html,
+#__next {
+  height: 100%;
+  width: 100%;
   font-family: "Poppins", sans-serif;
   color: #25282b;
 }
@@ -7,5 +11,12 @@ button {
   font-family: "PT Sans Caption", sans-serif;
   font-weight: 700;
   font-size: 14px;
+  text-transform: uppercase;
+}
+
+span {
+  font-family: "PT Sans Caption", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
   text-transform: uppercase;
 }

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { BenefitsData } from "../../../config/HomeConfig";
+
 const Benefit = () => (
   <BenefitContainer>
     {BenefitsData.map((BenefitDataItem) => (

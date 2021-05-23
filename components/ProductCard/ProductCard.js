@@ -2,16 +2,18 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import Link from "next/link";
 
-const ProductCard = ({ name, price, media, _id }) => (
+const ProductCard = ({ name, price, media, _id, hideInfo }) => (
   <Link href={`/products/${_id}`}>
     <Container>
       <Card>
         <StyledImage src={media.source} />
       </Card>
-      <div>
-        <ProductName>{name}</ProductName>
-        <ProductPrice>{price.formatted_with_symbol}</ProductPrice>
-      </div>
+      {hideInfo ? null : (
+        <div>
+          <ProductName>{name}</ProductName>
+          <ProductPrice>{price.formatted_with_symbol}</ProductPrice>
+        </div>
+      )}
     </Container>
   </Link>
 );
@@ -21,6 +23,7 @@ ProductCard.defaultProps = {
   name: "",
   price: {},
   media: {},
+  hideInfo: false,
 };
 
 ProductCard.propTypes = {
@@ -32,6 +35,7 @@ ProductCard.propTypes = {
   media: PropTypes.shape({
     source: PropTypes.string,
   }),
+  hideInfo: PropTypes.bool,
 };
 
 export default ProductCard;

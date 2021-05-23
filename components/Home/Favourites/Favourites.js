@@ -26,10 +26,11 @@ const responsive = {
   },
 };
 
-const ButtonGroup = ({ next, previous, _, ...rest }) => {
+const ButtonGroup = ({ next, previous, ...rest }) => {
   const {
     carouselState: { currentSlide },
   } = rest;
+
   return (
     <CarouselButtonGroup>
       <UIButtonLeft
@@ -56,10 +57,8 @@ const ButtonGroup = ({ next, previous, _, ...rest }) => {
 
 const Favourites = () => (
   <FavoritesContainer>
-    <FavouritesTitleContainer>
-      <FavouritesTitle>{FavouritesData.title}</FavouritesTitle>
-    </FavouritesTitleContainer>
-    <Divider />
+    <FavouritesTitle>{FavouritesData.title}</FavouritesTitle>
+    <Divider margin="0.5em 1.5em" />
     <CarouselContainer>
       <Carousel
         responsive={responsive}
@@ -86,29 +85,27 @@ ButtonGroup.propTypes = {
   previous: PropTypes.func,
 };
 
-const FavouritesTitleContainer = styled.div`
-  display: flex;
-`;
-
 const CarouselContainer = styled.div`
   margin-left: 2rem;
 `;
+
 const CarouselButtonGroup = styled.div`
   transform: translateY(-256px);
+
   .disable {
     display: none;
   }
 `;
 
 const FavouritesTitle = styled.h1`
-  margin-left: 1.5rem;
-  padding: 0;
+  padding: 0.5em 1.5em 0;
+  margin: 0;
   align-items: flex-start;
 `;
 
 const FavoritesContainer = styled.div`
-  height: 40rem;
   width: 100%;
+  padding: 0 2em;
 `;
 
 const UIButtonLeft = styled(UIBUtton)`

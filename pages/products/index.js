@@ -4,11 +4,10 @@ import { useRouter } from "next/router";
 
 import Header from "../../components/Header";
 import ProductCard from "../../components/ProductCard";
-import { Dropdown, Pagination, Grid } from "../../styles/UIKit";
+import mediaQuerySize from "../../utils/mediaQuerySize";
 import ProductFilter from "../../components/ProductFilter";
 import ProductsContext from "../../contexts/ProductsContext";
-import mediaQuerySize from "../../utils/mediaQuerySize";
-import Spinner from "../../styles/UIKit/Spinner";
+import { Dropdown, Pagination, Grid, Spinner } from "../../styles/UIKit";
 
 const sortOptions = [
   {

@@ -99,6 +99,8 @@ export default Header;
 const HeaderContainer = styled.div`
   height: 6.5rem;
   width: 100%;
+  background-color: ${(props) => props.theme.backgroundLight};
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
 `;
 
 const HeaderBase = styled.div`

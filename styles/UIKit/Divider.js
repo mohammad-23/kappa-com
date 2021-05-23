@@ -4,7 +4,7 @@ const Divider = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
-  margin: 2.5rem 1.5rem 1.5rem;
+  margin: ${(props) => props.margin || "2.5rem 1.5rem 1.5rem"};
   color: ${(props) => props.theme.textSecondary};
 
   :before {

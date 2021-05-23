@@ -95,6 +95,7 @@ const Button = styled.button`
       : `1px solid ${props.theme.primary}`};
   outline: none;
   border-radius: 4px;
+  cursor: pointer;
 
   /* add hover effect for disabled also */
   :hover {

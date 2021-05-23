@@ -61,8 +61,8 @@ class Auth extends Component {
       const { data } = await api.get("/user");
 
       if (data.user) {
-        this.setState({ user: data.user }, () => {
-          this.fetchUserCart();
+        this.setState({ user: data.user }, async () => {
+          await this.fetchUserCart();
         });
       }
     } catch (error) {
@@ -202,6 +202,7 @@ class Auth extends Component {
           authToken,
           loadingUserInfo,
           signUp: this.signUp,
+          updateCart: this.updateCart,
           isUserRegistered: this.isUserRegistered,
           signInWithEmailPassword: this.signInWithEmailPassword,
         }}

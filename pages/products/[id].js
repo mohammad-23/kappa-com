@@ -101,10 +101,9 @@ const Product = ({ data, error }) => {
     try {
       setLoading(true);
 
-      await api.put("/cart", { product });
+      const { data: cart } = await api.put("/cart", { product });
 
-      await updateCart(product);
-      toast.success("Added to cart!");
+      await updateCart(cart.data);
     } catch (error) {
       toast.error(error.message);
     } finally {

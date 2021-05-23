@@ -16,8 +16,9 @@ class Auth extends Component {
   };
 
   state = {
-    authToken: "",
+    cart: {},
     user: null,
+    authToken: "",
     verifyingAuth: true,
     loadingUserInfo: false,
   };
@@ -42,11 +43,11 @@ class Auth extends Component {
     }
   }
 
-  fetchUserInfo = () => {
+  fetchUserInfo = async () => {
     const { authToken } = this.state;
 
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_BASE_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
       headers: {
         authorization: authToken,
       },
@@ -57,10 +58,12 @@ class Auth extends Component {
         loadingUserInfo: true,
       });
 
-      const { data } = api.get("/user");
+      const { data } = await api.get("/user");
 
       if (data.user) {
-        this.setState({ user: data.user });
+        this.setState({ user: data.user }, async () => {
+          await this.fetchUserCart();
+        });
       }
     } catch (error) {
       const errorMessage = get(
@@ -107,7 +110,10 @@ class Auth extends Component {
       });
 
       if (data) {
-        this.setState({ authToken: data.token, user: data.user });
+        this.setState({ authToken: data.token, user: data.user }, () => {
+          localStorage.setItem("authToken", data.token);
+          this.fetchUserCart();
+        });
 
         toast.success("Login Successful!");
 
@@ -157,8 +163,32 @@ class Auth extends Component {
     }
   };
 
+  fetchUserCart = async () => {
+    try {
+      const { data } = await this.api.get("/cart", {
+        headers: {
+          authorization: this.state.authToken,
+        },
+      });
+
+      this.setState({ cart: data.cart });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  updateCart = async (cart) => {
+    this.setState({ cart });
+  };
+
   render() {
-    const { authToken, user, verifyingAuth, loadingUserInfo } = this.state;
+    const {
+      authToken,
+      user,
+      verifyingAuth,
+      loadingUserInfo,
+      cart,
+    } = this.state;
 
     if (verifyingAuth) {
       return <div>Loading....</div>;
@@ -168,9 +198,11 @@ class Auth extends Component {
       <AuthContext.Provider
         value={{
           user,
+          cart,
           authToken,
           loadingUserInfo,
           signUp: this.signUp,
+          updateCart: this.updateCart,
           isUserRegistered: this.isUserRegistered,
           signInWithEmailPassword: this.signInWithEmailPassword,
         }}

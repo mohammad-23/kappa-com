@@ -5,8 +5,17 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 import useOutsideAlerter from "../../utils/useOutsideAlerter";
 
-const Dropdown = ({ options, onOptionSelect, initialValue }) => {
-  const [sortBy, setSortBy] = useState({ name: "", value: "" });
+const Dropdown = ({
+  options,
+  onOptionSelect,
+  initialValue,
+  placeholder,
+  hasInitialValue,
+}) => {
+  const [sortBy, setSortBy] = useState({
+    name: "",
+    value: "",
+  });
 
   const wrapperRef = useRef(null);
   const { isOpen, setIsOpen } = useOutsideAlerter(wrapperRef);
@@ -24,7 +33,7 @@ const Dropdown = ({ options, onOptionSelect, initialValue }) => {
   };
 
   useEffect(() => {
-    if (options.length) {
+    if (options.length && hasInitialValue) {
       setInitialSort();
     }
   }, []);
@@ -36,7 +45,7 @@ const Dropdown = ({ options, onOptionSelect, initialValue }) => {
 
   const onOptionClick = (item) => () => {
     if (typeof options === "string") {
-      setSortBy(item);
+      setSortBy({ name: item, value: item });
       toggleDropdownOpen();
       onOptionSelect(item);
     } else {
@@ -51,7 +60,7 @@ const Dropdown = ({ options, onOptionSelect, initialValue }) => {
   return (
     <DropdownContainer ref={wrapperRef}>
       <DropdownButton onClick={toggleDropdownOpen} className="dropbtn">
-        <div>{sortBy.name}</div>
+        <div>{sortBy.name.length ? sortBy.name : placeholder}</div>
         {isOpen ? <FiChevronUp /> : <FiChevronDown />}
       </DropdownButton>
       <DropdownContent isOpen={isOpen}>
@@ -81,12 +90,16 @@ const Dropdown = ({ options, onOptionSelect, initialValue }) => {
 
 Dropdown.defaultProps = {
   options: [],
+  placeholder: "",
   initialValue: {},
+  hasInitialValue: true,
   onOptionSelect: () => {},
 };
 
 Dropdown.propTypes = {
   options: PropTypes.array,
+  placeholder: PropTypes.string,
+  hasInitialValue: PropTypes.bool,
   initialValue: PropTypes.shape({
     key: PropTypes.string,
     value: PropTypes.object,

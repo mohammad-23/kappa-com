@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FiUser, FiShoppingBag, FiMenu, FiSearch } from "react-icons/fi";
 
 import { Logo } from "../../assets/icons";
-import { Input, Tooltip } from "../../styles/UIKit";
+import { Input, TextField, Tooltip } from "../../styles/UIKit";
 import LoginModal from "../LoginModal/LoginModal";
 import AuthContext from "../../contexts/AuthContext";
 import {
@@ -30,7 +30,7 @@ const userMenu = [
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { user } = useContext(AuthContext);
+  const { user, cart } = useContext(AuthContext);
 
   const renderCategories = () =>
     primaryCategories.map((category) => (
@@ -70,7 +70,21 @@ const Header = () => {
       <Tooltip content={() => renderMenuContent()} direction="bottom-right">
         <FiUser size={24} style={{ marginTop: "10px" }} />
       </Tooltip>
-      <FiShoppingBag size={24} />
+      <CartContainer>
+        <FiShoppingBag size={24} />
+        {cart.items?.length ? (
+          <CartAmount>
+            <TextField
+              color="primary"
+              size="0.75em"
+              margin="0 2px 0 0"
+              weight={700}
+            >
+              {cart.items.length}
+            </TextField>
+          </CartAmount>
+        ) : null}
+      </CartContainer>
       <FiMenu size={24} />
     </IconsContainer>
   );
@@ -99,6 +113,8 @@ export default Header;
 const HeaderContainer = styled.div`
   height: 6.5rem;
   width: 100%;
+  background-color: ${(props) => props.theme.backgroundLight};
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
 `;
 
 const HeaderBase = styled.div`
@@ -177,4 +193,24 @@ const MenuItem = styled.div`
   :hover {
     color: ${(props) => props.theme.textSecondary};
   }
+`;
+
+const CartContainer = styled.div`
+  position: relative;
+  display: flex;
+`;
+
+const CartAmount = styled.div`
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  background-color: ${(props) => props.theme.background};
 `;

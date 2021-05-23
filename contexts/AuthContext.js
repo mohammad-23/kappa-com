@@ -8,10 +8,12 @@ const AuthContext = React.createContext({
   signOut: null,
   isUserRegistered: null,
   user: null,
+  cart: null,
   updateUserAndToken: null,
   updateToken: null,
   loadingUserInfo: null,
   updateUserInfo: null,
+  updateCart: null,
 });
 
 export default AuthContext;

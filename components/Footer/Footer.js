@@ -24,16 +24,16 @@ const Footer = () => (
   <FooterContainer>
     <TopFooter>
       {FooterData.map((footerItem, index) => (
-        <ListContainer key={footerItem.key}>
+        <div key={footerItem.key}>
           <UnorderdListItem key={index}>
             <ListHeading key={footerItem.title}>{footerItem.title}</ListHeading>
             {footerItem.links.map((link) => (
               <ListItem key={link}> {link}</ListItem>
             ))}
           </UnorderdListItem>
-        </ListContainer>
+        </div>
       ))}
-      <ListContainer>
+      <div>
         <UnorderdListItem>
           <ListHeading>{GET_IN_THE_KNOW}</ListHeading>
           <ListItem>
@@ -49,9 +49,9 @@ const Footer = () => (
             </IconContainer>
           </ListItem>
         </UnorderdListItem>
-      </ListContainer>
+      </div>
     </TopFooter>
-    <Divider />
+    <Divider margin="1em" />
     <BottomFooter>
       <CopyRightsContainer>
         <p> {COPYRIGHT_TEXT}</p>
@@ -73,7 +73,6 @@ export default Footer;
 
 const TopFooter = styled.div`
   display: flex;
-  height: 20.56rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -82,12 +81,7 @@ const TopFooter = styled.div`
 
 const FooterContainer = styled.div`
   width: 100%;
-  height: 30.56rem;
   background-color: ${(props) => props.theme.footerBackground};
-`;
-
-const ListContainer = styled.div`
-  padding-top: 4rem;
 `;
 
 const ListHeading = styled.p`

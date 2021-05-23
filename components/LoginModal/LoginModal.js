@@ -15,12 +15,9 @@ const LoginModal = ({ closeModal, isOpen }) => {
 
   const form = useRef();
 
-  const {
-    authToken,
-    isUserRegistered,
-    signInWithEmailPassword,
-    signUp,
-  } = useContext(AuthContext);
+  const { isUserRegistered, signInWithEmailPassword, signUp } = useContext(
+    AuthContext
+  );
 
   useEffect(() => {
     setUser(null);
@@ -97,10 +94,6 @@ const LoginModal = ({ closeModal, isOpen }) => {
       setAuthStep("LOGIN");
     }
   };
-
-  if (authToken) {
-    resetStateAndClose();
-  }
 
   return (
     <ModalContainer isOpen={isOpen} onClick={resetStateAndClose}>

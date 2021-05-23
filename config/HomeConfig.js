@@ -1,3 +1,4 @@
+import React from "react";
 import {
   FaFingerprint,
   FaLifeRing,
@@ -115,10 +116,10 @@ const HotDealsData = {
   title: "HOT DEALS",
   linkText: "VIEW ALL",
   OfferText: (
-    <span>
+    <React.Fragment>
       {" "}
       WINTER SALES <br /> 50 % OFF
-    </span>
+    </React.Fragment>
   ),
   buttonText: "SHOP NOW",
   items: [

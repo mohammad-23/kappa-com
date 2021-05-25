@@ -16,7 +16,14 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { COUNTRIES } from "../utils/constants";
 import AuthContext from "../contexts/AuthContext";
-import { Button, Checkbox, Input, Modal, TextField } from "../styles/UIKit";
+import {
+  Button,
+  Checkbox,
+  Divider,
+  Input,
+  Modal,
+  TextField,
+} from "../styles/UIKit";
 
 const getAddressFormConfig = () => [
   {
@@ -82,12 +89,14 @@ const AddressModal = ({
       </Modal.Header>
       <Modal.Content style={{ margin: "0 0 2em" }}>
         <Button
+          size="sm"
           inverted
           onClick={toggleContentState}
           style={{ margin: "0 0 2em" }}
         >
           {showForm ? "Add New Address" : "Choose a current Address"}
         </Button>
+        <Divider margin="0.5em 1.5em 1.25em" color="background" />
         {(() => {
           if (showForm) {
             return user.addresses.map(({ phone_number, ...address }) => {

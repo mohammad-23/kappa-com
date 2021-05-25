@@ -68,8 +68,10 @@ const Button = styled.button`
   }}
 
   color: ${(props) => {
+    const buttonTheme = props.type || "primary";
+
     if (props.inverted) {
-      return props.theme.primary;
+      return props.theme[buttonTheme];
     }
 
     if (props.basic) {
@@ -79,6 +81,8 @@ const Button = styled.button`
     return "#fff";
   }};
   background-color: ${(props) => {
+    const buttonTheme = props.type || "primary";
+
     if (props.inverted) {
       return "#fff";
     }
@@ -87,12 +91,17 @@ const Button = styled.button`
       return props.theme.background;
     }
 
-    return props.theme.primary;
+    return props.theme[buttonTheme];
   }};
-  border: ${(props) =>
-    props.basic
-      ? `1px solid ${props.theme.background}`
-      : `1px solid ${props.theme.primary}`};
+  border: ${(props) => {
+    const buttonTheme = props.type || "primary";
+
+    if (props.basic) {
+      return `1px solid ${props.theme.background}`;
+    }
+
+    return `1px solid ${props.theme[buttonTheme]}`;
+  }};
   outline: none;
   border-radius: 4px;
   cursor: pointer;
@@ -101,27 +110,31 @@ const Button = styled.button`
   :hover {
     color: ${(props) => (props.basic ? props.theme.textPrimary : "#fff")};
     background-color: ${(props) => {
+      const buttonTheme = props.type || "primary";
+
       if (props.inverted) {
-        return props.theme.primary;
+        return props.theme[buttonTheme];
       }
 
       if (props.basic) {
         return props.theme.backgroundLight;
       }
 
-      return props.theme.primaryHover;
+      return props.theme[`${buttonTheme}Hover`];
     }};
 
     border: ${(props) => {
+      const buttonTheme = props.type || "primary";
+
       if (props.inverted) {
-        return `1px solid ${props.theme.primary}`;
+        return `1px solid ${props.theme[buttonTheme]}`;
       }
 
       if (props.basic) {
         return `1px solid ${props.theme.background}`;
       }
 
-      return `1px solid ${props.theme.primaryHover}`;
+      return `1px solid ${props.theme[`${buttonTheme}Hover`]}`;
     }};
   }
 

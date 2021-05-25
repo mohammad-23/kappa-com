@@ -9,9 +9,6 @@ const AuthContext = React.createContext({
   isUserRegistered: null,
   user: null,
   cart: null,
-  updateUserAndToken: null,
-  updateToken: null,
-  loadingUserInfo: null,
   updateUserInfo: null,
   updateCart: null,
 });

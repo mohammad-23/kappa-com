@@ -12,7 +12,7 @@ const Dropdown = ({
   placeholder,
   hasInitialValue,
 }) => {
-  const [sortBy, setSortBy] = useState({
+  const [selected, setSelected] = useState({
     name: "",
     value: "",
   });
@@ -22,12 +22,12 @@ const Dropdown = ({
 
   const setInitialSort = () => {
     if (Object.keys(initialValue).length) {
-      setSortBy({ name: initialValue.name, value: initialValue.value });
+      setSelected({ name: initialValue.name, value: initialValue.value });
     } else {
       if (typeof options[0] === "string") {
-        setSortBy({ name: options[0], value: options[0] });
+        setSelected({ name: options[0], value: options[0] });
       } else {
-        setSortBy({ name: options[0].name, value: options[0].value });
+        setSelected({ name: options[0].name, value: options[0].value });
       }
     }
   };
@@ -44,14 +44,14 @@ const Dropdown = ({
   );
 
   const onOptionClick = (item) => () => {
-    if (typeof options === "string") {
-      setSortBy({ name: item, value: item });
+    if (typeof options[0] === "string") {
+      setSelected({ name: item, value: item });
       toggleDropdownOpen();
       onOptionSelect(item);
     } else {
       const { name, value } = item;
 
-      setSortBy({ name, value });
+      setSelected({ name, value });
       toggleDropdownOpen();
       onOptionSelect(item);
     }
@@ -60,7 +60,7 @@ const Dropdown = ({
   return (
     <DropdownContainer ref={wrapperRef}>
       <DropdownButton onClick={toggleDropdownOpen} className="dropbtn">
-        <div>{sortBy.name.length ? sortBy.name : placeholder}</div>
+        <div>{selected.name.length ? selected.name : placeholder}</div>
         {isOpen ? <FiChevronUp /> : <FiChevronDown />}
       </DropdownButton>
       <DropdownContent isOpen={isOpen}>
@@ -144,6 +144,7 @@ const Option = styled.div`
   color: black;
   padding: 0.75em 1em;
   text-decoration: none;
+  text-align: left;
 
   :hover {
     background-color: ${(props) => props.theme.background};

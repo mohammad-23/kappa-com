@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import UIBUtton from "../../styles/UIKit/Button";
-import PaymentCompleteConfig from "../../config/PaymentCompleteConfig";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import UIBUtton from "../styles/UIKit/Button";
+import PaymentCompleteConfig from "../config/PaymentCompleteConfig";
 
 export default class PaymentStatus extends Component {
   static async getInitialProps({ query }) {

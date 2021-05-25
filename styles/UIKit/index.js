@@ -1,5 +1,6 @@
 import Grid from "./Grid";
 import Tabs from "./Tabs";
+import Modal from "./Modal";
 import Input from "./Input";
 import Label from "./Label";
 import Button from "./Button";
@@ -19,6 +20,7 @@ import StarRating from "./StarRating";
 export {
   Grid,
   Tabs,
+  Modal,
   Input,
   Label,
   Button,

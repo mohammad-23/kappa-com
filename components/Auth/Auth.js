@@ -20,7 +20,7 @@ class Auth extends Component {
     user: null,
     authToken: "",
     verifyingAuth: true,
-    loadingUserInfo: false,
+    loadingUserInfo: true,
   };
 
   api = axios.create({
@@ -163,6 +163,10 @@ class Auth extends Component {
     }
   };
 
+  updateUserInfo = (updatedUser) => {
+    this.setState({ user: updatedUser });
+  };
+
   fetchUserCart = async () => {
     try {
       const { data } = await this.api.get("/cart", {
@@ -190,7 +194,7 @@ class Auth extends Component {
       cart,
     } = this.state;
 
-    if (verifyingAuth) {
+    if (verifyingAuth || loadingUserInfo) {
       return <div>Loading....</div>;
     }
 
@@ -203,6 +207,7 @@ class Auth extends Component {
           loadingUserInfo,
           signUp: this.signUp,
           updateCart: this.updateCart,
+          updateUserInfo: this.updateUserInfo,
           isUserRegistered: this.isUserRegistered,
           signInWithEmailPassword: this.signInWithEmailPassword,
         }}

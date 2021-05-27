@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
-import useOutsideAlerter from "../../utils/useOutsideAlerter";
+import { useOutsideAlerter } from "../../utils";
 
 const Dropdown = ({
   options,

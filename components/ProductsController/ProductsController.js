@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { uniq } from "lodash";
 
-import useApi from "../../utils/useApi";
+import { useApi } from "../../utils";
 import ProductsContext from "../../contexts/ProductsContext";
 
 const ProductsController = ({ children }) => {

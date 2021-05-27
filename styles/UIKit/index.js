@@ -1,6 +1,7 @@
 import Grid from "./Grid";
 import Tabs from "./Tabs";
 import Modal from "./Modal";
+import Table from "./Table";
 import Input from "./Input";
 import Label from "./Label";
 import Button from "./Button";
@@ -21,6 +22,7 @@ export {
   Grid,
   Tabs,
   Modal,
+  Table,
   Input,
   Label,
   Button,

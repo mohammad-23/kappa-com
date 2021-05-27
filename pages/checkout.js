@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
-import useApi from "../utils/useApi";
+import { useApi } from "../utils";
 import Form from "../components/Form";
 import Footer from "../components/Footer";
 import Header from "../components/Header";

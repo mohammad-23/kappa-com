@@ -13,6 +13,7 @@ import {
   WOMEN,
   KIDS,
   LOGIN,
+  LOGOUT,
   ACCOUNT_DETAILS,
   WISHLIST,
   ORDER_HISTORY,
@@ -21,16 +22,16 @@ import {
 const primaryCategories = [MEN, WOMEN, KIDS];
 
 const userMenu = [
-  { key: null, name: LOGIN },
-  { key: "user", name: ACCOUNT_DETAILS },
+  { key: "user-details", name: ACCOUNT_DETAILS },
   { key: "wishlist", name: WISHLIST },
-  { key: "user", name: ORDER_HISTORY },
+  { key: "orders", name: ORDER_HISTORY },
+  { key: "logout", name: LOGOUT },
 ];
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { user, cart } = useContext(AuthContext);
+  const { user, cart, signOut } = useContext(AuthContext);
 
   const renderCategories = () =>
     primaryCategories.map((category) => (
@@ -44,16 +45,22 @@ const Header = () => {
     </SearchContainer>
   );
 
-  const renderMenuContent = () =>
-    userMenu.map((item) => {
-      if (!item.key) {
-        if (!user) {
-          return (
-            <MenuItem key={item.name} onClick={() => setIsModalOpen(true)}>
-              {item.name}
-            </MenuItem>
-          );
-        }
+  const renderMenuContent = () => {
+    if (!user) {
+      return (
+        <MenuItem key={LOGIN} onClick={() => setIsModalOpen(true)}>
+          {LOGIN}
+        </MenuItem>
+      );
+    }
+
+    return userMenu.map((item) => {
+      if (!item.key && Object.keys(user).length) {
+        return (
+          <MenuItem key={item.name} onClick={signOut}>
+            {item.name}
+          </MenuItem>
+        );
       } else {
         return (
           <Link key={item.name} href={`/${item.key}`}>
@@ -61,9 +68,8 @@ const Header = () => {
           </Link>
         );
       }
-
-      return null;
     });
+  };
 
   const renderIcons = () => (
     <IconsContainer>
@@ -75,7 +81,7 @@ const Header = () => {
         {cart.items?.length ? (
           <CartAmount>
             <TextField
-              color="primary"
+              color="background"
               size="0.75em"
               margin="0 2px 0 0"
               weight={700}
@@ -212,5 +218,6 @@ const CartAmount = styled.div`
   align-items: center;
   justify-content: center;
   opacity: 0.9;
-  background-color: ${(props) => props.theme.background};
+  background-color: ${(props) => props.theme.primary};
+  color: ${(props) => props.theme.primary};
 `;

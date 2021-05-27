@@ -10,6 +10,8 @@ export const KIDS = "KIDS";
 
 export const LOGIN = "Login";
 
+export const LOGOUT = "Logout";
+
 export const ACCOUNT_DETAILS = "Account Details";
 
 export const WISHLIST = "Wishlist";
@@ -283,4 +285,46 @@ export const COUNTRIES = [
   "Yemen",
   "Zambia",
   "Zimbabwe",
+];
+
+export const changePasswordConfig = [
+  {
+    id: "currentPassword",
+    type: "password",
+    label: "Current Password",
+    required: true,
+  },
+  {
+    id: "newPassword",
+    type: "password",
+    label: "New Password",
+    required: true,
+  },
+  {
+    id: "confirm_password",
+    type: "password",
+    label: "Re-enter New Password",
+    required: true,
+  },
+];
+
+export const userInfoConfig = [
+  {
+    id: "email",
+    type: "email",
+    label: "Email",
+    required: true,
+  },
+  {
+    id: "name",
+    type: "string",
+    label: "Name",
+    required: true,
+  },
+  {
+    id: "number",
+    type: "number",
+    label: "Phone Number",
+    required: true,
+  },
 ];

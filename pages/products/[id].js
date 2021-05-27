@@ -8,7 +8,7 @@ import Carousel from "react-multi-carousel";
 import styled, { css } from "styled-components";
 import { BiChevronLeft, BiChevronRight, BiHeart } from "react-icons/bi";
 
-import useApi from "../../utils/useApi";
+import { useApi } from "../../utils";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import ProductCard from "../../components/ProductCard";

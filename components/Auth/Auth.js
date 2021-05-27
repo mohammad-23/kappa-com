@@ -163,6 +163,12 @@ class Auth extends Component {
     }
   };
 
+  signOut = () => {
+    this.setState({ user: null }, () => {
+      localStorage.removeItem("authToken");
+    });
+  };
+
   updateUserInfo = (updatedUser) => {
     this.setState({ user: updatedUser });
   };
@@ -206,6 +212,7 @@ class Auth extends Component {
           authToken,
           loadingUserInfo,
           signUp: this.signUp,
+          signOut: this.signOut,
           updateCart: this.updateCart,
           updateUserInfo: this.updateUserInfo,
           isUserRegistered: this.isUserRegistered,

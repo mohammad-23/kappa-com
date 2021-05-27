@@ -2,9 +2,9 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
+import { mediaQuerySize } from "../../utils";
 import Header from "../../components/Header";
 import ProductCard from "../../components/ProductCard";
-import mediaQuerySize from "../../utils/mediaQuerySize";
 import ProductFilter from "../../components/ProductFilter";
 import ProductsContext from "../../contexts/ProductsContext";
 import { Dropdown, Pagination, Grid, Spinner } from "../../styles/UIKit";

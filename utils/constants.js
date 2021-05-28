@@ -287,6 +287,16 @@ export const COUNTRIES = [
   "Zimbabwe",
 ];
 
+// USER CONFIG
+
+export const CHANGE_PASSWORD = "Change Password";
+
+export const EDIT_PROFILE = "Edit Account Details";
+
+export const EDIT_ADDRESS = "Edit Address";
+
+export const ADD_NEW_ADDRESS = "Add New Address";
+
 export const changePasswordConfig = [
   {
     id: "currentPassword",
@@ -308,6 +318,33 @@ export const changePasswordConfig = [
   },
 ];
 
+export const userLoginConfig = [
+  {
+    id: "email",
+    type: "email",
+    label: "Email",
+    required: true,
+  },
+  {
+    id: "password",
+    type: "password",
+    label: "Password",
+    required: true,
+  },
+  {
+    id: "name",
+    type: "string",
+    label: "Name",
+    required: true,
+  },
+  {
+    id: "number",
+    type: "number",
+    label: "Phone Number",
+    required: true,
+  },
+];
+
 export const userInfoConfig = [
   {
     id: "email",
@@ -324,6 +361,47 @@ export const userInfoConfig = [
   {
     id: "number",
     type: "number",
+    label: "Phone Number",
+    required: true,
+  },
+];
+
+export const addressConfig = [
+  {
+    id: "country",
+    type: "select",
+    label: "Country",
+    required: true,
+    placeholder: "Select Country",
+    options: COUNTRIES,
+  },
+  {
+    id: "address",
+    type: "string",
+    label: "Street Address",
+    required: true,
+  },
+  {
+    id: "city",
+    type: "string",
+    label: "Town / City",
+    required: true,
+  },
+  {
+    id: "state",
+    type: "string",
+    label: "State / County",
+    required: true,
+  },
+  {
+    id: "pin_code",
+    type: "string",
+    label: "Postcode / ZIP",
+    required: true,
+  },
+  {
+    id: "phone_number",
+    type: "string",
     label: "Phone Number",
     required: true,
   },

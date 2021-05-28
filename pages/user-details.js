@@ -11,8 +11,16 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import AuthContext from "../contexts/AuthContext";
 import { getNormalizedAddress, useApi } from "../utils";
-import { userInfoConfig, changePasswordConfig } from "../utils/constants";
 import { Button, Spinner, Table, TextField, Modal } from "../styles/UIKit";
+import {
+  EDIT_ADDRESS,
+  EDIT_PROFILE,
+  addressConfig,
+  userInfoConfig,
+  CHANGE_PASSWORD,
+  ADD_NEW_ADDRESS,
+  changePasswordConfig,
+} from "../utils/constants";
 
 const { TableBody, TableCell, TableHead, TableHeaderCell, TableRow } = Table;
 
@@ -63,52 +71,33 @@ const EditUserInfoModal = ({ isModalOpen, closeModal }) => {
   );
 };
 
-const ChangePasswordModal = ({ isModalOpen, closeModal }) => {
-  const [loading, setLoading] = useState(null);
-
-  const api = useApi();
+const EditModal = ({
+  config,
+  header,
+  loading,
+  closeModal,
+  isModalOpen,
+  onFormSubmit,
+}) => {
   const form = useRef();
 
-  const onFormSubmit = async () => {
-    const {
-      currentPassword,
-      newPassword,
-      confirm_password,
-    } = form.current.getData();
+  const onSubmit = () => {
+    const data = form.current.getData();
 
-    if (newPassword !== confirm_password) {
-      toast.error("Passwords don't match!");
-    } else {
-      try {
-        setLoading(false);
-
-        await api.post("/users/change-password", {
-          currentPassword,
-          newPassword,
-        });
-
-        setLoading(false);
-        toast.success("Password changed successfully!");
-        closeModal();
-      } catch (error) {
-        setLoading(false);
-        toast.error(error.response?.data.message || error.message);
-      }
-    }
+    onFormSubmit(data);
   };
 
   return (
     <Modal isOpen={isModalOpen} closeModal={closeModal}>
-      <Modal.Header style={{ textAlign: "center" }}>
-        Change Password
-      </Modal.Header>
+      <Modal.Header style={{ textAlign: "center" }}>{header}</Modal.Header>
       <Modal.Content style={{ margin: "0 0 2em" }}>
-        <Form
-          ref={form}
-          onSubmit={onFormSubmit}
-          config={changePasswordConfig}
-        />
-        <Button onClick={onFormSubmit} disabled={loading} loading={loading}>
+        <Form ref={form} onSubmit={onSubmit} config={config} />
+        <Button
+          size="sm"
+          onClick={onSubmit}
+          disabled={loading}
+          loading={loading}
+        >
           Save
         </Button>
       </Modal.Content>
@@ -117,15 +106,27 @@ const ChangePasswordModal = ({ isModalOpen, closeModal }) => {
 };
 
 const UserDetails = () => {
-  const [loading, setLoading] = useState(null);
-  const [modalState, setModalState] = useState(null);
+  const [loading, setLoading] = useState({ type: null, value: null });
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    config: [],
+    type: null,
+  });
 
   const api = useApi();
   const { user, updateUserInfo } = useContext(AuthContext);
 
+  const shouldShowLoader = ({ type, value }) => {
+    if (loading.type === type && loading.value === value) {
+      return true;
+    }
+
+    return false;
+  };
+
   const makeAddressDefault = async (address) => {
     try {
-      setLoading(address._id);
+      setLoading({ type: "tag", value: address._id });
 
       const response = await api.put("/users", {
         address: { ...address, is_default: true },
@@ -135,12 +136,106 @@ const UserDetails = () => {
     } catch (error) {
       toast.error("An error occurred! Please try again.");
     } finally {
-      setLoading(null);
+      setLoading({ type: null, value: null });
+    }
+  };
+
+  const removeAddress = (address) => async () => {
+    try {
+      setLoading({ type: "action", value: address._id });
+
+      const { data } = await api.delete(`/users/address/${address._id}`);
+
+      updateUserInfo(data.user);
+    } catch (error) {
+      toast.error(error.response?.data.message || error.message);
+    } finally {
+      setLoading({ type: null, value: null });
+    }
+  };
+
+  const editAddress = async (address) => {
+    try {
+      setLoading({ type: "address", value: address._id });
+
+      const { data } = await api.put("/users", {
+        address: { ...address, _id: modalState.id },
+      });
+
+      updateUserInfo(data.user);
+      setLoading({ type: null, value: null });
+      closeModal();
+    } catch (error) {
+      toast.error(error.response?.data.message || error.message);
+      setLoading({ type: null, value: null });
+    }
+  };
+
+  const editUserInfo = async (formData) => {
+    try {
+      setLoading({ type: "user" });
+      const response = await api.put("/users", formData);
+
+      updateUserInfo(response.data.user);
+
+      setLoading({ type: null, value: null });
+      toast.success(response.data.message);
+      closeModal();
+    } catch (error) {
+      setLoading({ type: null, value: null });
+      toast.error(error.response?.data.message || error.message);
+    }
+  };
+
+  const changePassword = async ({
+    currentPassword,
+    newPassword,
+    confirm_password,
+  }) => {
+    if (newPassword !== confirm_password) {
+      toast.error("Passwords don't match!");
+    } else {
+      try {
+        setLoading({ type: "password" });
+
+        await api.post("/users/change-password", {
+          currentPassword,
+          newPassword,
+        });
+
+        setLoading({ type: null, value: null });
+        toast.success("Password changed successfully!");
+        closeModal();
+      } catch (error) {
+        setLoading({ type: null, value: null });
+        toast.error(error.response?.data.message || error.message);
+      }
+    }
+  };
+
+  const addNewAddress = async (data) => {
+    try {
+      setLoading({ type: "new-address" });
+
+      const response = await api.put("/users", {
+        address: { ...data },
+      });
+
+      updateUserInfo(response.data.user);
+      closeModal();
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading({ type: null, value: null });
     }
   };
 
   const closeModal = () => {
-    setModalState(null);
+    setModalState({
+      isOpen: false,
+      config: [],
+      type: null,
+    });
   };
 
   const renderTag = (address) => {
@@ -149,7 +244,7 @@ const UserDetails = () => {
     if (is_default) {
       return (
         <DefaultAddress>
-          <TextField margin="0" color="white" weight="bold">
+          <TextField size="0.9em" margin="0" color="white" weight="bold">
             Default
           </TextField>
         </DefaultAddress>
@@ -158,18 +253,19 @@ const UserDetails = () => {
 
     return (
       <TextField
+        size="0.9em"
         margin="0"
         weight="bold"
         color="success"
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", width: "fit-content" }}
         onClick={() => {
           makeAddressDefault(address);
         }}
       >
-        {loading === address._id ? (
-          <LoaderContainer style={{ margin: "0 0 0 3em" }}>
+        {shouldShowLoader({ type: "tag", value: address._id }) ? (
+          <div style={{ margin: "0 0 0 3em" }}>
             <Spinner />
-          </LoaderContainer>
+          </div>
         ) : (
           "Make Default"
         )}
@@ -179,12 +275,43 @@ const UserDetails = () => {
 
   const renderAddressActions = (address) => (
     <ActionsContainer>
-      <TextField weight="bold" margin="0" color="primary">
-        EDIT
-      </TextField>
-      <TextField weight="bold" margin="0" color="failure">
-        REMOVE
-      </TextField>
+      {shouldShowLoader({ type: "action", value: address._id }) ? (
+        <div style={{ margin: "0 0 0 3em" }}>
+          <Spinner />
+        </div>
+      ) : (
+        <React.Fragment>
+          <TextField
+            size="0.9em"
+            weight="bold"
+            margin="0"
+            color="primary"
+            onClick={() => {
+              setModalState({
+                isOpen: true,
+                config: addressConfig.map((item) => ({
+                  ...item,
+                  initialValue: address[item.id],
+                })),
+                header: EDIT_ADDRESS,
+                type: "address",
+                id: address._id,
+              });
+            }}
+          >
+            EDIT
+          </TextField>
+          <TextField
+            size="0.9em"
+            weight="bold"
+            margin="0"
+            color="failure"
+            onClick={removeAddress(address)}
+          >
+            REMOVE
+          </TextField>
+        </React.Fragment>
+      )}
     </ActionsContainer>
   );
 
@@ -206,7 +333,7 @@ const UserDetails = () => {
             </TableCell>
             <TableCell>{item.phone_number}</TableCell>
             <TableCell>{renderTag(item)}</TableCell>
-            <TableCell>{renderAddressActions()}</TableCell>
+            <TableCell>{renderAddressActions(item)}</TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -241,10 +368,10 @@ const UserDetails = () => {
               {user.name}
             </TextField>
             <UserSecondaryDetails>
-              <TextField size="0.75em" margin="0" weight="700">
+              <TextField size="0.9em" margin="0" weight="700">
                 {user.email}
               </TextField>
-              <TextField size="0.75em" margin="0" weight="700">
+              <TextField size="0.9em" margin="0" weight="700">
                 {user.number}
               </TextField>
             </UserSecondaryDetails>
@@ -255,7 +382,12 @@ const UserDetails = () => {
               size="sm"
               type="secondary"
               onClick={() => {
-                setModalState("change-password");
+                setModalState({
+                  isOpen: true,
+                  type: "password",
+                  config: changePasswordConfig,
+                  header: CHANGE_PASSWORD,
+                });
               }}
             >
               Change Password
@@ -263,7 +395,15 @@ const UserDetails = () => {
             <Button
               size="sm"
               onClick={() => {
-                setModalState("edit-user");
+                setModalState({
+                  isOpen: true,
+                  type: "user",
+                  config: userInfoConfig.map((item) => ({
+                    ...item,
+                    initialValue: user[item.id],
+                  })),
+                  header: EDIT_PROFILE,
+                });
               }}
             >
               Edit Profile
@@ -271,37 +411,49 @@ const UserDetails = () => {
           </UserActions>
         </ProfileHeader>
         <AddressesContainer>
-          <TextField weight="bold" size="1.5em">
-            Addresses
-          </TextField>
+          <AddressHeader>
+            <TextField weight="bold" size="1.5em">
+              Addresses
+            </TextField>
+            <Button
+              type="secondary"
+              size="sm"
+              onClick={() => {
+                setModalState({
+                  isOpen: true,
+                  type: "new-address",
+                  config: addressConfig,
+                  header: ADD_NEW_ADDRESS,
+                });
+              }}
+            >
+              {ADD_NEW_ADDRESS}
+            </Button>
+          </AddressHeader>
           {renderAddresses()}
         </AddressesContainer>
       </Content>
       <Footer />
-      {modalState === "edit-user" ? (
-        <EditUserInfoModal
-          isModalOpen={modalState === "edit-user"}
-          closeModal={closeModal}
-        />
-      ) : null}
-      {modalState === "change-password" ? (
-        <ChangePasswordModal
-          isModalOpen={modalState === "change-password"}
-          closeModal={closeModal}
-        />
-      ) : null}
+      <EditModal
+        isModalOpen={modalState.isOpen}
+        onFormSubmit={(formData) => {
+          if (modalState.type === "user") {
+            editUserInfo(formData);
+          } else if (modalState.type === "password") {
+            changePassword(formData);
+          } else if (modalState.type === "address") {
+            editAddress(formData);
+          } else if (modalState.type === "new-address") {
+            addNewAddress(formData);
+          }
+        }}
+        loading={loading.type === modalState.type}
+        header={modalState.header}
+        config={modalState.config}
+        closeModal={closeModal}
+      />
     </React.Fragment>
   );
-};
-
-ChangePasswordModal.defaultProps = {
-  isModalOpen: false,
-  closeModal: () => {},
-};
-
-ChangePasswordModal.propTypes = {
-  isModalOpen: PropTypes.bool,
-  closeModal: PropTypes.func,
 };
 
 EditUserInfoModal.defaultProps = {
@@ -312,6 +464,24 @@ EditUserInfoModal.defaultProps = {
 EditUserInfoModal.propTypes = {
   isModalOpen: PropTypes.bool,
   closeModal: PropTypes.func,
+};
+
+EditModal.defaultProps = {
+  config: [],
+  loading: false,
+  isModalOpen: false,
+  header: "Edit User",
+  closeModal: () => {},
+  onFormSubmit: () => {},
+};
+
+EditModal.propTypes = {
+  config: PropTypes.array,
+  loading: PropTypes.bool,
+  header: PropTypes.string,
+  closeModal: PropTypes.func,
+  isModalOpen: PropTypes.bool,
+  onFormSubmit: PropTypes.func,
 };
 
 export default UserDetails;
@@ -396,6 +566,13 @@ const DefaultAddress = styled.div`
 const ActionsContainer = styled.div`
   ${flexStyle};
   gap: 1em;
+
+  & > * {
+    cursor: pointer;
+  }
 `;
 
-const LoaderContainer = styled.div``;
+const AddressHeader = styled.div`
+  ${flexStyle};
+  justify-content: space-between;
+`;

@@ -1,155 +1,16 @@
-/* eslint-disable camelcase */
-import React, {
-  useState,
-  useContext,
-  useRef,
-  useEffect,
-  useCallback,
-} from "react";
-import PropTypes from "prop-types";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
 import { useApi } from "../utils";
-import Form from "../components/Form";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { COUNTRIES } from "../utils/constants";
 import AuthContext from "../contexts/AuthContext";
-import {
-  Button,
-  Checkbox,
-  Divider,
-  Input,
-  Modal,
-  TextField,
-} from "../styles/UIKit";
-
-const getAddressFormConfig = () => [
-  {
-    id: "country",
-    type: "select",
-    label: "Country",
-    required: true,
-    placeholder: "Select Country",
-    options: COUNTRIES,
-  },
-  {
-    id: "address",
-    type: "string",
-    label: "Street Address",
-    required: true,
-  },
-  {
-    id: "city",
-    type: "string",
-    label: "Town / City",
-    required: true,
-  },
-  {
-    id: "state",
-    type: "string",
-    label: "State / County",
-    required: true,
-  },
-  {
-    id: "pin_code",
-    type: "string",
-    label: "Postcode / ZIP",
-    required: true,
-  },
-  {
-    id: "phone_number",
-    type: "string",
-    label: "Phone Number",
-    required: true,
-  },
-];
-
-const AddressModal = ({
-  isModalOpen,
-  closeModal,
-  addNewAddress,
-  loading,
-  form,
-  chooseAddress,
-}) => {
-  const [showForm, setShowForm] = useState(false);
-
-  const { user } = useContext(AuthContext);
-
-  const toggleContentState = useCallback(() =>
-    setShowForm((prevState) => !prevState)
-  );
-
-  return (
-    <Modal isOpen={isModalOpen.isOpen} closeModal={closeModal}>
-      <Modal.Header style={{ textAlign: "center" }}>
-        Add New Address
-      </Modal.Header>
-      <Modal.Content style={{ margin: "0 0 2em" }}>
-        <Button
-          size="sm"
-          inverted
-          onClick={toggleContentState}
-          style={{ margin: "0 0 2em" }}
-        >
-          {showForm ? "Add New Address" : "Choose a current Address"}
-        </Button>
-        <Divider margin="0.5em 1.5em 1.25em" color="background" />
-        {(() => {
-          if (showForm) {
-            return user.addresses.map(({ phone_number, ...address }) => {
-              const addressValues = [];
-
-              for (const item in address) {
-                if (!["_id", "is_default"].includes(item)) {
-                  addressValues.push(address[item]);
-                }
-              }
-
-              return (
-                <AddressesContainer
-                  key={address._id}
-                  onClick={() => {
-                    chooseAddress({ phone_number, ...address });
-                  }}
-                >
-                  <Card margin="1em auto" align="left">
-                    {addressValues.join(", ")}{" "}
-                    <TextField>Phone Number: {phone_number}</TextField>
-                  </Card>
-                </AddressesContainer>
-              );
-            });
-          }
-
-          return (
-            <React.Fragment>
-              <Form
-                ref={form}
-                config={getAddressFormConfig()}
-                onSubmit={addNewAddress}
-              />
-              <Button
-                size="sm"
-                onClick={addNewAddress}
-                disabled={loading}
-                loading={loading}
-              >
-                Continue
-              </Button>
-            </React.Fragment>
-          );
-        })()}
-      </Modal.Content>
-    </Modal>
-  );
-};
+import AddNewAddress from "../components/AddNewAddress";
+import { Button, Checkbox, Input, TextField } from "../styles/UIKit";
 
 const Checkout = () => {
   const api = useApi();
-  const form = useRef();
   const { cart, user, updateUserInfo } = useContext(AuthContext);
 
   const [loading, setLoading] = useState(false);
@@ -189,11 +50,9 @@ const Checkout = () => {
     return addressValues.join(", ");
   }, [chosenAddress]);
 
-  const addNewAddress = async () => {
+  const addNewAddress = async (data) => {
     try {
       setLoading(true);
-
-      const data = form.current.getData();
 
       const response = await api.put("/users", {
         address: { ...data },
@@ -391,7 +250,7 @@ const Checkout = () => {
         </Content>
       </ContentContainer>
       <Footer />
-      <AddressModal
+      <AddNewAddress
         loading={loading}
         closeModal={closeModal}
         isModalOpen={isModalOpen}
@@ -403,26 +262,6 @@ const Checkout = () => {
       />
     </React.Fragment>
   );
-};
-
-AddressModal.defaultProps = {
-  isModalOpen: false,
-  closeModal: () => {},
-  addNewAddress: () => {},
-  chooseAddress: () => {},
-  loading: false,
-  form: null,
-};
-
-AddressModal.propTypes = {
-  isModalOpen: PropTypes.shape({
-    isOpen: PropTypes.bool,
-  }),
-  closeModal: PropTypes.func,
-  addNewAddress: PropTypes.func,
-  chooseAddress: PropTypes.func,
-  loading: PropTypes.bool,
-  form: PropTypes.shape({}),
 };
 
 export default Checkout;
@@ -489,14 +328,4 @@ const OrderColumn = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 1em;
-`;
-
-const AddressesContainer = styled.div`
-  cursor: pointer;
-
-  & > div {
-    :hover {
-      opacity: 0.7;
-    }
-  }
 `;

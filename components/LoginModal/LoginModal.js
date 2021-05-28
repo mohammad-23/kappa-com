@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Form from "../Form";
 import AuthContext from "../../contexts/AuthContext";
 import { Button, Divider } from "../../styles/UIKit";
-import { userInfoConfig } from "../../utils/constants";
+import { userLoginConfig } from "../../utils/constants";
 
 const LoginModal = ({ closeModal, isOpen }) => {
   const [user, setUser] = useState(null);
@@ -163,7 +163,7 @@ const LoginModal = ({ closeModal, isOpen }) => {
               <React.Fragment>
                 <Form
                   ref={form}
-                  config={userInfoConfig}
+                  config={userLoginConfig}
                   onSubmit={registerUser}
                 />
                 <Button

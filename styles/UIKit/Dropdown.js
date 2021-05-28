@@ -102,7 +102,7 @@ Dropdown.propTypes = {
   hasInitialValue: PropTypes.bool,
   initialValue: PropTypes.shape({
     key: PropTypes.string,
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     name: PropTypes.string,
   }),
   onOptionSelect: PropTypes.func,

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 
-import omitProps from "../../utils/omitProps";
+import { omitProps } from "../../utils";
 
 const TabContext = React.createContext({
   activeTab: null,

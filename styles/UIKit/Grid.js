@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import mediaQuerySize from "../../utils/mediaQuerySize";
+import { mediaQuerySize } from "../../utils";
 
 const Grid = styled.div`
   display: grid;

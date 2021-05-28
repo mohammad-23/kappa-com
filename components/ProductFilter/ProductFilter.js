@@ -51,7 +51,7 @@ const SliderFilter = ({ title }) => {
         onValuesChange={onValuesChange}
         maxPrice={maxPrice}
       />
-      <span>Range:</span>
+      <span style={{ fontSize: "12px" }}>Range:</span>
       <SliderRange>
         <StyledInput
           type="number"

@@ -101,7 +101,11 @@ class Form extends Component {
               onOptionSelect={(value) => {
                 this.updateField(item.id, value);
               }}
-              hasInitialValue={false}
+              initialValue={{
+                name: item.initialValue,
+                value: item.initialValue,
+              }}
+              hasInitialValue={!!item.initialValue || false}
               placeholder={item.placeholder}
             />
           </InputField>

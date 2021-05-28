@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
-import useOutsideAlerter from "../../utils/useOutsideAlerter";
+import { useOutsideAlerter } from "../../utils";
 
 const Dropdown = ({
   options,
@@ -102,7 +102,7 @@ Dropdown.propTypes = {
   hasInitialValue: PropTypes.bool,
   initialValue: PropTypes.shape({
     key: PropTypes.string,
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     name: PropTypes.string,
   }),
   onOptionSelect: PropTypes.func,

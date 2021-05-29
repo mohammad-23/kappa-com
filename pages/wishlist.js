@@ -10,7 +10,7 @@ import { TextField, Grid, Pagination } from "../styles/UIKit";
 const Wishlist = () => {
   const [pagination, setPagination] = useState({
     currentPage: 1,
-    limit: 2,
+    limit: 8,
   });
 
   const { user, addProductToCart } = useContext(AuthContext);
@@ -77,7 +77,7 @@ const Wishlist = () => {
         </Grid>
       </ContentContainer>
       <Pagination
-        totalPages={Math.ceil(user.wishlist.length / 2)}
+        totalPages={Math.ceil(user.wishlist.length / pagination.limit)}
         currentPage={pagination.currentPage}
         siblingRange={1}
         onPageClick={onPageClick}

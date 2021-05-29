@@ -200,13 +200,13 @@ class Auth extends Component {
     }
   };
 
-  addProductToCart = async (data, quantitySelected) => {
-    const product = { id: data._id, quantity: quantitySelected };
+  addProductToCart = async (product, quantitySelected) => {
+    const productData = { id: product._id, quantity: quantitySelected };
 
     try {
-      const { data: cart } = await this.api.put(
+      const { data } = await this.api.put(
         "/cart",
-        { product },
+        { product: productData },
         {
           headers: {
             authorization: this.state.authToken,
@@ -214,9 +214,9 @@ class Auth extends Component {
         }
       );
 
-      await this.deleteWishlistItem(data._id);
+      await this.deleteWishlistItem(product._id);
 
-      this.setState({ cart: cart.data });
+      this.setState({ cart: data.cart });
     } catch (error) {
       toast.error(error.message);
     }

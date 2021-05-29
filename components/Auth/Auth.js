@@ -174,7 +174,7 @@ class Auth extends Component {
   updateUserInfo = async (updatedData) => {
     try {
       const response = await this.api.put("/users", {
-        address: { ...updatedData },
+        updatedData,
         headers: {
           authorization: this.state.authToken,
         },
@@ -223,19 +223,25 @@ class Auth extends Component {
   };
 
   deleteWishlistItem = async (productId) => {
-    try {
-      const { data: user } = await this.api.delete(
-        `/users/wishlist/${productId}`,
-        {
-          headers: {
-            authorization: this.state.authToken,
-          },
-        }
-      );
+    const isProductInWishlist = this.state.user.wishlist.find(
+      (item) => item._id === productId
+    );
 
-      this.setState({ user: user.user });
-    } catch (error) {
-      toast.error(error.message);
+    if (isProductInWishlist) {
+      try {
+        const { data: user } = await this.api.delete(
+          `/users/wishlist/${productId}`,
+          {
+            headers: {
+              authorization: this.state.authToken,
+            },
+          }
+        );
+
+        this.setState({ user: user.user });
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
   };
 

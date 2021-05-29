@@ -1,44 +1,63 @@
 import styled from "styled-components";
+import Link from "next/link";
 
-import { ItemCard, Button, Divider } from "../../../styles/UIKit";
-import { HotDealsData } from "../../../config/HomeConfig";
+import { Button, Divider } from "../../../styles/UIKit";
+import { HeaderData, HotDealsData } from "../../../config/HomeConfig";
+import { useEffect, useState } from "react";
+import useApi from "../../../utils/useApi";
+import ProductCard from "../../ProductCard";
 
-const HotDeals = () => (
-  <HotDealsContainer>
-    <HotDealsTitleContainer>
-      <HotDealsTitle>{HotDealsData.title}</HotDealsTitle>
-      <ViewAllLink>{HotDealsData.linkText} </ViewAllLink>
-    </HotDealsTitleContainer>
-    <Divider />
-    <HotDealsContent>
-      <HotDealsOfferContainer>
-        <HotDealsOfferTitle>{HotDealsData.OfferText}</HotDealsOfferTitle>
-        <HotDealsCounterContainer>
-          <HotDealsCounterSquare>
-            <SquareCounter>100</SquareCounter>
-            <SquareTime>DAYS</SquareTime>
-          </HotDealsCounterSquare>
-          <HotDealsCounterSquare>
-            <SquareCounter>23</SquareCounter>
-            <SquareTime>HOURS</SquareTime>
-          </HotDealsCounterSquare>
-          <HotDealsCounterSquare>
-            <SquareCounter>36</SquareCounter>
-            <SquareTime>MINS</SquareTime>
-          </HotDealsCounterSquare>
-          <HotDealsCounterSquare>
-            <SquareCounter>45</SquareCounter>
-            <SquareTime>SECS</SquareTime>
-          </HotDealsCounterSquare>
-        </HotDealsCounterContainer>
-        <ShopNowButton inverted> {HotDealsData.buttonText}</ShopNowButton>
-      </HotDealsOfferContainer>
-      {HotDealsData.items.map((item) => (
-        <ItemCard key={item.id} itemName={item.name} itemPrice={item.price} />
-      ))}
-    </HotDealsContent>
-  </HotDealsContainer>
-);
+const HotDeals = () => {
+  const [hotDeals, setHotDeals] = useState([]);
+  const api = useApi();
+
+  useEffect(() => {
+    api.get("/hot-deals").then(({ data }) => {
+      setHotDeals(data);
+    });
+  }, []);
+
+  return (
+    <HotDealsContainer>
+      <HotDealsTitleContainer>
+        <HotDealsTitle>{HotDealsData.title}</HotDealsTitle>
+        <ViewAllLink>
+          {" "}
+          <Link href={HeaderData.men.url}>VIEW ALL</Link>{" "}
+        </ViewAllLink>
+      </HotDealsTitleContainer>
+      <Divider />
+      <HotDealsContent>
+        <HotDealsOfferContainer>
+          <HotDealsOfferTitle>{HotDealsData.OfferText}</HotDealsOfferTitle>
+          <HotDealsCounterContainer>
+            <HotDealsCounterSquare>
+              <SquareCounter>100</SquareCounter>
+              <SquareTime>DAYS</SquareTime>
+            </HotDealsCounterSquare>
+            <HotDealsCounterSquare>
+              <SquareCounter>23</SquareCounter>
+              <SquareTime>HOURS</SquareTime>
+            </HotDealsCounterSquare>
+            <HotDealsCounterSquare>
+              <SquareCounter>36</SquareCounter>
+              <SquareTime>MINS</SquareTime>
+            </HotDealsCounterSquare>
+            <HotDealsCounterSquare>
+              <SquareCounter>45</SquareCounter>
+              <SquareTime>SECS</SquareTime>
+            </HotDealsCounterSquare>
+          </HotDealsCounterContainer>
+          <ShopNowButton inverted> {HotDealsData.buttonText}</ShopNowButton>
+        </HotDealsOfferContainer>
+
+        {hotDeals.slice(0, 3).map((hotDeal) => (
+          <ProductCard key={hotDeal._id} {...hotDeal} />
+        ))}
+      </HotDealsContent>
+    </HotDealsContainer>
+  );
+};
 
 export default HotDeals;
 
@@ -54,17 +73,25 @@ const HotDealsTitle = styled.h1`
 
 const HotDealsTitleContainer = styled.div`
   display: flex;
-  flex-direction: row;
 `;
 
-const ViewAllLink = styled.a`
-  color: ${(props) => props.theme.primary};
-  font-size: 1rem;
+const ViewAllLink = styled.div`
   margin-left: auto;
-  font-weight: bold;
   cursor: pointer;
   margin-top: 2rem;
   margin-right: 1rem;
+  a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: ${(props) => props.theme.textPrimary};
+
+    :hover {
+      color: ${(props) => props.theme.textSecondary};
+    }
+  }
 `;
 
 const HotDealsOfferTitle = styled.h1`
@@ -74,8 +101,8 @@ const HotDealsOfferTitle = styled.h1`
 
 const HotDealsContent = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: space-around;
+  align-items: center;
 `;
 
 const HotDealsOfferContainer = styled.div`

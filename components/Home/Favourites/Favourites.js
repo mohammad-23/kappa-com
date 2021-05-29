@@ -1,10 +1,13 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Carousel from "react-multi-carousel";
 
-import { Divider, ItemCard } from "../../../styles/UIKit";
+import { Divider } from "../../../styles/UIKit";
 import UIBUtton from "../../../styles/UIKit/Button";
 import { FavouritesData } from "../../../config/HomeConfig";
+import useApi from "../../../utils/useApi";
+import ProductCard from "../../ProductCard";
 
 const responsive = {
   superLargeDesktop: {
@@ -26,10 +29,11 @@ const responsive = {
   },
 };
 
-const ButtonGroup = ({ next, previous, _, ...rest }) => {
+const ButtonGroup = ({ next, previous, favLength, ...rest }) => {
   const {
     carouselState: { currentSlide },
   } = rest;
+
   return (
     <CarouselButtonGroup>
       <UIButtonLeft
@@ -43,9 +47,7 @@ const ButtonGroup = ({ next, previous, _, ...rest }) => {
       <UIButtonRight
         inverted
         onClick={() => next()}
-        className={
-          currentSlide === FavouritesData.items.length / 2 ? "disable" : ""
-        }
+        className={currentSlide === favLength / 2 ? "disable" : ""}
       >
         {" "}
         &gt;{" "}
@@ -54,36 +56,44 @@ const ButtonGroup = ({ next, previous, _, ...rest }) => {
   );
 };
 
-const Favourites = () => (
-  <FavoritesContainer>
-    <FavouritesTitleContainer>
-      <FavouritesTitle>{FavouritesData.title}</FavouritesTitle>
-    </FavouritesTitleContainer>
-    <Divider />
-    <CarouselContainer>
-      <Carousel
-        responsive={responsive}
-        arrows={false}
-        renderButtonGroupOutside={true}
-        customButtonGroup={<ButtonGroup />}
-      >
-        {FavouritesData.items.map((favouriteItem) => (
-          <ItemCard
-            key={favouriteItem.id}
-            itemName={favouriteItem.name}
-            itemPrice={favouriteItem.price}
-          />
-        ))}
-      </Carousel>
-    </CarouselContainer>
-  </FavoritesContainer>
-);
+const Favourites = () => {
+  const [favourites, setFavourites] = useState([]);
+  const api = useApi();
+
+  useEffect(() => {
+    api.get("/favourites").then(({ data }) => {
+      setFavourites(data);
+    });
+  }, []);
+
+  return (
+    <FavoritesContainer>
+      <FavouritesTitleContainer>
+        <FavouritesTitle>{FavouritesData.title}</FavouritesTitle>
+      </FavouritesTitleContainer>
+      <Divider />
+      <CarouselContainer>
+        <Carousel
+          responsive={responsive}
+          arrows={false}
+          renderButtonGroupOutside={true}
+          customButtonGroup={<ButtonGroup favLength={favourites.length} />}
+        >
+          {favourites.map((favouriteItem) => (
+            <ProductCard key={favouriteItem._id} {...favouriteItem} />
+          ))}
+        </Carousel>
+      </CarouselContainer>
+    </FavoritesContainer>
+  );
+};
 
 export default Favourites;
 
 ButtonGroup.propTypes = {
   next: PropTypes.func,
   previous: PropTypes.func,
+  favLength: PropTypes.number,
 };
 
 const FavouritesTitleContainer = styled.div`
@@ -92,6 +102,13 @@ const FavouritesTitleContainer = styled.div`
 
 const CarouselContainer = styled.div`
   margin-left: 2rem;
+  .react-multi-carousel-list {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    height: 32rem;
+  }
 `;
 const CarouselButtonGroup = styled.div`
   transform: translateY(-256px);
@@ -107,7 +124,7 @@ const FavouritesTitle = styled.h1`
 `;
 
 const FavoritesContainer = styled.div`
-  height: 40rem;
+  min-height: 42rem;
   width: 100%;
 `;
 

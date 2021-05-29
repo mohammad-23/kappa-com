@@ -55,6 +55,7 @@ const ProductsController = ({ children }) => {
         setCategories(data.categories);
 
         const filterTypes = getProductFiltersTypes(data.totalProducts);
+
         setProductFilters(filterTypes);
 
         setProductsState({
@@ -81,6 +82,7 @@ const ProductsController = ({ children }) => {
       const { variant_groups } = item;
 
       const names = variant_groups.map((item) => item.name);
+
       variantNames = [...variantNames, ...names];
     }
 

@@ -6,6 +6,12 @@ import {
   FaShippingFast,
 } from "react-icons/fa";
 
+const HeaderData = {
+  men: { url: "/products?category=men" },
+  women: { url: "/products?category=women" },
+  kids: { url: "/products?category=kids" },
+};
+
 const HeroData = [
   {
     id: 1,
@@ -141,4 +147,4 @@ const HotDealsData = {
   ],
 };
 
-export { HeroData, BenefitsData, FavouritesData, HotDealsData };
+export { HeroData, BenefitsData, FavouritesData, HotDealsData, HeaderData };

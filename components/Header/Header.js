@@ -17,6 +17,7 @@ import {
   WISHLIST,
   ORDER_HISTORY,
 } from "../../utils/constants";
+import { HeaderData } from "../../config/HomeConfig";
 
 const primaryCategories = [MEN, WOMEN, KIDS];
 
@@ -34,7 +35,9 @@ const Header = () => {
 
   const renderCategories = () =>
     primaryCategories.map((category) => (
-      <CategoryContainer key={category}>{category}</CategoryContainer>
+      <CategoryContainer key={category}>
+        <Link href={HeaderData[category.toLowerCase()].url}>{category}</Link>
+      </CategoryContainer>
     ));
 
   const renderSearchInput = () => (
@@ -70,7 +73,11 @@ const Header = () => {
       <Tooltip content={() => renderMenuContent()} direction="bottom-right">
         <FiUser size={24} style={{ marginTop: "10px" }} />
       </Tooltip>
-      <FiShoppingBag size={24} />
+      <Link href={"/cart"}>
+        <span>
+          <FiShoppingBag size={24} />
+        </span>
+      </Link>
       <FiMenu size={24} />
     </IconsContainer>
   );
@@ -79,7 +86,11 @@ const Header = () => {
     <HeaderContainer>
       <HeaderBase>{HEADER_BASE_TEXT}</HeaderBase>
       <HeaderSections>
-        <Logo style={{ margin: "auto 0" }} />
+        <Link href="/">
+          <LogoContainer>
+            <Logo style={{ margin: "auto 0" }} />
+          </LogoContainer>
+        </Link>
         <Categories>{renderCategories()}</Categories>
         {renderSearchInput()}
         {renderIcons()}
@@ -99,6 +110,10 @@ export default Header;
 const HeaderContainer = styled.div`
   height: 6.5rem;
   width: 100%;
+`;
+
+const LogoContainer = styled.span`
+  cursor: pointer;
 `;
 
 const HeaderBase = styled.div`
@@ -126,14 +141,17 @@ const Categories = styled.div`
 `;
 
 const CategoryContainer = styled.div`
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  text-transform: uppercase;
-  color: ${(props) => props.theme.textPrimary};
+  a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: ${(props) => props.theme.textPrimary};
 
-  :hover {
-    color: ${(props) => props.theme.textSecondary};
+    :hover {
+      color: ${(props) => props.theme.textSecondary};
+    }
   }
 `;
 

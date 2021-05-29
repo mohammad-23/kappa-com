@@ -37,12 +37,16 @@ ProductCard.propTypes = {
 export default ProductCard;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  margin: 0 0 1em 0;
 `;
 
 const Card = styled.div`
-  height: 300px;
+  height: 21rem;
+  width: 14.5rem;
   cursor: pointer;
   border-radius: 4px;
   background-color: ${(props) => props.theme.background};
@@ -50,15 +54,15 @@ const Card = styled.div`
 `;
 
 const StyledImage = styled.img`
-  height: 100%;
-  width: 100%;
+  height: 21rem;
+  width: 14.5rem;
 `;
 
 const ProductName = styled.div`
-  font-size: 16px;
+  font-size: 0.9rem;
   margin: 0.25em auto;
   cursor: pointer;
-  width: fit-content;
+  width: 14.5rem;
 
   :hover {
     color: ${(props) => props.theme.textSecondary};
@@ -71,6 +75,7 @@ const ProductPrice = styled.div`
   cursor: pointer;
   width: fit-content;
   margin: auto;
+  font-size: 0.9rem;
 
   :hover {
     color: ${(props) => props.theme.primaryHover};

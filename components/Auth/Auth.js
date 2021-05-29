@@ -46,7 +46,7 @@ class Auth extends Component {
     const { authToken } = this.state;
 
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_BASE_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
       headers: {
         authorization: authToken,
       },

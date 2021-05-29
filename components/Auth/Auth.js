@@ -4,7 +4,9 @@ import axios from "axios";
 import get from "lodash/get";
 import { toast } from "react-toastify";
 
+import { Spinner } from "../../styles/UIKit";
 import AuthContext from "../../contexts/AuthContext";
+import styled from "styled-components";
 
 class Auth extends Component {
   static defaultProps = {
@@ -169,8 +171,19 @@ class Auth extends Component {
     });
   };
 
-  updateUserInfo = (updatedUser) => {
-    this.setState({ user: updatedUser });
+  updateUserInfo = async (updatedData) => {
+    try {
+      const response = await this.api.put("/users", {
+        updatedData,
+        headers: {
+          authorization: this.state.authToken,
+        },
+      });
+
+      this.setState({ user: response.data.user });
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   fetchUserCart = async () => {
@@ -187,8 +200,49 @@ class Auth extends Component {
     }
   };
 
-  updateCart = async (cart) => {
-    this.setState({ cart });
+  addProductToCart = async (product, quantitySelected) => {
+    const productData = { id: product._id, quantity: quantitySelected };
+
+    try {
+      const { data } = await this.api.put(
+        "/cart",
+        { product: productData },
+        {
+          headers: {
+            authorization: this.state.authToken,
+          },
+        }
+      );
+
+      await this.deleteWishlistItem(product._id);
+
+      this.setState({ cart: data.cart });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  deleteWishlistItem = async (productId) => {
+    const isProductInWishlist = this.state.user.wishlist.find(
+      (item) => item._id === productId
+    );
+
+    if (isProductInWishlist) {
+      try {
+        const { data: user } = await this.api.delete(
+          `/users/wishlist/${productId}`,
+          {
+            headers: {
+              authorization: this.state.authToken,
+            },
+          }
+        );
+
+        this.setState({ user: user.user });
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
   };
 
   render() {
@@ -201,7 +255,11 @@ class Auth extends Component {
     } = this.state;
 
     if (verifyingAuth || loadingUserInfo) {
-      return <div>Loading....</div>;
+      return (
+        <LoaderContainer>
+          <Spinner /> Loading
+        </LoaderContainer>
+      );
     }
 
     return (
@@ -213,9 +271,10 @@ class Auth extends Component {
           loadingUserInfo,
           signUp: this.signUp,
           signOut: this.signOut,
-          updateCart: this.updateCart,
           updateUserInfo: this.updateUserInfo,
+          addProductToCart: this.addProductToCart,
           isUserRegistered: this.isUserRegistered,
+          deleteWishlistItem: this.deleteWishlistItem,
           signInWithEmailPassword: this.signInWithEmailPassword,
         }}
       >
@@ -226,3 +285,12 @@ class Auth extends Component {
 }
 
 export default Auth;
+
+const LoaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 1em;
+`;

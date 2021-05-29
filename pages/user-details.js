@@ -28,7 +28,6 @@ const EditUserInfoModal = ({ isModalOpen, closeModal }) => {
   const [loading, setLoading] = useState(null);
 
   const form = useRef();
-  const api = useApi();
   const { user, updateUserInfo } = useContext(AuthContext);
 
   const onFormSubmit = async () => {
@@ -36,12 +35,10 @@ const EditUserInfoModal = ({ isModalOpen, closeModal }) => {
 
     try {
       setLoading(true);
-      const response = await api.put("/users", data);
 
-      updateUserInfo(response.data.user);
+      await updateUserInfo(data);
 
       setLoading(false);
-      toast.success(response.data.message);
       closeModal();
     } catch (error) {
       setLoading(false);
@@ -128,11 +125,7 @@ const UserDetails = () => {
     try {
       setLoading({ type: "tag", value: address._id });
 
-      const response = await api.put("/users", {
-        address: { ...address, is_default: true },
-      });
-
-      updateUserInfo(response.data.user);
+      await updateUserInfo({ address: { ...address, is_default: true } });
     } catch (error) {
       toast.error("An error occurred! Please try again.");
     } finally {
@@ -158,11 +151,8 @@ const UserDetails = () => {
     try {
       setLoading({ type: "address", value: address._id });
 
-      const { data } = await api.put("/users", {
-        address: { ...address, _id: modalState.id },
-      });
+      await updateUserInfo({ address: { ...address, _id: modalState.id } });
 
-      updateUserInfo(data.user);
       setLoading({ type: null, value: null });
       closeModal();
     } catch (error) {
@@ -174,12 +164,10 @@ const UserDetails = () => {
   const editUserInfo = async (formData) => {
     try {
       setLoading({ type: "user" });
-      const response = await api.put("/users", formData);
 
-      updateUserInfo(response.data.user);
+      await updateUserInfo(formData);
 
       setLoading({ type: null, value: null });
-      toast.success(response.data.message);
       closeModal();
     } catch (error) {
       setLoading({ type: null, value: null });
@@ -217,11 +205,8 @@ const UserDetails = () => {
     try {
       setLoading({ type: "new-address" });
 
-      const response = await api.put("/users", {
-        address: { ...data },
-      });
+      await updateUserInfo({ address: data });
 
-      updateUserInfo(response.data.user);
       closeModal();
     } catch (error) {
       toast.error(error.message);

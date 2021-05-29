@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
-import { useApi } from "../utils";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import AuthContext from "../contexts/AuthContext";
@@ -10,7 +9,6 @@ import AddNewAddress from "../components/AddNewAddress";
 import { Button, Checkbox, Input, TextField } from "../styles/UIKit";
 
 const Checkout = () => {
-  const api = useApi();
   const { cart, user, updateUserInfo } = useContext(AuthContext);
 
   const [loading, setLoading] = useState(false);
@@ -54,14 +52,11 @@ const Checkout = () => {
     try {
       setLoading(true);
 
-      const response = await api.put("/users", {
-        address: { ...data },
-      });
+      await updateUserInfo({ address: data });
 
-      updateUserInfo(response.data.user);
       setIsModalOpen(false);
 
-      const { addresses } = response.data.user;
+      const { addresses } = user;
       let updatedAddress = {};
 
       for (const address of addresses) {
@@ -88,15 +83,12 @@ const Checkout = () => {
     try {
       setLoading(true);
 
-      const response = await api.put("/users", {
-        address: { ...chosenAddress, is_default: true },
-      });
+      await updateUserInfo({ address: { ...chosenAddress, is_default: true } });
 
       setChosenAddress((prevState) => ({
         ...prevState,
         is_default: true,
       }));
-      updateUserInfo(response.data.user);
     } catch (error) {
       toast.error("An error occurred! Please try again.");
     } finally {
@@ -267,6 +259,7 @@ const Checkout = () => {
 export default Checkout;
 
 const ContentContainer = styled.div`
+  min-height: 75%;
   padding: 2em;
 `;
 

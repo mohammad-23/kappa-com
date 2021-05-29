@@ -9,19 +9,59 @@ const Grid = styled.div`
   min-height: 75%;
 
   @media ${mediaQuerySize.lg} {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: ${(props) => {
+      if (props.lg) {
+        return Array(props.lg + 1)
+          .toString()
+          .split("")
+          .map(() => "1fr")
+          .join(" ");
+      }
+
+      return "1fr 1fr 1fr";
+    }};
   }
 
   @media ${mediaQuerySize.md} {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: ${(props) => {
+      if (props.md) {
+        return Array(props.md + 1)
+          .toString()
+          .split("")
+          .map(() => "1fr")
+          .join(" ");
+      }
+
+      return "1fr 1fr";
+    }};
   }
 
   @media ${mediaQuerySize.sm} {
-    grid-template-columns: 1fr;
+    grid-template-columns: ${(props) => {
+      if (props.sm) {
+        return Array(props.sm + 1)
+          .toString()
+          .split("")
+          .map(() => "1fr")
+          .join(" ");
+      }
+
+      return "1fr";
+    }};
   }
 
   @media ${mediaQuerySize.xl} {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: ${(props) => {
+      if (props.xl) {
+        return Array(props.xl + 1)
+          .toString()
+          .split("")
+          .map(() => "1fr")
+          .join(" ");
+      }
+
+      return "1fr 1fr 1fr 1fr";
+    }};
   }
 `;
 

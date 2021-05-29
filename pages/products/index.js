@@ -164,7 +164,7 @@ const Products = () => {
             {(() => {
               if (products.length) {
                 return (
-                  <Grid>
+                  <Grid lg={3} xl={4} md={2} sm={1}>
                     {products.map((product) => (
                       <ProductCard key={product.name} {...product} />
                     ))}

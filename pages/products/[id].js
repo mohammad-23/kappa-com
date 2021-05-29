@@ -8,7 +8,6 @@ import Carousel from "react-multi-carousel";
 import styled, { css } from "styled-components";
 import { BiChevronLeft, BiChevronRight, BiHeart } from "react-icons/bi";
 
-import { useApi } from "../../utils";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import ProductCard from "../../components/ProductCard";
@@ -53,9 +52,8 @@ const Product = ({ data, error }) => {
   const [quantitySelected, setQuantitySelected] = useState(1);
   const [, setSelectedVariants] = useState({});
 
-  const api = useApi();
   const router = useRouter();
-  const { updateCart } = useContext(AuthContext);
+  const { addProductToCart } = useContext(AuthContext);
 
   useEffect(() => {
     if (data.assets) {
@@ -95,15 +93,11 @@ const Product = ({ data, error }) => {
     setQuantitySelected(Number(value));
   };
 
-  const addProductToCart = async () => {
-    const product = { id: data._id, quantity: quantitySelected };
-
+  const addProduct = async () => {
     try {
       setLoading(true);
 
-      const { data: cart } = await api.put("/cart", { product });
-
-      await updateCart(cart.data);
+      await addProductToCart(data._id, quantitySelected);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -188,11 +182,7 @@ const Product = ({ data, error }) => {
         <TextField size="1em">{data.short_description}</TextField>
         <VariantsContainer>{renderVariants()}</VariantsContainer>
         <ProductAddContainer>
-          <Button
-            onClick={addProductToCart}
-            loading={loading}
-            disabled={loading}
-          >
+          <Button onClick={addProduct} loading={loading} disabled={loading}>
             Add to cart
           </Button>
           <Button basic>

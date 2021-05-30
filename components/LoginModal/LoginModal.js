@@ -59,6 +59,8 @@ const LoginModal = ({ closeModal, isOpen }) => {
 
     if (!isSignInSuccessfull) {
       setLoading(null);
+    } else {
+      resetStateAndClose();
     }
   };
 

@@ -38,7 +38,6 @@ const Footer = () => (
           <ListHeading>{GET_IN_THE_KNOW}</ListHeading>
           <ListItem>
             <EmailInput placeholder={EMAIL_PLACEHOLDER} />
-            <InputArrow> &gt; </InputArrow>
           </ListItem>
           <ListItem>
             <IconContainer>
@@ -54,16 +53,16 @@ const Footer = () => (
     <Divider margin="1em" />
     <BottomFooter>
       <CopyRightsContainer>
-        <p> {COPYRIGHT_TEXT}</p>
+        <p>{COPYRIGHT_TEXT}</p>
         <p>
           {PRIVACY_POLICY} {TERMS_AND_CONDITIONS}
         </p>
       </CopyRightsContainer>
       <PaymentCardsContainer>
-        <FaCcVisa size={48} style={{ margin: "0.25rem" }} />
-        <FaCcMastercard size={48} style={{ margin: "0.25rem" }} />
-        <FaCcPaypal size={48} style={{ margin: "0.25rem" }} />
-        <FaCcAmex size={48} style={{ margin: "0.25rem" }} />
+        <FaCcVisa size={28} style={{ margin: "0.25rem" }} />
+        <FaCcMastercard size={28} style={{ margin: "0.25rem" }} />
+        <FaCcPaypal size={28} style={{ margin: "0.25rem" }} />
+        <FaCcAmex size={28} style={{ margin: "0.25rem" }} />
       </PaymentCardsContainer>
     </BottomFooter>
   </FooterContainer>
@@ -87,12 +86,12 @@ const FooterContainer = styled.div`
 const ListHeading = styled.p`
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 1rem;
+  font-size: 0.8rem;
 `;
 
 const ListItem = styled.li`
   list-style: none;
-  font-size: 1rem;
+  font-size: 0.8rem;
 `;
 
 const UnorderdListItem = styled.ul`
@@ -100,18 +99,11 @@ const UnorderdListItem = styled.ul`
 `;
 
 const EmailInput = styled(Input)`
-  border-top: 0;
-  border-right: 0;
-  border-left: 0;
+  border: 0;
   border-bottom: 1px solid black;
+  border-radius: 0px;
   background-color: ${(props) => props.theme.footerBackground};
-  :focus {
-    outline: none;
-  }
-`;
-
-const InputArrow = styled.span`
-  font-size: 1.5rem;
+  font-size: 0.8rem;
 `;
 
 const IconContainer = styled.div`
@@ -119,6 +111,10 @@ const IconContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-top: 4rem;
+
+  & > * {
+    cursor: pointer;
+  }
 `;
 
 const BottomFooter = styled.div`
@@ -131,6 +127,7 @@ const BottomFooter = styled.div`
 
 const CopyRightsContainer = styled.div`
   align-items: flex-start;
+  font-size: 0.8rem;
 `;
 
 const PaymentCardsContainer = styled.div`

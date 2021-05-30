@@ -104,20 +104,17 @@ const HotDealsOfferTitle = styled.h1`
 `;
 
 const HotDealsContent = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 35% 20% 20% 20%;
+  gap: 0.5em;
 `;
 
 const HotDealsOfferContainer = styled.div`
-  width: 30.25rem;
-  height: 25.75rem;
   background-color: ${(props) => props.theme.primary};
   color: ${(props) => props.theme.white};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  height: 100%;
+  text-align: center;
+  display: grid;
 `;
 
 const HotDealsCounterSquare = styled.div`
@@ -154,4 +151,5 @@ const ShopNowButton = styled(Button)`
     background-color: ${(props) => props.theme.white};
     color: ${(props) => props.theme.primary};
   }
+  margin: auto;
 `;

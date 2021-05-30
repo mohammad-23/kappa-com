@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
@@ -9,21 +9,22 @@ import Divider from "../styles/UIKit/Divider";
 import UIBUtton from "../styles/UIKit/Button";
 import useApi from "../utils/useApi";
 import CartConstants from "../config/CartConfig";
+import AuthContext from "../contexts/AuthContext";
 
 const Cart = () => {
   const api = useApi();
   const [cartItems, setCartItems] = useState([]);
   const [cartData, setCartData] = useState({});
+  const [cartTotal, setCartTotal] = useState(0);
+  const { cart, updateCart } = useContext(AuthContext);
 
   const fetchData = async () => {
     try {
-      const { data } = await api.get("cart");
-      const {
-        data: { items },
-      } = data;
+      console.log("cart data", cart);
 
-      setCartItems(items);
-      setCartData(data.data);
+      setCartData(cart);
+      setCartTotal(cart.total_price);
+      setCartItems(cart.items);
     } catch (err) {
       toast.error("Cannot fetch cart data");
       console.log("Error while fetching cart data : ", err);
@@ -35,18 +36,30 @@ const Cart = () => {
   };
 
   const deleteCartItem = async (itemId) => {
-    const newCartItems = cartItems.filter(
+    const newCartItems = cartData.items.filter(
       (item) => item.product._id !== itemId
     );
+    let totalPrice = 0;
 
+    newCartItems.forEach((element) => {
+      totalPrice += element.total_price;
+    });
+
+    cartData.items = newCartItems;
+    cartData.total_price = totalPrice;
+    console.log(cartData);
+    setCartData(cartData);
     setCartItems(newCartItems);
+    setCartTotal(totalPrice);
+    updateCart(cartData);
 
     try {
+      console.log("delete cart item ", itemId);
       await api.delete(`cart/product/${itemId}`);
       toast.success("Deleted cart item successfully");
     } catch (err) {
       toast.error("Some error has occurred");
-      console("Error while deleting cart item : ", err);
+      console.log("Error while deleting cart item : ", err);
     }
   };
 
@@ -117,7 +130,7 @@ const Cart = () => {
           <CartTotalDivider />
           <CartTotalContainer>
             <CartHeading>{CartConstants.totals.total}</CartHeading>
-            <CartText> ${cartData.total_price}</CartText>
+            <CartText> ${cartTotal}</CartText>
           </CartTotalContainer>
           <CartTotalButton>
             {CartConstants.totals.checkoutButtonText}
@@ -126,10 +139,7 @@ const Cart = () => {
       </CartContainer>
 
       <CartEmptyContainer className={cartItems.length > 0 && "hide"}>
-        <h2>
-          {" "}
-          {CartConstants.cartEmptyConstant} {cartItems.length}{" "}
-        </h2>
+        <h2> {CartConstants.cartEmptyConstant}</h2>
       </CartEmptyContainer>
       <Footer />
     </CartWrapper>

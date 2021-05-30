@@ -122,6 +122,10 @@ const FavouritesTitle = styled.h1`
 const FavoritesContainer = styled.div`
   width: 100%;
   padding: 0 2em;
+  ul.react-multi-carousel-track {
+    gap: 0.5em;
+    margin: 1em 0;
+  }
 `;
 
 const UIButtonLeft = styled(UIBUtton)`

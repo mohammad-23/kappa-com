@@ -19,9 +19,11 @@ const ProductCard = ({
   const { user, deleteWishlistItem, updateUserInfo } = useContext(AuthContext);
 
   const checkIsWishlisted = () => {
-    const isWishlisted = user.wishlist.findIndex((item) => item._id === _id);
+    if (user) {
+      const isWishlisted = user.wishlist.findIndex((item) => item._id === _id);
 
-    return isWishlisted >= 0;
+      return isWishlisted >= 0;
+    }
   };
 
   return (
@@ -99,8 +101,7 @@ const Container = styled.div`
 `;
 
 const Card = styled.div`
-  height: 21rem;
-  width: 14.5rem;
+  height: 300px;
   cursor: pointer;
   border-radius: 4px;
   background-color: ${(props) => props.theme.background};
@@ -115,15 +116,15 @@ const Card = styled.div`
 `;
 
 const StyledImage = styled.img`
-  height: 21rem;
-  width: 14.5rem;
+  height: 100%;
+  width: 100%;
 `;
 
 const ProductName = styled.div`
   font-size: 0.9rem;
   margin: 0.25em auto;
   cursor: pointer;
-  width: 14.5rem;
+  width: fit-content;
 
   :hover {
     color: ${(props) => props.theme.textSecondary};

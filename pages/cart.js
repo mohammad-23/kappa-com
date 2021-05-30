@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
+import { FaTimes } from "react-icons/fa";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -54,9 +55,9 @@ const Cart = () => {
   }, []);
 
   return (
-    <div>
+    <CartWrapper>
       <Header />
-      <CartContainer hidden={cartItems.length === 0}>
+      <CartContainer className={cartItems.length === 0 && "hide"}>
         <CartTitleContainer>
           <FlexAdjusterCloseX>
             <EmptyBox />
@@ -86,8 +87,7 @@ const Cart = () => {
                 <CloseX
                   onClick={() => handleDeleteCartItem(cartItem.product._id)}
                 >
-                  {" "}
-                  +{" "}
+                  <FaTimes size={24} />
                 </CloseX>
               </FlexAdjusterCloseX>
               <FlexAdjuster>
@@ -125,21 +125,36 @@ const Cart = () => {
         </CartTotals>
       </CartContainer>
 
-      <CartContainer hidden={cartItems.length > 0}>
-        <h2> {CartConstants.cartEmptyConstant}</h2>
-      </CartContainer>
+      <CartEmptyContainer className={cartItems.length > 0 && "hide"}>
+        <h2>
+          {" "}
+          {CartConstants.cartEmptyConstant} {cartItems.length}{" "}
+        </h2>
+      </CartEmptyContainer>
       <Footer />
-    </div>
+    </CartWrapper>
   );
 };
 
 export default Cart;
+
+const CartWrapper = styled.div`
+  .hide {
+    display: none;
+  }
+`;
 
 const CartContainer = styled.div`
   margin-top: 5rem;
 `;
 
 const CartTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+const CartEmptyContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -193,9 +208,7 @@ const FlexAdjusterCloseX = styled.div`
 
 const CloseX = styled.p`
   color: #fb4e4e;
-  font-size: 2rem;
   margin: 0;
-  transform: rotateZ(45deg);
   cursor: pointer;
 `;
 

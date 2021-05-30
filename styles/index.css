@@ -3,6 +3,7 @@ html,
 #__next {
   font-family: "Poppins", sans-serif;
   color: #25282b;
+  height: 100%;
 }
 
 button {

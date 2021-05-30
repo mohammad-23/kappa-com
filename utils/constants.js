@@ -406,3 +406,21 @@ export const addressConfig = [
     required: true,
   },
 ];
+
+export const IN_PROGRESS = "IN PROGRESS";
+
+export const CANCELLED = "CANCELLED";
+
+export const DELIVERED = "DELIVERED";
+
+export const FAILED = "FAILED";
+
+export const COMPLETED = "COMPLETED";
+
+export const SUCCEEDED = "SUCCEEDED";
+
+export const PROCESSING = "PROCESSING";
+
+export const DISPATCHED = "DISPATCHED";
+
+export const SHIPPED = "SHIPPED";

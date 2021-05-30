@@ -43,7 +43,7 @@ const Table = ({ children, ...props }) => {
 
   return (
     <TableContext.Provider value={{ basic }}>
-      <StyledTable>{children}</StyledTable>
+      <StyledTable {...props}>{children}</StyledTable>
     </TableContext.Provider>
   );
 };

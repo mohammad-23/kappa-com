@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-import { BenefitsData } from "../../../config/HomeConfig";
+import { benefitsData } from "../../../config/HomeConfig";
 
 const Benefit = () => (
   <BenefitContainer>
-    {BenefitsData.map((BenefitDataItem) => (
+    {benefitsData.map((BenefitDataItem) => (
       <BenefitItem key={BenefitDataItem.id}>
         <BenefitIconContainer>{BenefitDataItem.icon}</BenefitIconContainer>
         <BenefitDiv>

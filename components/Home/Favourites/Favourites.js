@@ -5,7 +5,7 @@ import Carousel from "react-multi-carousel";
 
 import { Divider } from "../../../styles/UIKit";
 import UIBUtton from "../../../styles/UIKit/Button";
-import { FavouritesData } from "../../../config/HomeConfig";
+import { favouritesData } from "../../../config/HomeConfig";
 import useApi from "../../../utils/useApi";
 import ProductCard from "../../ProductCard";
 
@@ -69,7 +69,7 @@ const Favourites = () => {
   return (
     <FavoritesContainer>
       <FavouritesTitleContainer>
-        <FavouritesTitle>{FavouritesData.title}</FavouritesTitle>
+        <FavouritesTitle>{favouritesData.title}</FavouritesTitle>
       </FavouritesTitleContainer>
       <Divider />
       <CarouselContainer>

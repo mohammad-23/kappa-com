@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import Divider from "../../styles/UIKit/Divider";
-import UIBUtton from "../../styles/UIKit/Button";
-import useApi from "../../utils/useApi";
-import CartConstants from "../../config/CartConfig";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Divider from "../styles/UIKit/Divider";
+import UIBUtton from "../styles/UIKit/Button";
+import useApi from "../utils/useApi";
+import CartConstants from "../config/CartConfig";
 
 const Cart = () => {
   const api = useApi();
@@ -15,13 +15,18 @@ const Cart = () => {
   const [cartData, setCartData] = useState({});
 
   const fetchData = async () => {
-    const { data } = await api.get("cart");
-    const {
-      data: { items },
-    } = data;
+    try {
+      const { data } = await api.get("cart");
+      const {
+        data: { items },
+      } = data;
 
-    setCartItems(items);
-    setCartData(data.data);
+      setCartItems(items);
+      setCartData(data.data);
+    } catch (err) {
+      toast.error("Cannot fetch cart data");
+      console.log("Error while fetching cart data : ", err);
+    }
   };
 
   const handleDeleteCartItem = (itemId) => {
@@ -29,7 +34,6 @@ const Cart = () => {
   };
 
   const deleteCartItem = async (itemId) => {
-    toast.info("Deleting Cart item");
     const newCartItems = cartItems.filter(
       (item) => item.product._id !== itemId
     );
@@ -38,12 +42,10 @@ const Cart = () => {
 
     try {
       await api.delete(`cart/product/${itemId}`);
-      fetchData();
-
       toast.success("Deleted cart item successfully");
     } catch (err) {
       toast.error("Some error has occurred");
-      fetchData();
+      console("Error while deleting cart item : ", err);
     }
   };
 
@@ -54,7 +56,7 @@ const Cart = () => {
   return (
     <div>
       <Header />
-      <CartContainer>
+      <CartContainer hidden={cartItems.length === 0}>
         <CartTitleContainer>
           <FlexAdjuster>
             <EmptyBox />
@@ -121,6 +123,10 @@ const Cart = () => {
             {CartConstants.totals.checkoutButtonText}
           </CartTotalButton>
         </CartTotals>
+      </CartContainer>
+
+      <CartContainer hidden={cartItems.length > 0}>
+        <h2> {CartConstants.cartEmptyConstant}</h2>
       </CartContainer>
       <Footer />
     </div>

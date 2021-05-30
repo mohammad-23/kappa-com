@@ -17,7 +17,7 @@ import {
   WISHLIST,
   ORDER_HISTORY,
 } from "../../utils/constants";
-import { HeaderData } from "../../config/HomeConfig";
+import { headerData } from "../../config/HomeConfig";
 
 const primaryCategories = [MEN, WOMEN, KIDS];
 
@@ -36,7 +36,7 @@ const Header = () => {
   const renderCategories = () =>
     primaryCategories.map((category) => (
       <CategoryContainer key={category}>
-        <Link href={HeaderData[category.toLowerCase()].url}>{category}</Link>
+        <Link href={headerData[category.toLowerCase()].url}>{category}</Link>
       </CategoryContainer>
     ));
 
@@ -73,10 +73,22 @@ const Header = () => {
       <Tooltip content={() => renderMenuContent()} direction="bottom-right">
         <FiUser size={24} style={{ marginTop: "10px" }} />
       </Tooltip>
-      <Link href={"/cart"}>
-        <span>
+      <Link href="/cart">
+        <CartContainer>
           <FiShoppingBag size={24} />
-        </span>
+          {cart.items?.length ? (
+            <CartAmount>
+              <TextField
+                color="background"
+                size="0.75em"
+                margin="0 2px 0 0"
+                weight={700}
+              >
+                {cart.items.length}
+              </TextField>
+            </CartAmount>
+          ) : null}
+        </CartContainer>
       </Link>
       <FiMenu size={24} />
     </IconsContainer>
@@ -195,4 +207,24 @@ const MenuItem = styled.div`
   :hover {
     color: ${(props) => props.theme.textSecondary};
   }
+`;
+
+const CartContainer = styled.div`
+  position: relative;
+  display: flex;
+`;
+const CartAmount = styled.div`
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  background-color: ${(props) => props.theme.primary};
+  color: ${(props) => props.theme.primary};
 `;

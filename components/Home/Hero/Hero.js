@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import UIBUtton from "../../../styles/UIKit/Button";
-import { HeroData } from "../../../config/HomeConfig";
+import { heroData } from "../../../config/HomeConfig";
 
 const responsive = {
   superLargeDesktop: {
@@ -49,7 +49,7 @@ const Hero = () => (
       infinite={true}
       showDots={true}
     >
-      {HeroData.map((HeroItem) => (
+      {heroData.map((HeroItem) => (
         <CarouselItem key={HeroItem.id}>
           <HeroTitle>{HeroItem.title}</HeroTitle>
           <HeroDescription>{HeroItem.description}</HeroDescription>

@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 
 import { Button, Divider } from "../../../styles/UIKit";
-import { HeaderData, HotDealsData } from "../../../config/HomeConfig";
-import { useEffect, useState } from "react";
+import { headerData, hotDealsData } from "../../../config/HomeConfig";
 import useApi from "../../../utils/useApi";
 import ProductCard from "../../ProductCard";
 
@@ -11,25 +11,29 @@ const HotDeals = () => {
   const [hotDeals, setHotDeals] = useState([]);
   const api = useApi();
 
+  const fetchData = async () => {
+    const { data } = await api.get("/hot-deals");
+
+    setHotDeals(data);
+  };
+
   useEffect(() => {
-    api.get("/hot-deals").then(({ data }) => {
-      setHotDeals(data);
-    });
+    fetchData();
   }, []);
 
   return (
     <HotDealsContainer>
       <HotDealsTitleContainer>
-        <HotDealsTitle>{HotDealsData.title}</HotDealsTitle>
+        <HotDealsTitle>{hotDealsData.title}</HotDealsTitle>
         <ViewAllLink>
           {" "}
-          <Link href={HeaderData.men.url}>VIEW ALL</Link>{" "}
+          <Link href={headerData.men.url}>VIEW ALL</Link>{" "}
         </ViewAllLink>
       </HotDealsTitleContainer>
       <Divider />
       <HotDealsContent>
         <HotDealsOfferContainer>
-          <HotDealsOfferTitle>{HotDealsData.OfferText}</HotDealsOfferTitle>
+          <HotDealsOfferTitle>{hotDealsData.OfferText}</HotDealsOfferTitle>
           <HotDealsCounterContainer>
             <HotDealsCounterSquare>
               <SquareCounter>100</SquareCounter>
@@ -48,7 +52,7 @@ const HotDeals = () => {
               <SquareTime>SECS</SquareTime>
             </HotDealsCounterSquare>
           </HotDealsCounterContainer>
-          <ShopNowButton inverted> {HotDealsData.buttonText}</ShopNowButton>
+          <ShopNowButton inverted> {hotDealsData.buttonText}</ShopNowButton>
         </HotDealsOfferContainer>
 
         {hotDeals.slice(0, 3).map((hotDeal) => (

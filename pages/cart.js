@@ -58,9 +58,9 @@ const Cart = () => {
       <Header />
       <CartContainer hidden={cartItems.length === 0}>
         <CartTitleContainer>
-          <FlexAdjuster>
+          <FlexAdjusterCloseX>
             <EmptyBox />
-          </FlexAdjuster>
+          </FlexAdjusterCloseX>
           <FlexAdjuster>
             <EmptyBox />
           </FlexAdjuster>
@@ -82,14 +82,14 @@ const Cart = () => {
         {cartItems.map((cartItem) => (
           <div key={cartItem._id}>
             <CartContent>
-              <FlexAdjuster>
+              <FlexAdjusterCloseX>
                 <CloseX
                   onClick={() => handleDeleteCartItem(cartItem.product._id)}
                 >
                   {" "}
                   +{" "}
                 </CloseX>
-              </FlexAdjuster>
+              </FlexAdjusterCloseX>
               <FlexAdjuster>
                 <ImageBox src={cartItem.product.media.source} />
               </FlexAdjuster>
@@ -184,6 +184,10 @@ const CartContent = styled.div`
 
 const FlexAdjuster = styled.div`
   width: 10rem;
+  text-align: center;
+`;
+const FlexAdjusterCloseX = styled.div`
+  width: 2rem;
   text-align: center;
 `;
 

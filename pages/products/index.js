@@ -2,13 +2,12 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
+import { mediaQuerySize } from "../../utils";
 import Header from "../../components/Header";
 import ProductCard from "../../components/ProductCard";
-import { Dropdown, Pagination, Grid } from "../../styles/UIKit";
 import ProductFilter from "../../components/ProductFilter";
 import ProductsContext from "../../contexts/ProductsContext";
-import mediaQuerySize from "../../utils/mediaQuerySize";
-import Spinner from "../../styles/UIKit/Spinner";
+import { Dropdown, Pagination, Grid, Spinner } from "../../styles/UIKit";
 
 const sortOptions = [
   {
@@ -165,7 +164,7 @@ const Products = () => {
             {(() => {
               if (products.length) {
                 return (
-                  <Grid>
+                  <Grid lg={3} xl={4} md={2} sm={1}>
                     {products.map((product) => (
                       <ProductCard key={product.name} {...product} />
                     ))}

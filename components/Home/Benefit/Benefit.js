@@ -7,10 +7,10 @@ const Benefit = () => (
     {benefitsData.map((BenefitDataItem) => (
       <BenefitItem key={BenefitDataItem.id}>
         <BenefitIconContainer>{BenefitDataItem.icon}</BenefitIconContainer>
-        <BenefitDiv>
+        <div>
           <BenefitTitle>{BenefitDataItem.title}</BenefitTitle>
-          <p>{BenefitDataItem.description}</p>
-        </BenefitDiv>
+          <BenefitDescription>{BenefitDataItem.description}</BenefitDescription>
+        </div>
       </BenefitItem>
     ))}
   </BenefitContainer>
@@ -19,30 +19,34 @@ const Benefit = () => (
 export default Benefit;
 
 const BenefitContainer = styled.div`
-  height: 13rem;
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  padding: 1.5em 0;
+  background-color: ${(props) => props.theme.background};
 `;
 
-const BenefitTitle = styled.h3`
+const BenefitTitle = styled.div`
+  font-size: 16px;
+  font-weight: 700;
   display: inline;
 `;
 
 const BenefitItem = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
-  justify-content: space-around;
+  padding: 0 1em;
+
+  & > * {
+    margin-right: 1em;
+  }
 `;
 
-const BenefitDiv = styled.div`
-  margin-left: 1rem;
-  width: 15rem;
+const BenefitDescription = styled.div`
+  font-size: 16px;
 `;
 
 const BenefitIconContainer = styled.div`
   color: ${(props) => props.theme.primary};
+  margin-top: 0.25em;
 `;

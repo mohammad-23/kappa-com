@@ -4,7 +4,7 @@ import find from "lodash/find";
 import validator from "validator";
 import isEqual from "lodash/isEqual";
 
-import { Input, InputField, Label } from "../../styles/UIKit";
+import { Dropdown, Input, InputField, Label } from "../../styles/UIKit";
 
 class Form extends Component {
   static propTypes = {
@@ -32,6 +32,7 @@ class Form extends Component {
       } else {
         states.fields[item.id] = item.initialValue || null;
       }
+
       states.errors[item.id] = null;
     });
 
@@ -69,16 +70,6 @@ class Form extends Component {
     const { errors } = this.state;
 
     const fields = config.map((item) => {
-      if (item.invisible) {
-        if (typeof item.invisible === "function") {
-          if (item.invisible(this.state)) {
-            return null;
-          }
-        } else if (item.invisible) {
-          return null;
-        }
-      }
-
       if (["string", "email", "number", "password"].includes(item.type)) {
         const inputType = ["email", "string"].includes(item.type)
           ? "text"
@@ -97,6 +88,26 @@ class Form extends Component {
               type={inputType}
             />
             {errors[item.id] && <Label error>{errors[item.id]}</Label>}
+          </InputField>
+        );
+      }
+
+      if (item.type === "select") {
+        return (
+          <InputField key={item.id}>
+            <Label required={item.required}>{item.label}</Label>
+            <Dropdown
+              options={item.options}
+              onOptionSelect={(value) => {
+                this.updateField(item.id, value);
+              }}
+              initialValue={{
+                name: item.initialValue,
+                value: item.initialValue,
+              }}
+              hasInitialValue={!!item.initialValue || false}
+              placeholder={item.placeholder}
+            />
           </InputField>
         );
       }
@@ -167,25 +178,13 @@ class Form extends Component {
         isItemRequired = false;
       }
 
-      let isItemInvisible;
-
-      if (item.invisible) {
-        if (typeof item.invisible === "function") {
-          isItemInvisible = item.invisible(this.state.fields);
-        } else {
-          isItemInvisible = true;
-        }
-      } else {
-        isItemInvisible = false;
-      }
-
       if (isItemRequired && !this.state.fields[item.id]) {
         errors[item.id] = `${item.label} is required`;
+
         return;
       }
 
       if (
-        !isItemInvisible &&
         item.type === "email" &&
         !validator.isEmail(this.state.fields[item.id])
       ) {

@@ -15,6 +15,7 @@ const Checkbox = ({ checked, ...props }) => (
 
 Checkbox.defaultProps = {
   checked: false,
+  onChange: () => {},
 };
 
 Checkbox.propTypes = {

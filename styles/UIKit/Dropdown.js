@@ -3,28 +3,37 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
-import useOutsideAlerter from "../../utils/useOutsideAlerter";
+import { useOutsideAlerter } from "../../utils";
 
-const Dropdown = ({ options, onOptionSelect, initialValue }) => {
-  const [sortBy, setSortBy] = useState({ name: "", value: "" });
+const Dropdown = ({
+  options,
+  onOptionSelect,
+  initialValue,
+  placeholder,
+  hasInitialValue,
+}) => {
+  const [selected, setSelected] = useState({
+    name: "",
+    value: "",
+  });
 
   const wrapperRef = useRef(null);
   const { isOpen, setIsOpen } = useOutsideAlerter(wrapperRef);
 
   const setInitialSort = () => {
     if (Object.keys(initialValue).length) {
-      setSortBy({ name: initialValue.name, value: initialValue.value });
+      setSelected({ name: initialValue.name, value: initialValue.value });
     } else {
       if (typeof options[0] === "string") {
-        setSortBy({ name: options[0], value: options[0] });
+        setSelected({ name: options[0], value: options[0] });
       } else {
-        setSortBy({ name: options[0].name, value: options[0].value });
+        setSelected({ name: options[0].name, value: options[0].value });
       }
     }
   };
 
   useEffect(() => {
-    if (options.length) {
+    if (options.length && hasInitialValue) {
       setInitialSort();
     }
   }, []);
@@ -35,14 +44,14 @@ const Dropdown = ({ options, onOptionSelect, initialValue }) => {
   );
 
   const onOptionClick = (item) => () => {
-    if (typeof options === "string") {
-      setSortBy(item);
+    if (typeof options[0] === "string") {
+      setSelected({ name: item, value: item });
       toggleDropdownOpen();
       onOptionSelect(item);
     } else {
       const { name, value } = item;
 
-      setSortBy({ name, value });
+      setSelected({ name, value });
       toggleDropdownOpen();
       onOptionSelect(item);
     }
@@ -51,7 +60,7 @@ const Dropdown = ({ options, onOptionSelect, initialValue }) => {
   return (
     <DropdownContainer ref={wrapperRef}>
       <DropdownButton onClick={toggleDropdownOpen} className="dropbtn">
-        <div>{sortBy.name}</div>
+        <div>{selected.name.length ? selected.name : placeholder}</div>
         {isOpen ? <FiChevronUp /> : <FiChevronDown />}
       </DropdownButton>
       <DropdownContent isOpen={isOpen}>
@@ -81,15 +90,19 @@ const Dropdown = ({ options, onOptionSelect, initialValue }) => {
 
 Dropdown.defaultProps = {
   options: [],
+  placeholder: "",
   initialValue: {},
+  hasInitialValue: true,
   onOptionSelect: () => {},
 };
 
 Dropdown.propTypes = {
   options: PropTypes.array,
+  placeholder: PropTypes.string,
+  hasInitialValue: PropTypes.bool,
   initialValue: PropTypes.shape({
     key: PropTypes.string,
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     name: PropTypes.string,
   }),
   onOptionSelect: PropTypes.func,
@@ -131,6 +144,7 @@ const Option = styled.div`
   color: black;
   padding: 0.75em 1em;
   text-decoration: none;
+  text-align: left;
 
   :hover {
     background-color: ${(props) => props.theme.background};

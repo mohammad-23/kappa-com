@@ -4,7 +4,7 @@ import Spinner from "./Spinner";
 
 const UIBUtton = ({ children, loading, ...props }) => (
   <Button {...props}>
-    <ContentContainer>
+    <ContentContainer loading={loading ? 1 : 0}>
       {loading ? <Spinner {...props} /> : null} {children}
     </ContentContainer>
   </Button>
@@ -59,27 +59,87 @@ const Button = styled.button`
     }
   }}
 
-  color: ${(props) => (props.inverted ? props.theme.primary : "#fff")};
-  background-color: ${(props) =>
-    props.inverted ? "#fff" : props.theme.primary};
-  border: ${(props) => `1px solid ${props.theme.primary}`};
+  ${(props) => {
+    if (props.compact) {
+      return {
+        padding: "0.25em",
+      };
+    }
+  }}
+
+  color: ${(props) => {
+    const buttonTheme = props.type || "primary";
+
+    if (props.inverted) {
+      return props.theme[buttonTheme];
+    }
+
+    if (props.basic) {
+      return props.theme.textPrimary;
+    }
+
+    return "#fff";
+  }};
+  background-color: ${(props) => {
+    const buttonTheme = props.type || "primary";
+
+    if (props.inverted) {
+      return "#fff";
+    }
+
+    if (props.basic) {
+      return props.theme.background;
+    }
+
+    return props.theme[buttonTheme];
+  }};
+  border: ${(props) => {
+    const buttonTheme = props.type || "primary";
+
+    if (props.basic) {
+      return `1px solid ${props.theme.background}`;
+    }
+
+    return `1px solid ${props.theme[buttonTheme]}`;
+  }};
   outline: none;
   border-radius: 4px;
+  cursor: pointer;
 
   /* add hover effect for disabled also */
   :hover {
-    color: #fff;
-    background-color: ${(props) =>
-      props.inverted ? props.theme.primary : props.theme.primaryHover};
+    color: ${(props) => (props.basic ? props.theme.textPrimary : "#fff")};
+    background-color: ${(props) => {
+      const buttonTheme = props.type || "primary";
 
-    border: ${(props) =>
-      props.inverted
-        ? `1px solid ${props.theme.primary}`
-        : `1px solid ${props.theme.primaryHover}`};
+      if (props.inverted) {
+        return props.theme[buttonTheme];
+      }
+
+      if (props.basic) {
+        return props.theme.backgroundLight;
+      }
+
+      return props.theme[`${buttonTheme}Hover`];
+    }};
+
+    border: ${(props) => {
+      const buttonTheme = props.type || "primary";
+
+      if (props.inverted) {
+        return `1px solid ${props.theme[buttonTheme]}`;
+      }
+
+      if (props.basic) {
+        return `1px solid ${props.theme.background}`;
+      }
+
+      return `1px solid ${props.theme[`${buttonTheme}Hover`]}`;
+    }};
   }
 
   :active {
-    transform: ${(props) => (props.disabled ? "scale(1)" : "scale(0.99)")};
+    transform: ${(props) => (props.disabled ? "scale(1)" : "scale(0.98)")};
   }
 
   :disabled {
@@ -95,6 +155,6 @@ const ContentContainer = styled.div`
   justify-content: space-between;
 
   & * :first-child {
-    margin-right: 5px;
+    margin-right: ${(props) => (props.loading ? "5px" : 0)};
   }
 `;

@@ -1,8 +1,7 @@
 import Carousel from "react-multi-carousel";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
-import UIBUtton from "../../../styles/UIKit/Button";
+import { Button } from "../../../styles/UIKit";
 import { heroData } from "../../../config/HomeConfig";
 
 const responsive = {
@@ -25,26 +24,10 @@ const responsive = {
   },
 };
 
-const ButtonGroup = ({ next, previous }) => (
-  <CarouselButtonGroup>
-    <UIButtonLeft inverted onClick={() => previous()}>
-      {" "}
-      &lt;
-    </UIButtonLeft>
-    <UIButtonRight inverted onClick={() => next()}>
-      {" "}
-      &gt;{" "}
-    </UIButtonRight>
-  </CarouselButtonGroup>
-);
-
 const Hero = () => (
   <CarouselContainer>
-    <Carousel
+    <StyledCarousel
       responsive={responsive}
-      arrows={false}
-      renderButtonGroupOutside={true}
-      customButtonGroup={<ButtonGroup />}
       autoPlay={true}
       infinite={true}
       showDots={true}
@@ -53,43 +36,52 @@ const Hero = () => (
         <CarouselItem key={HeroItem.id}>
           <HeroTitle>{HeroItem.title}</HeroTitle>
           <HeroDescription>{HeroItem.description}</HeroDescription>
-          <UIBUtton inverted>{HeroItem.buttonText}</UIBUtton>
+          <Button inverted>{HeroItem.buttonText}</Button>
         </CarouselItem>
       ))}
-    </Carousel>
+    </StyledCarousel>
   </CarouselContainer>
 );
 
 export default Hero;
 
-ButtonGroup.propTypes = {
-  next: PropTypes.func,
-  previous: PropTypes.func,
-};
-
 const CarouselContainer = styled.div`
   width: 100%;
 `;
 
-const CarouselButtonGroup = styled.div`
-  .disable {
-    display: none;
+const StyledCarousel = styled(Carousel)`
+  padding: 0 0 2em 0;
+
+  .react-multiple-carousel__arrow--right {
+    right: 10px;
   }
-  transform: translateY(-40vh);
+
+  .react-multiple-carousel__arrow--left {
+    left: 10px;
+  }
+
+  .react-multi-carousel-dot-list {
+    margin-bottom: 1em;
+  }
+
+  .react-multiple-carousel__arrow--right::before {
+    content: ">";
+  }
+
+  .react-multiple-carousel__arrow--left::before {
+    content: "<";
+  }
 `;
 
 const CarouselItem = styled.div`
   background-color: ${(props) => props.theme.textPrimary};
   color: ${(props) => props.theme.white};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 33rem;
+  text-align: center;
+  height: 100%;
+  padding: 4em 0;
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 4.8rem;
   margin: 0;
   text-align: center;
 `;
@@ -97,24 +89,4 @@ const HeroTitle = styled.h1`
 const HeroDescription = styled.p`
   font-size: 1.8rem;
   text-align: center;
-`;
-
-const UIButtonLeft = styled(UIBUtton)`
-  float: left;
-  color: #ffff;
-  background-color: #0000;
-  :hover {
-    background-color: #555555;
-  }
-  opacity: 50%;
-`;
-
-const UIButtonRight = styled(UIBUtton)`
-  float: right;
-  color: #ffff;
-  :hover {
-    background-color: #555555;
-  }
-  background-color: #0000;
-  opacity: 50%;
 `;

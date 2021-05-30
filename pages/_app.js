@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
 const MyApp = ({ Component, pageProps, router }) => (
   <AppContainer>
     <GlobalStyle />
-    <ToastContainer />
+    <ToastContainer position="top-right" autoClose={5000} />
     <ThemeProvider theme={theme}>
       <Auth>
         {router.pathname === "/products" ? (

@@ -4,19 +4,22 @@ const Divider = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
-  margin: 2.5rem 1.5rem 1.5rem;
-  color: ${(props) => props.theme.textSecondary};
+  margin: ${(props) => props.margin || "2.5rem 1.5rem 1.5rem"};
 
   :before {
     content: "";
     flex: 1;
-    border-bottom: 1px solid ${(props) => props.theme.textSecondary};
+    border-bottom: 1px solid
+      ${(props) =>
+        props.color ? props.theme[props.color] : props.theme.textSecondary};
   }
 
   :after {
     content: "";
     flex: 1;
-    border-bottom: 1px solid ${(props) => props.theme.textSecondary};
+    border-bottom: 1px solid
+      ${(props) =>
+        props.color ? props.theme[props.color] : props.theme.textSecondary};
   }
 
   &:not(:empty)::before {

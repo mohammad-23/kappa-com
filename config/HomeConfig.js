@@ -40,25 +40,25 @@ const benefitsData = [
     id: 1,
     title: "FREE SHIPPING",
     description: "Free shipping on all US order or order above $100",
-    icon: <FaShippingFast size={24} />,
+    icon: <FaShippingFast size={20} />,
   },
   {
     id: 2,
     title: "SUPPORT 24/7",
     description: "Contact us 24 hours a day, 7 days a week",
-    icon: <FaLifeRing size={24} />,
+    icon: <FaLifeRing size={20} />,
   },
   {
     id: 3,
     title: "30 DAYS RETURN",
     description: "Simply return it within 30 days for an exchange.",
-    icon: <FaUndo size={24} />,
+    icon: <FaUndo size={20} />,
   },
   {
     id: 4,
     title: "100% PAYMENT SECURE",
     description: "We ensure secure payment process.",
-    icon: <FaFingerprint size={24} />,
+    icon: <FaFingerprint size={20} />,
   },
 ];
 

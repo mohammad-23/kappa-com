@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FiUser, FiShoppingBag, FiMenu, FiSearch } from "react-icons/fi";
 
 import { Logo } from "../../assets/icons";
-import { Input, Tooltip } from "../../styles/UIKit";
+import { Input, TextField, Tooltip } from "../../styles/UIKit";
 import LoginModal from "../LoginModal/LoginModal";
 import AuthContext from "../../contexts/AuthContext";
 import {
@@ -13,6 +13,7 @@ import {
   WOMEN,
   KIDS,
   LOGIN,
+  LOGOUT,
   ACCOUNT_DETAILS,
   WISHLIST,
   ORDER_HISTORY,
@@ -22,16 +23,16 @@ import { headerData } from "../../config/HomeConfig";
 const primaryCategories = [MEN, WOMEN, KIDS];
 
 const userMenu = [
-  { key: null, name: LOGIN },
-  { key: "user", name: ACCOUNT_DETAILS },
+  { key: "user-details", name: ACCOUNT_DETAILS },
   { key: "wishlist", name: WISHLIST },
-  { key: "user", name: ORDER_HISTORY },
+  { key: "orders", name: ORDER_HISTORY },
+  { key: "logout", name: LOGOUT },
 ];
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { user } = useContext(AuthContext);
+  const { user, cart, signOut } = useContext(AuthContext);
 
   const renderCategories = () =>
     primaryCategories.map((category) => (
@@ -47,16 +48,22 @@ const Header = () => {
     </SearchContainer>
   );
 
-  const renderMenuContent = () =>
-    userMenu.map((item) => {
-      if (!item.key) {
-        if (!user) {
-          return (
-            <MenuItem key={item.name} onClick={() => setIsModalOpen(true)}>
-              {item.name}
-            </MenuItem>
-          );
-        }
+  const renderMenuContent = () => {
+    if (!user) {
+      return (
+        <MenuItem key={LOGIN} onClick={() => setIsModalOpen(true)}>
+          {LOGIN}
+        </MenuItem>
+      );
+    }
+
+    return userMenu.map((item) => {
+      if (!item.key && Object.keys(user).length) {
+        return (
+          <MenuItem key={item.name} onClick={signOut}>
+            {item.name}
+          </MenuItem>
+        );
       } else {
         return (
           <Link key={item.name} href={`/${item.key}`}>
@@ -64,9 +71,8 @@ const Header = () => {
           </Link>
         );
       }
-
-      return null;
     });
+  };
 
   const renderIcons = () => (
     <IconsContainer>
@@ -122,6 +128,8 @@ export default Header;
 const HeaderContainer = styled.div`
   height: 6.5rem;
   width: 100%;
+  background-color: ${(props) => props.theme.backgroundLight};
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
 `;
 
 const LogoContainer = styled.span`
@@ -213,6 +221,7 @@ const CartContainer = styled.div`
   position: relative;
   display: flex;
 `;
+
 const CartAmount = styled.div`
   position: absolute;
   top: -10px;

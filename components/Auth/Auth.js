@@ -4,7 +4,9 @@ import axios from "axios";
 import get from "lodash/get";
 import { toast } from "react-toastify";
 
+import { Spinner } from "../../styles/UIKit";
 import AuthContext from "../../contexts/AuthContext";
+import styled from "styled-components";
 
 class Auth extends Component {
   static defaultProps = {
@@ -16,10 +18,11 @@ class Auth extends Component {
   };
 
   state = {
-    authToken: "",
+    cart: {},
     user: null,
+    authToken: "",
     verifyingAuth: true,
-    loadingUserInfo: false,
+    loadingUserInfo: true,
   };
 
   api = axios.create({
@@ -42,7 +45,7 @@ class Auth extends Component {
     }
   }
 
-  fetchUserInfo = () => {
+  fetchUserInfo = async () => {
     const { authToken } = this.state;
 
     const api = axios.create({
@@ -57,10 +60,12 @@ class Auth extends Component {
         loadingUserInfo: true,
       });
 
-      const { data } = api.get("/user");
+      const { data } = await api.get("/user");
 
       if (data.user) {
-        this.setState({ user: data.user });
+        this.setState({ user: data.user }, async () => {
+          await this.fetchUserCart();
+        });
       }
     } catch (error) {
       const errorMessage = get(
@@ -107,7 +112,10 @@ class Auth extends Component {
       });
 
       if (data) {
-        this.setState({ authToken: data.token, user: data.user });
+        this.setState({ authToken: data.token, user: data.user }, () => {
+          localStorage.setItem("authToken", data.token);
+          this.fetchUserCart();
+        });
 
         toast.success("Login Successful!");
 
@@ -157,21 +165,116 @@ class Auth extends Component {
     }
   };
 
-  render() {
-    const { authToken, user, verifyingAuth, loadingUserInfo } = this.state;
+  signOut = () => {
+    this.setState({ user: null }, () => {
+      localStorage.removeItem("authToken");
+    });
+  };
 
-    if (verifyingAuth) {
-      return <div>Loading....</div>;
+  updateUserInfo = async (updatedData) => {
+    try {
+      const response = await this.api.put("/users", {
+        updatedData,
+        headers: {
+          authorization: this.state.authToken,
+        },
+      });
+
+      this.setState({ user: response.data.user });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  fetchUserCart = async () => {
+    try {
+      const { data } = await this.api.get("/cart", {
+        headers: {
+          authorization: this.state.authToken,
+        },
+      });
+
+      this.setState({ cart: data.cart });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  addProductToCart = async (product, quantitySelected) => {
+    const productData = { id: product._id, quantity: quantitySelected };
+
+    try {
+      const { data } = await this.api.put(
+        "/cart",
+        { product: productData },
+        {
+          headers: {
+            authorization: this.state.authToken,
+          },
+        }
+      );
+
+      await this.deleteWishlistItem(product._id);
+
+      this.setState({ cart: data.cart });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  deleteWishlistItem = async (productId) => {
+    const isProductInWishlist = this.state.user.wishlist.find(
+      (item) => item._id === productId
+    );
+
+    if (isProductInWishlist) {
+      try {
+        const { data: user } = await this.api.delete(
+          `/users/wishlist/${productId}`,
+          {
+            headers: {
+              authorization: this.state.authToken,
+            },
+          }
+        );
+
+        this.setState({ user: user.user });
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+  };
+
+  render() {
+    const {
+      authToken,
+      user,
+      verifyingAuth,
+      loadingUserInfo,
+      cart,
+    } = this.state;
+
+    if (verifyingAuth || loadingUserInfo) {
+      return (
+        <LoaderContainer>
+          <Spinner /> Loading
+        </LoaderContainer>
+      );
     }
 
     return (
       <AuthContext.Provider
         value={{
           user,
+          cart,
           authToken,
           loadingUserInfo,
           signUp: this.signUp,
+          signOut: this.signOut,
+          updateUserInfo: this.updateUserInfo,
+          addProductToCart: this.addProductToCart,
           isUserRegistered: this.isUserRegistered,
+          deleteWishlistItem: this.deleteWishlistItem,
           signInWithEmailPassword: this.signInWithEmailPassword,
         }}
       >
@@ -182,3 +285,12 @@ class Auth extends Component {
 }
 
 export default Auth;
+
+const LoaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 1em;
+`;

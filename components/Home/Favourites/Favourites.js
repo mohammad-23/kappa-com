@@ -68,10 +68,8 @@ const Favourites = () => {
 
   return (
     <FavoritesContainer>
-      <FavouritesTitleContainer>
-        <FavouritesTitle>{favouritesData.title}</FavouritesTitle>
-      </FavouritesTitleContainer>
-      <Divider />
+      <FavouritesTitle>{favouritesData.title}</FavouritesTitle>
+      <Divider margin="0.5em 1.5em" />
       <CarouselContainer>
         <Carousel
           responsive={responsive}
@@ -96,10 +94,6 @@ ButtonGroup.propTypes = {
   favLength: PropTypes.number,
 };
 
-const FavouritesTitleContainer = styled.div`
-  display: flex;
-`;
-
 const CarouselContainer = styled.div`
   margin-left: 2rem;
   .react-multi-carousel-list {
@@ -110,22 +104,24 @@ const CarouselContainer = styled.div`
     height: 32rem;
   }
 `;
+
 const CarouselButtonGroup = styled.div`
   transform: translateY(-256px);
+
   .disable {
     display: none;
   }
 `;
 
 const FavouritesTitle = styled.h1`
-  margin-left: 1.5rem;
-  padding: 0;
+  padding: 0.5em 1.5em 0;
+  margin: 0;
   align-items: flex-start;
 `;
 
 const FavoritesContainer = styled.div`
-  min-height: 42rem;
   width: 100%;
+  padding: 0 2em;
 `;
 
 const UIButtonLeft = styled(UIBUtton)`

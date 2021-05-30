@@ -110,7 +110,7 @@ const Orders = () => {
             <TableCell>{renderAddress(item.shipping_address)}</TableCell>
             <TableCell>{item.items.length}</TableCell>
             <TableCell>{renderTag(item.status)}</TableCell>
-            <TableCell>{renderTag(item.status)}</TableCell>
+            <TableCell>{renderTag(item.payment.status)}</TableCell>
             <TableCell>${item.total_price}</TableCell>
           </TableRow>
         ))}

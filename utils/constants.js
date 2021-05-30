@@ -420,3 +420,7 @@ export const COMPLETED = "COMPLETED";
 export const SUCCEEDED = "SUCCEEDED";
 
 export const PROCESSING = "PROCESSING";
+
+export const DISPATCHED = "DISPATCHED";
+
+export const SHIPPED = "SHIPPED";

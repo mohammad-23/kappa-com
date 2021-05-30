@@ -2,8 +2,11 @@ import {
   CANCELLED,
   COMPLETED,
   IN_PROGRESS,
-  SUCCEEDED,
   PROCESSING,
+  DELIVERED,
+  DISPATCHED,
+  SHIPPED,
+  FAILED,
 } from "./constants";
 
 const getStatusColor = (status) => {
@@ -12,12 +15,21 @@ const getStatusColor = (status) => {
       return "success";
 
     case CANCELLED:
-      return "faiure";
+      return "failure";
+
+    case FAILED:
+      return "failure";
+
+    case DELIVERED:
+      return "success";
 
     case COMPLETED:
       return "success";
 
-    case SUCCEEDED:
+    case DISPATCHED:
+      return "success";
+
+    case SHIPPED:
       return "success";
 
     case PROCESSING:

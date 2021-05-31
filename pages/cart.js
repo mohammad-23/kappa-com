@@ -5,26 +5,20 @@ import { FaTimes } from "react-icons/fa";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Divider from "../styles/UIKit/Divider";
-import UIBUtton from "../styles/UIKit/Button";
+import { Divider, Button } from "../styles/UIKit";
 import useApi from "../utils/useApi";
 import CartConstants from "../config/CartConfig";
 import AuthContext from "../contexts/AuthContext";
 
 const Cart = () => {
   const api = useApi();
-  const [cartItems, setCartItems] = useState([]);
+
   const [cartData, setCartData] = useState({});
-  const [cartTotal, setCartTotal] = useState(0);
   const { cart, updateCart } = useContext(AuthContext);
 
-  const fetchData = async () => {
+  const fetchData = () => {
     try {
-      console.log("cart data", cart);
-
       setCartData(cart);
-      setCartTotal(cart.total_price);
-      setCartItems(cart.items);
     } catch (err) {
       toast.error("Cannot fetch cart data");
       console.log("Error while fetching cart data : ", err);
@@ -36,26 +30,13 @@ const Cart = () => {
   };
 
   const deleteCartItem = async (itemId) => {
-    const newCartItems = cartData.items.filter(
-      (item) => item.product._id !== itemId
-    );
-    let totalPrice = 0;
-
-    newCartItems.forEach((element) => {
-      totalPrice += element.total_price;
-    });
-
-    cartData.items = newCartItems;
-    cartData.total_price = totalPrice;
-    console.log(cartData);
-    setCartData(cartData);
-    setCartItems(newCartItems);
-    setCartTotal(totalPrice);
-    updateCart(cartData);
-
     try {
-      console.log("delete cart item ", itemId);
-      await api.delete(`cart/product/${itemId}`);
+      const {
+        data: { cart },
+      } = await api.delete(`cart/product/${itemId}`);
+
+      setCartData(cart);
+      updateCart(cart);
       toast.success("Deleted cart item successfully");
     } catch (err) {
       toast.error("Some error has occurred");
@@ -70,7 +51,7 @@ const Cart = () => {
   return (
     <CartWrapper>
       <Header />
-      <CartContainer className={cartItems.length === 0 && "hide"}>
+      <CartContainer className={cartData?.items?.length === 0 && "hide"}>
         <CartTitleContainer>
           <FlexAdjusterCloseX>
             <EmptyBox />
@@ -93,34 +74,34 @@ const Cart = () => {
           </FlexAdjuster>
         </CartTitleContainer>
         <CartDivider />
-        {cartItems.map((cartItem) => (
-          <div key={cartItem._id}>
+        {cartData?.items?.map((cartItem) => (
+          <div key={cartItem?._id}>
             <CartContent>
               <FlexAdjusterCloseX>
                 <CloseX
-                  onClick={() => handleDeleteCartItem(cartItem.product._id)}
+                  onClick={() => handleDeleteCartItem(cartItem?.product._id)}
                 >
                   <FaTimes size={24} />
                 </CloseX>
               </FlexAdjusterCloseX>
               <FlexAdjuster>
-                <ImageBox src={cartItem.product.media.source} />
+                <ImageBox src={cartItem?.product?.media?.source} />
               </FlexAdjuster>
               <FlexAdjuster>
                 {" "}
-                <CartText> {cartItem.product.name}</CartText>
+                <CartText> {cartItem?.product?.name}</CartText>
               </FlexAdjuster>
               <FlexAdjuster>
                 <CartText>
                   {" "}
-                  {cartItem.product.price.formatted_with_symbol}
+                  {cartItem?.product?.price?.formatted_with_symbol}
                 </CartText>
               </FlexAdjuster>
               <FlexAdjuster>
-                <QuantityBox>{cartItem.quantity}</QuantityBox>
+                <QuantityBox>{cartItem?.quantity}</QuantityBox>
               </FlexAdjuster>
               <FlexAdjuster>
-                <CartText> ${cartItem.total_price}</CartText>
+                <CartText> ${cartItem?.total_price}</CartText>
               </FlexAdjuster>
             </CartContent>
             <CartDivider />
@@ -130,7 +111,7 @@ const Cart = () => {
           <CartTotalDivider />
           <CartTotalContainer>
             <CartHeading>{CartConstants.totals.total}</CartHeading>
-            <CartText> ${cartTotal}</CartText>
+            <CartText> ${cartData?.total_price}</CartText>
           </CartTotalContainer>
           <CartTotalButton>
             {CartConstants.totals.checkoutButtonText}
@@ -138,7 +119,7 @@ const Cart = () => {
         </CartTotals>
       </CartContainer>
 
-      <CartEmptyContainer className={cartItems.length > 0 && "hide"}>
+      <CartEmptyContainer className={cartData?.items?.length > 0 && "hide"}>
         <h2> {CartConstants.cartEmptyConstant}</h2>
       </CartEmptyContainer>
       <Footer />
@@ -244,7 +225,7 @@ const CartTotalContainer = styled.div`
   justify-content: space-between;
 `;
 
-const CartTotalButton = styled(UIBUtton)`
+const CartTotalButton = styled(Button)`
   margin: 1rem 0rem 1rem 0rem;
   background-color: ${(props) => props.theme.secondary};
   border-color: ${(props) => props.theme.secondary};

@@ -201,7 +201,7 @@ class Auth extends Component {
   };
 
   addProductToCart = async (product, quantitySelected) => {
-    const productData = { id: product._id, quantity: quantitySelected };
+    const productData = { id: product, quantity: quantitySelected };
 
     try {
       const { data } = await this.api.put(

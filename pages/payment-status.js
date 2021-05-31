@@ -25,7 +25,9 @@ const PaymentStatus = () => {
         </PaymentStatusMessage>
         {query.status === "success" ? (
           <Link href="/products">
-            <Button size="sm">CONTINUE SHOPPING</Button>
+            <div>
+              <Button size="sm">CONTINUE SHOPPING</Button>
+            </div>
           </Link>
         ) : (
           ""

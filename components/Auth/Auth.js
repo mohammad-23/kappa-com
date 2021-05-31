@@ -173,7 +173,6 @@ class Auth extends Component {
 
   updateUserInfo = async (updatedData) => {
     try {
-      console.log({ state: this.state });
       const response = await this.api.put(
         "/users",
         { updatedData },

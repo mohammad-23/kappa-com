@@ -1,18 +1,20 @@
 import styled from "styled-components";
 
 import { ItemCard, Button, Divider } from "../../../styles/UIKit";
-import { HotDealsData } from "../../../config/HomeConfig";
+import { homeConfig } from "../../../config";
 
 const HotDeals = () => (
   <HotDealsContainer>
     <HotDealsTitleContainer>
-      <HotDealsTitle>{HotDealsData.title}</HotDealsTitle>
-      <ViewAllLink>{HotDealsData.linkText} </ViewAllLink>
+      <HotDealsTitle>{homeConfig.hotDealsData.title}</HotDealsTitle>
+      <ViewAllLink>{homeConfig.hotDealsData.linkText} </ViewAllLink>
     </HotDealsTitleContainer>
     <Divider />
     <HotDealsContent>
       <HotDealsOfferContainer>
-        <HotDealsOfferTitle>{HotDealsData.OfferText}</HotDealsOfferTitle>
+        <HotDealsOfferTitle>
+          {homeConfig.hotDealsData.OfferText}
+        </HotDealsOfferTitle>
         <HotDealsCounterContainer>
           <HotDealsCounterSquare>
             <SquareCounter>100</SquareCounter>
@@ -31,9 +33,12 @@ const HotDeals = () => (
             <SquareTime>SECS</SquareTime>
           </HotDealsCounterSquare>
         </HotDealsCounterContainer>
-        <ShopNowButton inverted> {HotDealsData.buttonText}</ShopNowButton>
+        <ShopNowButton inverted>
+          {" "}
+          {homeConfig.hotDealsData.buttonText}
+        </ShopNowButton>
       </HotDealsOfferContainer>
-      {HotDealsData.items.map((item) => (
+      {homeConfig.hotDealsData.items.map((item) => (
         <ItemCard key={item.id} itemName={item.name} itemPrice={item.price} />
       ))}
     </HotDealsContent>

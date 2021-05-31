@@ -1,22 +1,27 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
 
+import { useApi } from "../utils";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import AuthContext from "../contexts/AuthContext";
 import AddNewAddress from "../components/AddNewAddress";
 import { Button, Checkbox, Input, TextField } from "../styles/UIKit";
 
-const Checkout = () => {
-  const { cart, user, updateUserInfo } = useContext(AuthContext);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY);
 
+const Checkout = () => {
   const [loading, setLoading] = useState(false);
   const [chosenAddress, setChosenAddress] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState({
     isOpen: false,
     action: "change",
   });
+
+  const api = useApi();
+  const { cart, user, updateUserInfo } = useContext(AuthContext);
 
   useEffect(() => {
     if (user) {
@@ -100,12 +105,32 @@ const Checkout = () => {
     setIsModalOpen({ isOpen: false, action: null });
   };
 
+  const placeOrder = async () => {
+    const stripe = await stripePromise;
+
+    try {
+      const { data } = await api.post("/create-checkout-session", {
+        chosenAddress,
+      });
+
+      const result = await stripe.redirectToCheckout({
+        sessionId: data.id,
+      });
+
+      if (result.error) {
+        toast.error(result.error.message);
+      }
+    } catch (error) {
+      toast.error(error.response?.data.message || error.message);
+    }
+  };
+
   const renderAddressContent = () => (
     <div>
       <h2>Choose Address</h2>
       <Card>
         {(() => {
-          if (!user.addresses.length) {
+          if (!user?.addresses.length) {
             return (
               <React.Fragment>
                 <StyledCard raised background="white">
@@ -210,7 +235,13 @@ const Checkout = () => {
         </OrderColumn>
       </Card>
       <br />
-      <Button type="secondary" size="sm" style={{ float: "right" }}>
+      <Button
+        type="secondary"
+        size="sm"
+        style={{ float: "right" }}
+        disabled={!stripePromise}
+        onClick={placeOrder}
+      >
         Place Order
       </Button>
     </div>

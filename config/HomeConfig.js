@@ -6,7 +6,7 @@ import {
   FaShippingFast,
 } from "react-icons/fa";
 
-const HeroData = [
+const heroData = [
   {
     id: 1,
     title: "HOT RIGHT NOW",
@@ -29,7 +29,7 @@ const HeroData = [
   },
 ];
 
-const BenefitsData = [
+const benefitsData = [
   {
     id: 1,
     title: "FREE SHIPPING",
@@ -56,7 +56,7 @@ const BenefitsData = [
   },
 ];
 
-const FavouritesData = {
+const favouritesData = {
   title: "THE FAVORITES",
   items: [
     {
@@ -112,7 +112,7 @@ const FavouritesData = {
   ],
 };
 
-const HotDealsData = {
+const hotDealsData = {
   title: "HOT DEALS",
   linkText: "VIEW ALL",
   OfferText: (
@@ -141,4 +141,4 @@ const HotDealsData = {
   ],
 };
 
-export { HeroData, BenefitsData, FavouritesData, HotDealsData };
+export default { heroData, benefitsData, favouritesData, hotDealsData };

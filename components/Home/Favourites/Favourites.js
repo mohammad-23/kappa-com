@@ -4,7 +4,7 @@ import Carousel from "react-multi-carousel";
 
 import { Divider, ItemCard } from "../../../styles/UIKit";
 import UIBUtton from "../../../styles/UIKit/Button";
-import { FavouritesData } from "../../../config/HomeConfig";
+import { homeConfig } from "../../../config";
 
 const responsive = {
   superLargeDesktop: {
@@ -45,7 +45,9 @@ const ButtonGroup = ({ next, previous, ...rest }) => {
         inverted
         onClick={() => next()}
         className={
-          currentSlide === FavouritesData.items.length / 2 ? "disable" : ""
+          currentSlide === homeConfig.favouritesData.items.length / 2
+            ? "disable"
+            : ""
         }
       >
         {" "}
@@ -57,7 +59,7 @@ const ButtonGroup = ({ next, previous, ...rest }) => {
 
 const Favourites = () => (
   <FavoritesContainer>
-    <FavouritesTitle>{FavouritesData.title}</FavouritesTitle>
+    <FavouritesTitle>{homeConfig.favouritesData.title}</FavouritesTitle>
     <Divider margin="0.5em 1.5em" />
     <CarouselContainer>
       <Carousel
@@ -66,7 +68,7 @@ const Favourites = () => (
         renderButtonGroupOutside={true}
         customButtonGroup={<ButtonGroup />}
       >
-        {FavouritesData.items.map((favouriteItem) => (
+        {homeConfig.favouritesData.items.map((favouriteItem) => (
           <ItemCard
             key={favouriteItem.id}
             itemName={favouriteItem.name}

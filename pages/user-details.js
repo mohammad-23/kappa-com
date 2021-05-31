@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { FiCamera } from "react-icons/fi";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 import Form from "../components/Form";
 import Avatar from "../components/Avatar";
@@ -23,50 +24,6 @@ import {
 } from "../utils/constants";
 
 const { TableBody, TableCell, TableHead, TableHeaderCell, TableRow } = Table;
-
-const EditUserInfoModal = ({ isModalOpen, closeModal }) => {
-  const [loading, setLoading] = useState(null);
-
-  const form = useRef();
-  const { user, updateUserInfo } = useContext(AuthContext);
-
-  const onFormSubmit = async () => {
-    const data = form.current.getData();
-
-    try {
-      setLoading(true);
-
-      await updateUserInfo(data);
-
-      setLoading(false);
-      closeModal();
-    } catch (error) {
-      setLoading(false);
-      toast.error(error.response?.data.message || error.message);
-    }
-  };
-
-  return (
-    <Modal isOpen={isModalOpen} closeModal={closeModal}>
-      <Modal.Header style={{ textAlign: "center" }}>
-        Edit Account Details
-      </Modal.Header>
-      <Modal.Content style={{ margin: "0 0 2em" }}>
-        <Form
-          ref={form}
-          onSubmit={onFormSubmit}
-          config={userInfoConfig.map((item) => ({
-            ...item,
-            initialValue: user[item.id],
-          }))}
-        />
-        <Button onClick={onFormSubmit} disabled={loading} loading={loading}>
-          Save
-        </Button>
-      </Modal.Content>
-    </Modal>
-  );
-};
 
 const EditModal = ({
   config,
@@ -111,7 +68,14 @@ const UserDetails = () => {
   });
 
   const api = useApi();
+  const router = useRouter();
   const { user, updateUserInfo } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!user) {
+      router.push({ pathname: "/" });
+    }
+  }, []);
 
   const shouldShowLoader = ({ type, value }) => {
     if (loading.type === type && loading.value === value) {
@@ -439,16 +403,6 @@ const UserDetails = () => {
       />
     </React.Fragment>
   );
-};
-
-EditUserInfoModal.defaultProps = {
-  isModalOpen: false,
-  closeModal: () => {},
-};
-
-EditUserInfoModal.propTypes = {
-  isModalOpen: PropTypes.bool,
-  closeModal: PropTypes.func,
 };
 
 EditModal.defaultProps = {

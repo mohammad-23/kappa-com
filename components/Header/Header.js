@@ -25,7 +25,7 @@ const userMenu = [
   { key: "user-details", name: ACCOUNT_DETAILS },
   { key: "wishlist", name: WISHLIST },
   { key: "orders", name: ORDER_HISTORY },
-  { key: "logout", name: LOGOUT },
+  { key: null, name: LOGOUT },
 ];
 
 const Header = () => {

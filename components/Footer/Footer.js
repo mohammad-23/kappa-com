@@ -10,7 +10,6 @@ import {
   FaPinterestP,
 } from "react-icons/fa";
 
-import { Divider, Input } from "../../styles/UIKit";
 import {
   GET_IN_THE_KNOW,
   EMAIL_PLACEHOLDER,
@@ -18,12 +17,13 @@ import {
   PRIVACY_POLICY,
   TERMS_AND_CONDITIONS,
 } from "../../utils/constants";
-import FooterData from "../../config/FooterConfig";
+import { footerConfig } from "../../config";
+import { Divider, Input } from "../../styles/UIKit";
 
 const Footer = () => (
   <FooterContainer>
     <TopFooter>
-      {FooterData.map((footerItem, index) => (
+      {footerConfig.map((footerItem, index) => (
         <div key={footerItem.key}>
           <UnorderdListItem key={index}>
             <ListHeading key={footerItem.title}>{footerItem.title}</ListHeading>

@@ -2,7 +2,7 @@ import Carousel from "react-multi-carousel";
 import styled from "styled-components";
 
 import { Button } from "../../../styles/UIKit";
-import { HeroData } from "../../../config/HomeConfig";
+import { heroData } from "../../../config/HomeConfig";
 
 const responsive = {
   superLargeDesktop: {
@@ -32,7 +32,7 @@ const Hero = () => (
       infinite={true}
       showDots={true}
     >
-      {HeroData.map((HeroItem) => (
+      {heroData.map((HeroItem) => (
         <CarouselItem key={HeroItem.id}>
           <HeroTitle>{HeroItem.title}</HeroTitle>
           <HeroDescription>{HeroItem.description}</HeroDescription>

@@ -22,7 +22,7 @@ class Auth extends Component {
     user: null,
     authToken: "",
     verifyingAuth: true,
-    loadingUserInfo: true,
+    loadingUserInfo: false,
   };
 
   api = axios.create({
@@ -201,7 +201,7 @@ class Auth extends Component {
   };
 
   addProductToCart = async (product, quantitySelected) => {
-    const productData = { id: product._id, quantity: quantitySelected };
+    const productData = { id: product, quantity: quantitySelected };
 
     try {
       const { data } = await this.api.put(
@@ -245,6 +245,10 @@ class Auth extends Component {
     }
   };
 
+  updateCart = (cart) => {
+    this.setState({ cart });
+  };
+
   render() {
     const {
       authToken,
@@ -276,6 +280,7 @@ class Auth extends Component {
           isUserRegistered: this.isUserRegistered,
           deleteWishlistItem: this.deleteWishlistItem,
           signInWithEmailPassword: this.signInWithEmailPassword,
+          updateCart: this.updateCart,
         }}
       >
         {this.props.children}

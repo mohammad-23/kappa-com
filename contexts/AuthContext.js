@@ -13,6 +13,7 @@ const AuthContext = React.createContext({
   addProductToCart: null,
   deleteWishlistItem: null,
   addItemToWishlist: null,
+  updateCart: null,
 });
 
 export default AuthContext;

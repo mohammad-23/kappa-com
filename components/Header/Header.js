@@ -18,6 +18,7 @@ import {
   WISHLIST,
   ORDER_HISTORY,
 } from "../../utils/constants";
+import { headerData } from "../../config/HomeConfig";
 
 const primaryCategories = [MEN, WOMEN, KIDS];
 
@@ -35,7 +36,9 @@ const Header = () => {
 
   const renderCategories = () =>
     primaryCategories.map((category) => (
-      <CategoryContainer key={category}>{category}</CategoryContainer>
+      <CategoryContainer key={category}>
+        <Link href={headerData[category.toLowerCase()].url}>{category}</Link>
+      </CategoryContainer>
     ));
 
   const renderSearchInput = () => (
@@ -76,21 +79,23 @@ const Header = () => {
       <Tooltip content={() => renderMenuContent()} direction="bottom-right">
         <FiUser size={24} style={{ marginTop: "10px" }} />
       </Tooltip>
-      <CartContainer>
-        <FiShoppingBag size={24} />
-        {cart.items?.length ? (
-          <CartAmount>
-            <TextField
-              color="background"
-              size="0.75em"
-              margin="0 2px 0 0"
-              weight={700}
-            >
-              {cart.items.length}
-            </TextField>
-          </CartAmount>
-        ) : null}
-      </CartContainer>
+      <Link href="/cart">
+        <CartContainer>
+          <FiShoppingBag size={24} />
+          {cart.items?.length ? (
+            <CartAmount>
+              <TextField
+                color="background"
+                size="0.75em"
+                margin="0 2px 0 0"
+                weight={700}
+              >
+                {cart.items.length}
+              </TextField>
+            </CartAmount>
+          ) : null}
+        </CartContainer>
+      </Link>
       <FiMenu size={24} />
     </IconsContainer>
   );
@@ -99,7 +104,11 @@ const Header = () => {
     <HeaderContainer>
       <HeaderBase>{HEADER_BASE_TEXT}</HeaderBase>
       <HeaderSections>
-        <Logo style={{ margin: "auto 0" }} />
+        <Link href="/">
+          <LogoContainer>
+            <Logo style={{ margin: "auto 0" }} />
+          </LogoContainer>
+        </Link>
         <Categories>{renderCategories()}</Categories>
         {renderSearchInput()}
         {renderIcons()}
@@ -121,6 +130,10 @@ const HeaderContainer = styled.div`
   width: 100%;
   background-color: ${(props) => props.theme.backgroundLight};
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+`;
+
+const LogoContainer = styled.span`
+  cursor: pointer;
 `;
 
 const HeaderBase = styled.div`
@@ -148,14 +161,17 @@ const Categories = styled.div`
 `;
 
 const CategoryContainer = styled.div`
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  text-transform: uppercase;
-  color: ${(props) => props.theme.textPrimary};
+  a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: ${(props) => props.theme.textPrimary};
 
-  :hover {
-    color: ${(props) => props.theme.textSecondary};
+    :hover {
+      color: ${(props) => props.theme.textSecondary};
+    }
   }
 `;
 

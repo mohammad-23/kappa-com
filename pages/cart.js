@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
@@ -12,22 +12,7 @@ import AuthContext from "../contexts/AuthContext";
 
 const Cart = () => {
   const api = useApi();
-
-  const [cartData, setCartData] = useState({});
   const { cart, updateCart } = useContext(AuthContext);
-
-  const fetchData = () => {
-    try {
-      setCartData(cart);
-    } catch (err) {
-      toast.error("Cannot fetch cart data");
-      console.log("Error while fetching cart data : ", err);
-    }
-  };
-
-  const handleDeleteCartItem = (itemId) => {
-    deleteCartItem(itemId);
-  };
 
   const deleteCartItem = async (itemId) => {
     try {
@@ -35,23 +20,17 @@ const Cart = () => {
         data: { cart },
       } = await api.delete(`cart/product/${itemId}`);
 
-      setCartData(cart);
       updateCart(cart);
       toast.success("Deleted cart item successfully");
     } catch (err) {
       toast.error("Some error has occurred");
-      console.log("Error while deleting cart item : ", err);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <CartWrapper>
       <Header />
-      <CartContainer className={cartData?.items?.length === 0 && "hide"}>
+      <CartContainer className={cart?.items?.length === 0 && "hide"}>
         <CartTitleContainer>
           <FlexAdjusterCloseX>
             <EmptyBox />
@@ -74,13 +53,11 @@ const Cart = () => {
           </FlexAdjuster>
         </CartTitleContainer>
         <CartDivider />
-        {cartData?.items?.map((cartItem) => (
+        {cart?.items?.map((cartItem) => (
           <div key={cartItem?._id}>
             <CartContent>
               <FlexAdjusterCloseX>
-                <CloseX
-                  onClick={() => handleDeleteCartItem(cartItem?.product._id)}
-                >
+                <CloseX onClick={() => deleteCartItem(cartItem?.product._id)}>
                   <FaTimes size={24} />
                 </CloseX>
               </FlexAdjusterCloseX>
@@ -111,7 +88,7 @@ const Cart = () => {
           <CartTotalDivider />
           <CartTotalContainer>
             <CartHeading>{CartConstants.totals.total}</CartHeading>
-            <CartText> ${cartData?.total_price}</CartText>
+            <CartText> ${cart?.total_price}</CartText>
           </CartTotalContainer>
           <CartTotalButton>
             {CartConstants.totals.checkoutButtonText}
@@ -119,7 +96,7 @@ const Cart = () => {
         </CartTotals>
       </CartContainer>
 
-      <CartEmptyContainer className={cartData?.items?.length > 0 && "hide"}>
+      <CartEmptyContainer className={cart?.items?.length > 0 && "hide"}>
         <h2> {CartConstants.cartEmptyConstant}</h2>
       </CartEmptyContainer>
       <Footer />

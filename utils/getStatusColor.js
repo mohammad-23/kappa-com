@@ -7,6 +7,7 @@ import {
   DISPATCHED,
   SHIPPED,
   FAILED,
+  PLACED,
 } from "./constants";
 
 const getStatusColor = (status) => {
@@ -33,6 +34,9 @@ const getStatusColor = (status) => {
       return "success";
 
     case PROCESSING:
+      return "warning";
+
+    case PLACED:
       return "success";
   }
 };

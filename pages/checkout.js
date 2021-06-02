@@ -31,7 +31,7 @@ const Checkout = () => {
 
       setChosenAddress(defaultAddress);
     }
-  }, []);
+  }, [user]);
 
   const getNormalizedAddress = useCallback(() => {
     let addressToDisplay;

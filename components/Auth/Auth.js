@@ -183,7 +183,7 @@ class Auth extends Component {
     try {
       const response = await this.api.put(
         "/users",
-        { updatedData },
+        { ...updatedData },
         {
           headers: {
             authorization: this.state.authToken,

@@ -23,6 +23,7 @@ class Auth extends Component {
     authToken: "",
     verifyingAuth: true,
     loadingUserInfo: false,
+    isLoginModalOpen: false,
   };
 
   api = axios.create({
@@ -44,6 +45,13 @@ class Auth extends Component {
       this.setState({ verifyingAuth: false });
     }
   }
+
+  toggleLoginModalState = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      isLoginModalOpen: !prevState.isLoginModalOpen,
+    }));
+  };
 
   fetchUserInfo = async () => {
     const { authToken } = this.state;
@@ -254,11 +262,12 @@ class Auth extends Component {
 
   render() {
     const {
-      authToken,
+      cart,
       user,
+      authToken,
       verifyingAuth,
       loadingUserInfo,
-      cart,
+      isLoginModalOpen,
     } = this.state;
 
     if (verifyingAuth || loadingUserInfo) {
@@ -276,14 +285,16 @@ class Auth extends Component {
           cart,
           authToken,
           loadingUserInfo,
+          isLoginModalOpen,
           signUp: this.signUp,
           signOut: this.signOut,
+          updateCart: this.updateCart,
           updateUserInfo: this.updateUserInfo,
           addProductToCart: this.addProductToCart,
           isUserRegistered: this.isUserRegistered,
           deleteWishlistItem: this.deleteWishlistItem,
+          toggleLoginModalState: this.toggleLoginModalState,
           signInWithEmailPassword: this.signInWithEmailPassword,
-          updateCart: this.updateCart,
         }}
       >
         {this.props.children}

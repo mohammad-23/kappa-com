@@ -3,6 +3,8 @@ import React from "react";
 const AuthContext = React.createContext({
   authToken: null,
   signUp: null,
+  isLoginModalOpen: false,
+  toggleLoginModalState: null,
   signInWithEmailPassword: null,
   signInWithGoogle: null,
   signOut: null,

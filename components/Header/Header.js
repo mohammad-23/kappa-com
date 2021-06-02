@@ -18,7 +18,7 @@ import {
   WISHLIST,
   ORDER_HISTORY,
 } from "../../utils/constants";
-import { headerData } from "../../config/HomeConfig";
+import { homeConfig } from "../../config";
 
 const primaryCategories = [MEN, WOMEN, KIDS];
 
@@ -26,7 +26,7 @@ const userMenu = [
   { key: "user-details", name: ACCOUNT_DETAILS },
   { key: "wishlist", name: WISHLIST },
   { key: "orders", name: ORDER_HISTORY },
-  { key: "logout", name: LOGOUT },
+  { key: null, name: LOGOUT },
 ];
 
 const Header = () => {
@@ -37,7 +37,9 @@ const Header = () => {
   const renderCategories = () =>
     primaryCategories.map((category) => (
       <CategoryContainer key={category}>
-        <Link href={headerData[category.toLowerCase()].url}>{category}</Link>
+        <Link href={homeConfig.headerData[category.toLowerCase()].url}>
+          {category}
+        </Link>
       </CategoryContainer>
     ));
 

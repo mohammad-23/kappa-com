@@ -2,7 +2,7 @@ import Carousel from "react-multi-carousel";
 import styled from "styled-components";
 
 import { Button } from "../../../styles/UIKit";
-import { heroData } from "../../../config/HomeConfig";
+import { homeConfig } from "../../../config";
 
 const responsive = {
   superLargeDesktop: {
@@ -32,11 +32,11 @@ const Hero = () => (
       infinite={true}
       showDots={true}
     >
-      {heroData.map((HeroItem) => (
-        <CarouselItem key={HeroItem.id}>
-          <HeroTitle>{HeroItem.title}</HeroTitle>
-          <HeroDescription>{HeroItem.description}</HeroDescription>
-          <Button inverted>{HeroItem.buttonText}</Button>
+      {homeConfig.heroData.map((heroItem) => (
+        <CarouselItem key={heroItem.id}>
+          <HeroTitle>{heroItem.title}</HeroTitle>
+          <HeroDescription>{heroItem.description}</HeroDescription>
+          <Button inverted>{heroItem.buttonText}</Button>
         </CarouselItem>
       ))}
     </StyledCarousel>

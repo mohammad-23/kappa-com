@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 
-import { Button, Divider } from "../../../styles/UIKit";
-import { headerData, hotDealsData } from "../../../config/HomeConfig";
-import useApi from "../../../utils/useApi";
+import { useApi } from "../../../utils";
 import ProductCard from "../../ProductCard";
+import { homeConfig } from "../../../config";
+import { Button, Divider, TextField } from "../../../styles/UIKit";
 
 const HotDeals = () => {
   const [hotDeals, setHotDeals] = useState([]);
@@ -24,35 +24,62 @@ const HotDeals = () => {
   return (
     <HotDealsContainer>
       <HotDealsTitleContainer>
-        <HotDealsTitle>{hotDealsData.title}</HotDealsTitle>
+        <TextField size="1.5em" margin="0" weight="bold">
+          {homeConfig.hotDealsData.title}
+        </TextField>
         <ViewAllLink>
-          {" "}
-          <Link href={headerData.men.url}>VIEW ALL</Link>{" "}
+          <Link href={homeConfig.headerData.men.url}>VIEW ALL</Link>
         </ViewAllLink>
       </HotDealsTitleContainer>
-      <Divider />
+      <Divider margin="1em 2em" />
       <HotDealsContent>
         <HotDealsOfferContainer>
-          <HotDealsOfferTitle>{hotDealsData.OfferText}</HotDealsOfferTitle>
+          <HotDealsOfferTitle
+            size="1.5em"
+            color="white"
+            margin="1em 0"
+            weight="bold"
+          >
+            {homeConfig.hotDealsData.OfferText}
+          </HotDealsOfferTitle>
           <HotDealsCounterContainer>
             <HotDealsCounterSquare>
-              <SquareCounter>100</SquareCounter>
-              <SquareTime>DAYS</SquareTime>
+              <TextField size="0.9em" color="white" margin="0" weight="bold">
+                100
+              </TextField>
+              <TextField size="0.8em" margin="0" weight="bold" color="greyText">
+                DAYS
+              </TextField>
             </HotDealsCounterSquare>
             <HotDealsCounterSquare>
-              <SquareCounter>23</SquareCounter>
-              <SquareTime>HOURS</SquareTime>
+              <TextField size="0.9em" color="white" margin="0" weight="bold">
+                23
+              </TextField>
+              <TextField size="0.8em" margin="0" weight="bold" color="greyText">
+                HOURS
+              </TextField>
             </HotDealsCounterSquare>
             <HotDealsCounterSquare>
-              <SquareCounter>36</SquareCounter>
-              <SquareTime>MINS</SquareTime>
+              <TextField size="0.9em" color="white" margin="0" weight="bold">
+                36
+              </TextField>
+              <TextField size="0.8em" margin="0" weight="bold" color="greyText">
+                MINS
+              </TextField>
             </HotDealsCounterSquare>
             <HotDealsCounterSquare>
-              <SquareCounter>45</SquareCounter>
-              <SquareTime>SECS</SquareTime>
+              <TextField size="0.9em" color="white" margin="0" weight="bold">
+                45
+              </TextField>
+              <TextField size="0.8em" margin="0" weight="bold" color="greyText">
+                SECS
+              </TextField>
             </HotDealsCounterSquare>
           </HotDealsCounterContainer>
-          <ShopNowButton inverted> {hotDealsData.buttonText}</ShopNowButton>
+          <ShopNowButton inverted>
+            {" "}
+            {homeConfig.hotDealsData.buttonText}
+          </ShopNowButton>
         </HotDealsOfferContainer>
 
         {hotDeals.slice(0, 3).map((hotDeal) => (
@@ -67,26 +94,22 @@ export default HotDeals;
 
 const HotDealsContainer = styled.div`
   width: 100%;
-  min-height: 40.25rem;
-`;
-
-const HotDealsTitle = styled.h1`
-  margin-left: 1.5rem;
-  display: inline;
+  margin: 0 0 2em;
 `;
 
 const HotDealsTitleContainer = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1em 2em 0;
 `;
 
 const ViewAllLink = styled.div`
-  margin-left: auto;
   cursor: pointer;
-  margin-top: 2rem;
-  margin-right: 1rem;
+
   a {
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     text-transform: uppercase;
@@ -98,7 +121,7 @@ const ViewAllLink = styled.div`
   }
 `;
 
-const HotDealsOfferTitle = styled.h1`
+const HotDealsOfferTitle = styled(TextField)`
   text-transform: uppercase;
   text-align: center;
 `;
@@ -106,7 +129,8 @@ const HotDealsOfferTitle = styled.h1`
 const HotDealsContent = styled.div`
   display: grid;
   grid-template-columns: 35% 20% 20% 20%;
-  gap: 0.5em;
+  gap: 1em;
+  margin: 1em 2em 2em;
 `;
 
 const HotDealsOfferContainer = styled.div`
@@ -126,18 +150,6 @@ const HotDealsCounterSquare = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const SquareCounter = styled.h2`
-  margin: 0;
-`;
-
-const SquareTime = styled.p`
-  color: ${(props) => props.theme.greyText};
-  font-size: 0.8rem;
-  margin: 0;
-  display: inline;
-  font-weight: bold;
 `;
 
 const HotDealsCounterContainer = styled.div`

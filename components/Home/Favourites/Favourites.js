@@ -3,11 +3,11 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import Carousel from "react-multi-carousel";
 
-import { Divider } from "../../../styles/UIKit";
+import { Divider, TextField } from "../../../styles/UIKit";
 import UIBUtton from "../../../styles/UIKit/Button";
-import { favouritesData } from "../../../config/HomeConfig";
 import useApi from "../../../utils/useApi";
 import ProductCard from "../../ProductCard";
+import { homeConfig } from "../../../config";
 
 const responsive = {
   superLargeDesktop: {
@@ -68,8 +68,10 @@ const Favourites = () => {
 
   return (
     <FavoritesContainer>
-      <FavouritesTitle>{favouritesData.title}</FavouritesTitle>
-      <Divider margin="0.5em 1.5em" />
+      <TextField size="1.5em" margin="1em 0 0 2em" weight="bold">
+        {homeConfig.FAVOURITES_TITLE}
+      </TextField>
+      <Divider margin="1em 2em" />
       <CarouselContainer>
         <Carousel
           responsive={responsive}
@@ -95,13 +97,13 @@ ButtonGroup.propTypes = {
 };
 
 const CarouselContainer = styled.div`
-  margin-left: 2rem;
+  padding: 0 2rem;
+
   .react-multi-carousel-list {
     display: flex;
     align-items: center;
     overflow: hidden;
     position: relative;
-    height: 32rem;
   }
 `;
 
@@ -113,15 +115,9 @@ const CarouselButtonGroup = styled.div`
   }
 `;
 
-const FavouritesTitle = styled.h1`
-  padding: 0.5em 1.5em 0;
-  margin: 0;
-  align-items: flex-start;
-`;
-
 const FavoritesContainer = styled.div`
   width: 100%;
-  padding: 0 2em;
+
   ul.react-multi-carousel-track {
     gap: 0.5em;
     margin: 1em 0;

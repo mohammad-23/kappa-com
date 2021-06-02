@@ -62,61 +62,7 @@ const benefitsData = [
   },
 ];
 
-const favouritesData = {
-  title: "THE FAVORITES",
-  items: [
-    {
-      id: 1,
-      name: "Greta White Midi Dress",
-      price: "159.00",
-    },
-    {
-      id: 2,
-      name: "Lilika Silver Mini",
-      price: "159.00",
-    },
-    {
-      id: 3,
-      name: "Crystal Off White Dress",
-      price: "159.00",
-    },
-    {
-      id: 4,
-      name: "Levi's Jeans",
-      price: "15.00",
-    },
-    {
-      id: 5,
-      name: "Basic's Tshirt",
-      price: "159.00",
-    },
-    {
-      id: 6,
-      name: "Some nice dress",
-      price: "159.00",
-    },
-    {
-      id: 7,
-      name: "Tamilnadu Veshti",
-      price: "159.00",
-    },
-    {
-      id: 8,
-      name: "Kerala Mundu",
-      price: "159.00",
-    },
-    {
-      id: 9,
-      name: "Tamilnadu Saree",
-      price: "159.00",
-    },
-    {
-      id: 10,
-      name: "Kerala Saree",
-      price: "159.00",
-    },
-  ],
-};
+const FAVOURITES_TITLE = "THE FAVORITES";
 
 const hotDealsData = {
   title: "HOT DEALS",
@@ -128,23 +74,12 @@ const hotDealsData = {
     </React.Fragment>
   ),
   buttonText: "SHOP NOW",
-  items: [
-    {
-      id: 1,
-      name: "Carson Shoulder",
-      price: "175.00",
-    },
-    {
-      id: 2,
-      name: "Jaxson Jacket",
-      price: "175.00",
-    },
-    {
-      id: 3,
-      name: "Zinnia Scallop Applique Mini",
-      price: "199.00",
-    },
-  ],
 };
 
-export { heroData, benefitsData, favouritesData, hotDealsData, headerData };
+export default {
+  heroData,
+  benefitsData,
+  FAVOURITES_TITLE,
+  hotDealsData,
+  headerData,
+};

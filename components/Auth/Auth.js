@@ -34,7 +34,7 @@ class Auth extends Component {
       const authToken = localStorage.getItem("authToken");
 
       if (authToken) {
-        this.setState({ authToken }, () => {
+        this.setState({ authToken, loadingUserInfo: true }, () => {
           this.fetchUserInfo();
         });
       }
@@ -166,19 +166,22 @@ class Auth extends Component {
   };
 
   signOut = () => {
-    this.setState({ user: null }, () => {
+    this.setState({ user: null, cart: {} }, () => {
       localStorage.removeItem("authToken");
     });
   };
 
   updateUserInfo = async (updatedData) => {
     try {
-      const response = await this.api.put("/users", {
-        updatedData,
-        headers: {
-          authorization: this.state.authToken,
-        },
-      });
+      const response = await this.api.put(
+        "/users",
+        { updatedData },
+        {
+          headers: {
+            authorization: this.state.authToken,
+          },
+        }
+      );
 
       this.setState({ user: response.data.user });
     } catch (error) {

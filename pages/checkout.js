@@ -21,7 +21,9 @@ const Checkout = () => {
   });
 
   const api = useApi();
-  const { cart, user, updateUserInfo } = useContext(AuthContext);
+  const { cart, user, updateUserInfo, toggleLoginModalState } = useContext(
+    AuthContext
+  );
 
   useEffect(() => {
     if (user) {
@@ -29,7 +31,7 @@ const Checkout = () => {
 
       setChosenAddress(defaultAddress);
     }
-  }, []);
+  }, [user]);
 
   const getNormalizedAddress = useCallback(() => {
     let addressToDisplay;
@@ -106,22 +108,27 @@ const Checkout = () => {
   };
 
   const placeOrder = async () => {
-    const stripe = await stripePromise;
+    if (user) {
+      const stripe = await stripePromise;
 
-    try {
-      const { data } = await api.post("/create-checkout-session", {
-        chosenAddress,
-      });
+      try {
+        const { data } = await api.post("/create-checkout-session", {
+          chosenAddress,
+        });
 
-      const result = await stripe.redirectToCheckout({
-        sessionId: data.id,
-      });
+        const result = await stripe.redirectToCheckout({
+          sessionId: data.id,
+        });
 
-      if (result.error) {
-        toast.error(result.error.message);
+        if (result.error) {
+          toast.error(result.error.message);
+        }
+      } catch (error) {
+        toast.error(error.response?.data.message || error.message);
       }
-    } catch (error) {
-      toast.error(error.response?.data.message || error.message);
+    } else {
+      toast.warn("Login to continue!");
+      toggleLoginModalState();
     }
   };
 

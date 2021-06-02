@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { FiUser, FiShoppingBag, FiMenu, FiSearch } from "react-icons/fi";
@@ -30,9 +30,13 @@ const userMenu = [
 ];
 
 const Header = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const { user, cart, signOut } = useContext(AuthContext);
+  const {
+    user,
+    cart,
+    signOut,
+    isLoginModalOpen,
+    toggleLoginModalState,
+  } = useContext(AuthContext);
 
   const renderCategories = () =>
     primaryCategories.map((category) => (
@@ -53,7 +57,7 @@ const Header = () => {
   const renderMenuContent = () => {
     if (!user) {
       return (
-        <MenuItem key={LOGIN} onClick={() => setIsModalOpen(true)}>
+        <MenuItem key={LOGIN} onClick={() => toggleLoginModalState()}>
           {LOGIN}
         </MenuItem>
       );
@@ -116,10 +120,8 @@ const Header = () => {
         {renderIcons()}
       </HeaderSections>
       <LoginModal
-        isOpen={isModalOpen}
-        closeModal={() => {
-          setIsModalOpen(false);
-        }}
+        isOpen={isLoginModalOpen}
+        closeModal={toggleLoginModalState}
       />
     </HeaderContainer>
   );

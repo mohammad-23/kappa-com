@@ -45,7 +45,7 @@ Export function `getServerSideProps` from a _page_ to add server side rendering.
 Export function `getStaticProps` from a _page_ to fetch data at build time. Next.js will pre-render this page at build time using the props returned by `getStaticProps`.
 
 ```bash
-   export async function getServerSideProps(context) {
+   export async function getStaticProps(context) {
        const response = await api.get(URL);
 
        return {

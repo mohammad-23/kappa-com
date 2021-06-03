@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
+import { useApi } from "../utils";
+import { cartConfig } from "../config";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Divider, Button } from "../styles/UIKit";
-import useApi from "../utils/useApi";
-import CartConstants from "../config/CartConfig";
 import AuthContext from "../contexts/AuthContext";
 
 const Cart = () => {
@@ -39,17 +39,16 @@ const Cart = () => {
             <EmptyBox />
           </FlexAdjuster>
           <FlexAdjuster>
-            {" "}
-            <CartHeading> {CartConstants.header.product} </CartHeading>
+            <CartHeading>{cartConfig.header.product}</CartHeading>
           </FlexAdjuster>
           <FlexAdjuster>
-            <CartHeading> {CartConstants.header.price} </CartHeading>
+            <CartHeading>{cartConfig.header.price}</CartHeading>
           </FlexAdjuster>
           <FlexAdjuster>
-            <CartHeading> {CartConstants.header.quantity} </CartHeading>
+            <CartHeading>{cartConfig.header.quantity}</CartHeading>
           </FlexAdjuster>
           <FlexAdjuster>
-            <CartHeading> {CartConstants.header.total} </CartHeading>
+            <CartHeading>{cartConfig.header.total}</CartHeading>
           </FlexAdjuster>
         </CartTitleContainer>
         <CartDivider />
@@ -65,12 +64,10 @@ const Cart = () => {
                 <ImageBox src={cartItem?.product?.media?.source} />
               </FlexAdjuster>
               <FlexAdjuster>
-                {" "}
                 <CartText> {cartItem?.product?.name}</CartText>
               </FlexAdjuster>
               <FlexAdjuster>
                 <CartText>
-                  {" "}
                   {cartItem?.product?.price?.formatted_with_symbol}
                 </CartText>
               </FlexAdjuster>
@@ -87,17 +84,17 @@ const Cart = () => {
         <CartTotals>
           <CartTotalDivider />
           <CartTotalContainer>
-            <CartHeading>{CartConstants.totals.total}</CartHeading>
-            <CartText> ${cart?.total_price}</CartText>
+            <CartHeading>{cartConfig.totals.total}</CartHeading>
+            <CartText>${cart?.total_price}</CartText>
           </CartTotalContainer>
           <CartTotalButton>
-            {CartConstants.totals.checkoutButtonText}
+            {cartConfig.totals.checkoutButtonText}
           </CartTotalButton>
         </CartTotals>
       </CartContainer>
 
       <CartEmptyContainer className={cart?.items?.length > 0 && "hide"}>
-        <h2> {CartConstants.cartEmptyConstant}</h2>
+        <h2>{cartConfig.cartEmptyConstant}</h2>
       </CartEmptyContainer>
       <Footer />
     </CartWrapper>

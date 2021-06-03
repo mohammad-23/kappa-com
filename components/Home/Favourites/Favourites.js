@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Carousel from "react-multi-carousel";
@@ -55,43 +54,33 @@ const ButtonGroup = ({ next, previous, favLength, ...rest }) => {
   );
 };
 
-const Favourites = ({ favData, error }) => {
-  const [favourites, setFavourites] = useState([]);
-
-  useEffect(() => {
-    setFavourites(favData);
-  }, []);
-
-  return (
-    <FavoritesContainer>
-      <TextField size="1.5em" margin="1em 0 0 2em" weight="bold">
-        {homeConfig.FAVOURITES_TITLE}
-      </TextField>
-      <Divider margin="1em 2em" />
-      <CarouselContainer>
-        <Carousel
-          responsive={responsive}
-          arrows={false}
-          renderButtonGroupOutside={true}
-          customButtonGroup={<ButtonGroup favLength={favourites.length} />}
-        >
-          {favourites.map((favouriteItem) => (
-            <ProductCard key={favouriteItem._id} {...favouriteItem} />
-          ))}
-        </Carousel>
-      </CarouselContainer>
-    </FavoritesContainer>
-  );
-};
+const Favourites = ({ favData }) => (
+  <FavoritesContainer>
+    <TextField size="1.5em" margin="1em 0 0 2em" weight="bold">
+      {homeConfig.FAVOURITES_TITLE}
+    </TextField>
+    <Divider margin="1em 2em" />
+    <CarouselContainer>
+      <Carousel
+        responsive={responsive}
+        arrows={false}
+        renderButtonGroupOutside={true}
+        customButtonGroup={<ButtonGroup favLength={favData.length} />}
+      >
+        {favData.map((favouriteItem) => (
+          <ProductCard key={favouriteItem._id} {...favouriteItem} />
+        ))}
+      </Carousel>
+    </CarouselContainer>
+  </FavoritesContainer>
+);
 
 Favourites.defaultProps = {
   favData: [],
-  error: null,
 };
 
 Favourites.propTypes = {
   favData: PropTypes.array,
-  error: PropTypes.string,
 };
 
 export default Favourites;

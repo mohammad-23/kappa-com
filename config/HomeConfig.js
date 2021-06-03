@@ -76,10 +76,12 @@ const hotDealsData = {
   buttonText: "SHOP NOW",
 };
 
-export default {
+const homeConfig = {
   heroData,
   benefitsData,
   FAVOURITES_TITLE,
   hotDealsData,
   headerData,
 };
+
+export default homeConfig;

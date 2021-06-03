@@ -5,7 +5,6 @@ import Carousel from "react-multi-carousel";
 
 import { Divider, TextField } from "../../../styles/UIKit";
 import UIBUtton from "../../../styles/UIKit/Button";
-import useApi from "../../../utils/useApi";
 import ProductCard from "../../ProductCard";
 import { homeConfig } from "../../../config";
 
@@ -56,14 +55,11 @@ const ButtonGroup = ({ next, previous, favLength, ...rest }) => {
   );
 };
 
-const Favourites = () => {
+const Favourites = ({ favData, error }) => {
   const [favourites, setFavourites] = useState([]);
-  const api = useApi();
 
   useEffect(() => {
-    api.get("/favourites").then(({ data }) => {
-      setFavourites(data);
-    });
+    setFavourites(favData);
   }, []);
 
   return (
@@ -86,6 +82,16 @@ const Favourites = () => {
       </CarouselContainer>
     </FavoritesContainer>
   );
+};
+
+Favourites.defaultProps = {
+  favData: [],
+  error: null,
+};
+
+Favourites.propTypes = {
+  favData: PropTypes.array,
+  error: PropTypes.string,
 };
 
 export default Favourites;

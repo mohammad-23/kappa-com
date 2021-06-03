@@ -1,24 +1,17 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import Link from "next/link";
 
-import { useApi } from "../../../utils";
 import ProductCard from "../../ProductCard";
 import { homeConfig } from "../../../config";
 import { Button, Divider, TextField } from "../../../styles/UIKit";
 
-const HotDeals = () => {
+const HotDeals = ({ hotDealsData }) => {
   const [hotDeals, setHotDeals] = useState([]);
-  const api = useApi();
-
-  const fetchData = async () => {
-    const { data } = await api.get("/hot-deals");
-
-    setHotDeals(data);
-  };
 
   useEffect(() => {
-    fetchData();
+    setHotDeals(hotDealsData);
   }, []);
 
   return (
@@ -88,6 +81,14 @@ const HotDeals = () => {
       </HotDealsContent>
     </HotDealsContainer>
   );
+};
+
+HotDeals.defaultProps = {
+  hotDealsData: [],
+};
+
+HotDeals.propTypes = {
+  hotDealsData: PropTypes.array,
 };
 
 export default HotDeals;

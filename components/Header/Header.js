@@ -138,6 +138,8 @@ const HeaderContainer = styled.div`
 
 const LogoContainer = styled.span`
   cursor: pointer;
+  display: flex;
+  align-items: center;
 `;
 
 const HeaderBase = styled.div`

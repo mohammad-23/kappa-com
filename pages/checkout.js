@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 import { loadStripe } from "@stripe/stripe-js";
 
 import { useApi } from "../utils";
@@ -21,6 +22,7 @@ const Checkout = () => {
   });
 
   const api = useApi();
+  const router = useRouter();
   const { cart, user, updateUserInfo, toggleLoginModalState } = useContext(
     AuthContext
   );
@@ -30,6 +32,8 @@ const Checkout = () => {
       const defaultAddress = user?.addresses.find((item) => item.is_default);
 
       setChosenAddress(defaultAddress);
+    } else {
+      router.push("/");
     }
   }, [user]);
 
@@ -221,7 +225,7 @@ const Checkout = () => {
             Subtotal
           </TextField>{" "}
           <TextField margin="0" weight="500">
-            ${Number(cart.total_price).toFixed(2)}
+            ${cart.total_price ? Number(cart.total_price).toFixed(2) : "0.00"}
           </TextField>
         </OrderColumn>
         <OrderColumn>
@@ -237,7 +241,7 @@ const Checkout = () => {
             Total
           </TextField>{" "}
           <TextField margin="0" weight="500">
-            ${Number(cart.total_price).toFixed(2)}
+            ${cart.total_price ? Number(cart.total_price).toFixed(2) : "0.00"}
           </TextField>
         </OrderColumn>
       </Card>

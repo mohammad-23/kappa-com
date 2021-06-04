@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import styled from "styled-components";
+import Link from "next/link";
 import { toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
@@ -9,7 +10,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import AuthContext from "../contexts/AuthContext";
 import { Divider, Button, TextField } from "../styles/UIKit";
-import Link from "next/link";
 
 const Cart = () => {
   const api = useApi();

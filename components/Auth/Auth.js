@@ -174,7 +174,7 @@ class Auth extends Component {
   };
 
   signOut = () => {
-    this.setState({ user: null, cart: {} }, () => {
+    this.setState({ user: null }, () => {
       localStorage.removeItem("authToken");
     });
   };

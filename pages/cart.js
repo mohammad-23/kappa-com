@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import styled from "styled-components";
+import Link from "next/link";
 import { toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
@@ -7,8 +8,8 @@ import { useApi } from "../utils";
 import { cartConfig } from "../config";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Divider, Button } from "../styles/UIKit";
 import AuthContext from "../contexts/AuthContext";
+import { Divider, Button, TextField } from "../styles/UIKit";
 
 const Cart = () => {
   const api = useApi();
@@ -39,19 +40,27 @@ const Cart = () => {
             <EmptyBox />
           </FlexAdjuster>
           <FlexAdjuster>
-            <CartHeading>{cartConfig.header.product}</CartHeading>
+            <TextField margin="0" weight="bold" size="1.25em">
+              {cartConfig.header.product}
+            </TextField>
           </FlexAdjuster>
           <FlexAdjuster>
-            <CartHeading>{cartConfig.header.price}</CartHeading>
+            <TextField margin="0" weight="bold" size="1.25em">
+              {cartConfig.header.price}
+            </TextField>
           </FlexAdjuster>
           <FlexAdjuster>
-            <CartHeading>{cartConfig.header.quantity}</CartHeading>
+            <TextField margin="0" weight="bold" size="1.25em">
+              {cartConfig.header.quantity}
+            </TextField>
           </FlexAdjuster>
           <FlexAdjuster>
-            <CartHeading>{cartConfig.header.total}</CartHeading>
+            <TextField margin="0" weight="bold" size="1.25em">
+              {cartConfig.header.total}
+            </TextField>
           </FlexAdjuster>
         </CartTitleContainer>
-        <CartDivider />
+        <Divider margin="0.5em" />
         {cart?.items?.map((cartItem) => (
           <div key={cartItem?._id}>
             <CartContent>
@@ -78,18 +87,24 @@ const Cart = () => {
                 <CartText> ${cartItem?.total_price}</CartText>
               </FlexAdjuster>
             </CartContent>
-            <CartDivider />
+            <Divider margin="0.5em" />
           </div>
         ))}
         <CartTotals>
-          <CartTotalDivider />
+          <Divider margin="0 0 0.5em" />
           <CartTotalContainer>
-            <CartHeading>{cartConfig.totals.total}</CartHeading>
-            <CartText>${cart?.total_price}</CartText>
+            <TextField margin="0" weight="bold" size="1.25em">
+              {cartConfig.totals.total}
+            </TextField>
+            <TextField margin="0" weight="500" size="1em">
+              ${cart?.total_price}
+            </TextField>
           </CartTotalContainer>
-          <CartTotalButton>
-            {cartConfig.totals.checkoutButtonText}
-          </CartTotalButton>
+          <Link href="/checkout">
+            <CartTotalButton type="secondary">
+              {cartConfig.totals.checkoutButtonText}
+            </CartTotalButton>
+          </Link>
         </CartTotals>
       </CartContainer>
 
@@ -125,10 +140,6 @@ const CartEmptyContainer = styled.div`
   align-items: center;
 `;
 
-const CartHeading = styled.h2`
-  margin: 0;
-  font-weight: 500;
-`;
 const EmptyBox = styled.div`
   border: 1px solid #ffff;
   height: 1rem;
@@ -140,20 +151,15 @@ const CartText = styled.p`
 `;
 
 const QuantityBox = styled.div`
-  border: 1px solid #ebebeb;
+  border: 1px solid ${(props) => props.theme.background};
   height: 1rem;
   width: 1rem;
   text-align: center;
   padding: 1rem;
-  transform: translateX(100%);
-`;
-
-const CartDivider = styled(Divider)`
-  margin: 0.5rem;
-`;
-
-const CartTotalDivider = styled(Divider)`
-  margin: 0rem;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const CartContent = styled.div`
@@ -201,6 +207,4 @@ const CartTotalContainer = styled.div`
 
 const CartTotalButton = styled(Button)`
   margin: 1rem 0rem 1rem 0rem;
-  background-color: ${(props) => props.theme.secondary};
-  border-color: ${(props) => props.theme.secondary};
 `;

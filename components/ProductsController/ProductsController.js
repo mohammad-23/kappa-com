@@ -116,15 +116,21 @@ const ProductsController = ({ children }) => {
   const onFilterSelect = ({ filterName, filterValue }) => {
     let updatedQueryString = "";
 
-    if (router.query[filterName]) {
-      const queryParamsList = router.query[filterName].split(",");
+    const updatedQuery = {
+      ...router.query,
+    };
+
+    delete updatedQuery.page;
+
+    if (updatedQuery[filterName]) {
+      const queryParamsList = updatedQuery[filterName].split(",");
 
       if (queryParamsList.includes(filterValue)) {
         updatedQueryString = queryParamsList
           .filter((item) => item !== filterValue)
           .join(",");
       } else {
-        updatedQueryString = `${router.query[filterName]},${filterValue}`;
+        updatedQueryString = `${updatedQuery[filterName]},${filterValue}`;
       }
     } else {
       updatedQueryString = filterValue;
@@ -134,7 +140,7 @@ const ProductsController = ({ children }) => {
       {
         pathname: "/products",
         query: {
-          ...router.query,
+          ...updatedQuery,
           [filterName]: updatedQueryString,
         },
       },

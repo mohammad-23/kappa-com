@@ -31,16 +31,16 @@ const LoginModal = ({ closeModal, isOpen }) => {
   };
 
   const checkUserExists = async (event) => {
-    const { email } = form.current.getData();
+    const data = form.current.getData();
 
-    if (email.length) {
+    if (data?.email.length) {
       setLoading("IS_USER_REGISTERED");
 
-      const registeredUser = await isUserRegistered(email);
+      const registeredUser = await isUserRegistered(data.email);
 
       if (registeredUser) {
         setUser(registeredUser);
-        setEmail(email);
+        setEmail(data.email);
       }
 
       setLoading(null);
@@ -48,19 +48,21 @@ const LoginModal = ({ closeModal, isOpen }) => {
   };
 
   const submitWithPassword = async () => {
-    const { password } = form.current.getData();
+    const data = form.current.getData();
 
-    setLoading("LOGIN_WITH_PASSWORD");
+    if (data?.password.length) {
+      setLoading("LOGIN_WITH_PASSWORD");
 
-    const isSignInSuccessfull = await signInWithEmailPassword({
-      email,
-      password,
-    });
+      const isSignInSuccessfull = await signInWithEmailPassword({
+        email,
+        password: data.password,
+      });
 
-    if (!isSignInSuccessfull) {
-      setLoading(null);
-    } else {
-      resetStateAndClose();
+      if (!isSignInSuccessfull) {
+        setLoading(null);
+      } else {
+        resetStateAndClose();
+      }
     }
   };
 
@@ -91,6 +93,7 @@ const LoginModal = ({ closeModal, isOpen }) => {
   };
 
   const renderAuthStepForm = () => {
+    setUser(null);
     if (authStep === "LOGIN") {
       setAuthStep("SIGNUP");
     } else {

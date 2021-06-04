@@ -10,25 +10,27 @@ import Register from "../components/Home/Register";
 import HotDeals from "../components/Home/HotDeals";
 import Footer from "../components/Footer";
 
-const Home = ({ data, error }) => (
+const Home = ({ favData, hotDealsData, error }) => (
   <Container>
     <Header />
     <Hero />
     <Benefit />
-    <Favourites favData={data} />
+    <Favourites favData={favData} />
     <Register />
-    <HotDeals hotDealsData={data} />
+    <HotDeals hotDealsData={hotDealsData} />
     <Footer />
   </Container>
 );
 
 Home.defaultProps = {
-  data: [],
+  favData: [],
+  hotDealsData: [],
   error: null,
 };
 
 Home.propTypes = {
-  data: PropTypes.array,
+  favData: PropTypes.array,
+  hotDealsData: PropTypes.array,
   error: PropTypes.string,
 };
 
@@ -38,11 +40,13 @@ export async function getServerSideProps() {
   });
 
   try {
-    const response = await api.get("/favourites");
+    const favResponse = await api.get("/favourites");
+    const hotDealsResponse = await api.get("hot-deals");
 
     return {
       props: {
-        data: response.data || null,
+        favData: favResponse.data || null,
+        hotDealsData: hotDealsResponse.data || null,
       },
     };
   } catch (error) {

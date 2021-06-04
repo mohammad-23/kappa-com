@@ -1,93 +1,85 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import Link from "next/link";
 
-import { useApi } from "../../../utils";
 import ProductCard from "../../ProductCard";
 import { homeConfig } from "../../../config";
 import { Button, Divider, TextField } from "../../../styles/UIKit";
 
-const HotDeals = () => {
-  const [hotDeals, setHotDeals] = useState([]);
-  const api = useApi();
+const HotDeals = ({ hotDealsData }) => (
+  <HotDealsContainer>
+    <HotDealsTitleContainer>
+      <TextField size="1.5em" margin="0" weight="bold">
+        {homeConfig.hotDealsData.title}
+      </TextField>
+      <ViewAllLink>
+        <Link href={homeConfig.headerData.men.url}>VIEW ALL</Link>
+      </ViewAllLink>
+    </HotDealsTitleContainer>
+    <Divider margin="1em 2em" />
+    <HotDealsContent>
+      <HotDealsOfferContainer>
+        <HotDealsOfferTitle
+          size="1.5em"
+          color="white"
+          margin="1em 0"
+          weight="bold"
+        >
+          {homeConfig.hotDealsData.OfferText}
+        </HotDealsOfferTitle>
+        <HotDealsCounterContainer>
+          <HotDealsCounterSquare>
+            <TextField size="0.9em" color="white" margin="0" weight="bold">
+              100
+            </TextField>
+            <TextField size="0.8em" margin="0" weight="bold" color="greyText">
+              DAYS
+            </TextField>
+          </HotDealsCounterSquare>
+          <HotDealsCounterSquare>
+            <TextField size="0.9em" color="white" margin="0" weight="bold">
+              23
+            </TextField>
+            <TextField size="0.8em" margin="0" weight="bold" color="greyText">
+              HOURS
+            </TextField>
+          </HotDealsCounterSquare>
+          <HotDealsCounterSquare>
+            <TextField size="0.9em" color="white" margin="0" weight="bold">
+              36
+            </TextField>
+            <TextField size="0.8em" margin="0" weight="bold" color="greyText">
+              MINS
+            </TextField>
+          </HotDealsCounterSquare>
+          <HotDealsCounterSquare>
+            <TextField size="0.9em" color="white" margin="0" weight="bold">
+              45
+            </TextField>
+            <TextField size="0.8em" margin="0" weight="bold" color="greyText">
+              SECS
+            </TextField>
+          </HotDealsCounterSquare>
+        </HotDealsCounterContainer>
+        <ShopNowButton inverted>
+          {" "}
+          {homeConfig.hotDealsData.buttonText}
+        </ShopNowButton>
+      </HotDealsOfferContainer>
 
-  const fetchData = async () => {
-    const { data } = await api.get("/hot-deals");
+      {hotDealsData.slice(0, 3).map((hotDeal) => (
+        <ProductCard key={hotDeal._id} {...hotDeal} />
+      ))}
+    </HotDealsContent>
+  </HotDealsContainer>
+);
 
-    setHotDeals(data);
-  };
+HotDeals.defaultProps = {
+  hotDealsData: [],
+};
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return (
-    <HotDealsContainer>
-      <HotDealsTitleContainer>
-        <TextField size="1.5em" margin="0" weight="bold">
-          {homeConfig.hotDealsData.title}
-        </TextField>
-        <ViewAllLink>
-          <Link href={homeConfig.headerData.men.url}>VIEW ALL</Link>
-        </ViewAllLink>
-      </HotDealsTitleContainer>
-      <Divider margin="1em 2em" />
-      <HotDealsContent>
-        <HotDealsOfferContainer>
-          <HotDealsOfferTitle
-            size="1.5em"
-            color="white"
-            margin="1em 0"
-            weight="bold"
-          >
-            {homeConfig.hotDealsData.OfferText}
-          </HotDealsOfferTitle>
-          <HotDealsCounterContainer>
-            <HotDealsCounterSquare>
-              <TextField size="0.9em" color="white" margin="0" weight="bold">
-                100
-              </TextField>
-              <TextField size="0.8em" margin="0" weight="bold" color="greyText">
-                DAYS
-              </TextField>
-            </HotDealsCounterSquare>
-            <HotDealsCounterSquare>
-              <TextField size="0.9em" color="white" margin="0" weight="bold">
-                23
-              </TextField>
-              <TextField size="0.8em" margin="0" weight="bold" color="greyText">
-                HOURS
-              </TextField>
-            </HotDealsCounterSquare>
-            <HotDealsCounterSquare>
-              <TextField size="0.9em" color="white" margin="0" weight="bold">
-                36
-              </TextField>
-              <TextField size="0.8em" margin="0" weight="bold" color="greyText">
-                MINS
-              </TextField>
-            </HotDealsCounterSquare>
-            <HotDealsCounterSquare>
-              <TextField size="0.9em" color="white" margin="0" weight="bold">
-                45
-              </TextField>
-              <TextField size="0.8em" margin="0" weight="bold" color="greyText">
-                SECS
-              </TextField>
-            </HotDealsCounterSquare>
-          </HotDealsCounterContainer>
-          <ShopNowButton inverted>
-            {" "}
-            {homeConfig.hotDealsData.buttonText}
-          </ShopNowButton>
-        </HotDealsOfferContainer>
-
-        {hotDeals.slice(0, 3).map((hotDeal) => (
-          <ProductCard key={hotDeal._id} {...hotDeal} />
-        ))}
-      </HotDealsContent>
-    </HotDealsContainer>
-  );
+HotDeals.propTypes = {
+  hotDealsData: PropTypes.array,
 };
 
 export default HotDeals;

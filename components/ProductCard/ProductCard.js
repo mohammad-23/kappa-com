@@ -36,7 +36,7 @@ const ProductCard = ({
             onClick={(event) => {
               event.stopPropagation();
 
-              if (checkIsWishlisted) {
+              if (checkIsWishlisted()) {
                 deleteWishlistItem(_id);
               } else {
                 updateUserInfo({ wishlist: _id });

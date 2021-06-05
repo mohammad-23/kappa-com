@@ -65,7 +65,7 @@ const Checkout = () => {
 
       await updateUserInfo({ address: data });
 
-      setIsModalOpen(false);
+      closeModal();
 
       const { addresses } = user;
       let updatedAddress = {};
@@ -76,13 +76,14 @@ const Checkout = () => {
         );
 
         if (isSame) {
+          // eslint-disable-next-line no-unused-vars
           updatedAddress = { ...address };
 
           break;
         }
       }
 
-      setChosenAddress(updatedAddress);
+      setChosenAddress(data);
     } catch (error) {
       toast.error(error.message);
     } finally {

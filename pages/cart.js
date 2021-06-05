@@ -101,9 +101,11 @@ const Cart = () => {
             </TextField>
           </CartTotalContainer>
           <Link href="/checkout">
-            <CartTotalButton type="secondary">
-              {cartConfig.totals.checkoutButtonText}
-            </CartTotalButton>
+            <div>
+              <CartTotalButton type="secondary">
+                {cartConfig.totals.checkoutButtonText}
+              </CartTotalButton>
+            </div>
           </Link>
         </CartTotals>
       </CartContainer>

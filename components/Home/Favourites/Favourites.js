@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Carousel from "react-multi-carousel";
 
 import { Divider, TextField } from "../../../styles/UIKit";
 import UIBUtton from "../../../styles/UIKit/Button";
-import useApi from "../../../utils/useApi";
 import ProductCard from "../../ProductCard";
 import { homeConfig } from "../../../config";
 
@@ -56,36 +54,33 @@ const ButtonGroup = ({ next, previous, favLength, ...rest }) => {
   );
 };
 
-const Favourites = () => {
-  const [favourites, setFavourites] = useState([]);
-  const api = useApi();
+const Favourites = ({ favData }) => (
+  <FavoritesContainer>
+    <TextField size="1.5em" margin="1em 0 0 2em" weight="bold">
+      {homeConfig.FAVOURITES_TITLE}
+    </TextField>
+    <Divider margin="1em 2em" />
+    <CarouselContainer>
+      <Carousel
+        responsive={responsive}
+        arrows={false}
+        renderButtonGroupOutside={true}
+        customButtonGroup={<ButtonGroup favLength={favData.length} />}
+      >
+        {favData.map((favouriteItem) => (
+          <ProductCard key={favouriteItem._id} {...favouriteItem} />
+        ))}
+      </Carousel>
+    </CarouselContainer>
+  </FavoritesContainer>
+);
 
-  useEffect(() => {
-    api.get("/favourites").then(({ data }) => {
-      setFavourites(data);
-    });
-  }, []);
+Favourites.defaultProps = {
+  favData: [],
+};
 
-  return (
-    <FavoritesContainer>
-      <TextField size="1.5em" margin="1em 0 0 2em" weight="bold">
-        {homeConfig.FAVOURITES_TITLE}
-      </TextField>
-      <Divider margin="1em 2em" />
-      <CarouselContainer>
-        <Carousel
-          responsive={responsive}
-          arrows={false}
-          renderButtonGroupOutside={true}
-          customButtonGroup={<ButtonGroup favLength={favourites.length} />}
-        >
-          {favourites.map((favouriteItem) => (
-            <ProductCard key={favouriteItem._id} {...favouriteItem} />
-          ))}
-        </Carousel>
-      </CarouselContainer>
-    </FavoritesContainer>
-  );
+Favourites.propTypes = {
+  favData: PropTypes.array,
 };
 
 export default Favourites;

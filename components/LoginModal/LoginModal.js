@@ -75,12 +75,21 @@ const LoginModal = ({ closeModal, isOpen }) => {
       if (password.match(/^.{8,}$/)) {
         setLoading("SIGN_UP");
 
-        await signUp({ name, email, password, number });
+        const isSignupSuccessfull = await signUp({
+          name,
+          email,
+          password,
+          number,
+        });
+
+        if (!isSignupSuccessfull) {
+          setLoading(null);
+        } else {
+          resetStateAndClose();
+        }
       } else {
         toast.warning("Password must have atleast 8 characters.");
       }
-
-      setLoading(null);
     }
   };
 
@@ -175,6 +184,7 @@ const LoginModal = ({ closeModal, isOpen }) => {
                   size="sm"
                   onClick={registerUser}
                   disabled={loading === "SIGNUP"}
+                  loading={loading === "SIGNUP"}
                 >
                   Signup
                 </Button>

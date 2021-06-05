@@ -14,20 +14,17 @@ import AuthContext from "../contexts/AuthContext";
 const PaymentStatus = () => {
   const { query } = useRouter();
   const api = useApi();
-  const { cart, updateCart } = useContext(AuthContext);
+  const { updateCart } = useContext(AuthContext);
 
   try {
     const clearCart = async () => {
-      const cartClearResponse = await api.put("/cart/clear", {
-        cartId: cart._id,
-      });
+      const cartClearResponse = await api.put("/cart/clear", {});
 
       updateCart(cartClearResponse.data.cart);
     };
 
     useEffect(() => {
       if (query.status === "success") {
-        console.log(cart);
         clearCart();
       }
     }, []);

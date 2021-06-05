@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useRouter } from "next/router";
@@ -8,9 +8,30 @@ import { Button } from "../styles/UIKit";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { postCheckoutConfig } from "../config";
+import { useApi } from "../utils";
+import AuthContext from "../contexts/AuthContext";
 
 const PaymentStatus = () => {
   const { query } = useRouter();
+  const api = useApi();
+  const { cart, updateCart } = useContext(AuthContext);
+
+  try {
+    const clearCart = async () => {
+      const cartClearResponse = await api.put("/cart/clear", {
+        cartId: cart._id,
+      });
+
+      updateCart(cartClearResponse.data.cart);
+    };
+
+    useEffect(() => {
+      if (query.status === "success") {
+        console.log(cart);
+        clearCart();
+      }
+    }, []);
+  } catch (err) {}
 
   return (
     <React.Fragment>

@@ -156,7 +156,7 @@ class Auth extends Component {
       if (data) {
         this.setState({ authToken: data.token, user: data.user });
 
-        toast.success("Successful Registered!");
+        toast.success("Successfully Registered!");
 
         return true;
       }

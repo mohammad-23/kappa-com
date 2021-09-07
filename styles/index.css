@@ -1,3 +1,24 @@
-body {
+body,
+html,
+#__next {
   font-family: "Poppins", sans-serif;
+  color: #25282b;
+  height: 100%;
+}
+
+button {
+  font-family: "PT Sans Caption", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+span {
+  font-family: "PT Sans Caption", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.react-multiple-carousel__arrow::before {
+  font-family: "Poppins";
 }
